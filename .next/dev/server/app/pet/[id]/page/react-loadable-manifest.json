@@ -1,0 +1,18 @@
+{
+  "[project]/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/node_modules_9f1afa0e._.js",
+      "static/chunks/components_0903bca3._.js",
+      "static/chunks/components_leaflet-map_client_tsx_250b9a9a._.js"
+    ]
+  },
+  "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/node_modules_34619a67._.js",
+      "static/chunks/components_selectable-map_tsx_438bbbe1._.js",
+      "static/chunks/components_selectable-map_tsx_250b9a9a._.js"
+    ]
+  }
+}

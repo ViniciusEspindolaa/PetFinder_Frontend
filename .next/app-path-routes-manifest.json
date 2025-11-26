@@ -1,0 +1,16 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/users/location/route": "/api/users/location",
+  "/login/page": "/login",
+  "/map/page": "/map",
+  "/new-pet/page": "/new-pet",
+  "/notifications/page": "/notifications",
+  "/page": "/",
+  "/pet/[id]/edit/page": "/pet/[id]/edit",
+  "/pet/[id]/page": "/pet/[id]",
+  "/profile/edit/page": "/profile/edit",
+  "/profile/page": "/profile",
+  "/profile/settings/page": "/profile/settings",
+  "/signup/page": "/signup"
+}

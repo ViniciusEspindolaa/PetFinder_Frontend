@@ -1,0 +1,16 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/users/location/route": "app/api/users/location/route.js",
+  "/login/page": "app/login/page.js",
+  "/map/page": "app/map/page.js",
+  "/new-pet/page": "app/new-pet/page.js",
+  "/notifications/page": "app/notifications/page.js",
+  "/page": "app/page.js",
+  "/pet/[id]/edit/page": "app/pet/[id]/edit/page.js",
+  "/pet/[id]/page": "app/pet/[id]/page.js",
+  "/profile/edit/page": "app/profile/edit/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/profile/settings/page": "app/profile/settings/page.js",
+  "/signup/page": "app/signup/page.js"
+}

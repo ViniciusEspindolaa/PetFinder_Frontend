@@ -1,0 +1,8 @@
+1:"$Sreact.fragment"
+2:I[89225,["/_next/static/chunks/ce03da0b751f1205.js","/_next/static/chunks/d5a367720c0671ff.js"],"ViewportBoundary"]
+4:I[89225,["/_next/static/chunks/ce03da0b751f1205.js","/_next/static/chunks/d5a367720c0671ff.js"],"MetadataBoundary"]
+5:"$Sreact.suspense"
+7:I[93038,["/_next/static/chunks/ce03da0b751f1205.js","/_next/static/chunks/d5a367720c0671ff.js"],"IconMark"]
+0:{"buildId":"NhgsUjmkrqHR_WKGip8EW","rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":"$@3"}],["$","div",null,{"hidden":true,"children":["$","$L4",null,{"children":["$","$5",null,{"name":"Next.Metadata","children":"$@6"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"loading":null,"isPartial":false}
+3:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+6:[["$","title","0",{"children":"PetFinder - Encontre Pets Perdidos"}],["$","meta","1",{"name":"description","content":"Plataforma para ajudar pets perdidos, encontrados e adoção"}],["$","meta","2",{"name":"generator","content":"v0.app"}],["$","link","3",{"rel":"icon","href":"/favicon.svg"}],["$","link","4",{"rel":"apple-touch-icon","href":"/favicon.svg"}],["$","$L7","5",{}]]

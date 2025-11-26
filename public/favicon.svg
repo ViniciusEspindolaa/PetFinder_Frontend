@@ -1,0 +1,16 @@
+<!-- Simple SVG favicon: pin with inner circle and subtle shadow -->
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ff6b6b" />
+      <stop offset="1" stop-color="#ef4444" />
+    </linearGradient>
+    <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+  <g filter="url(#s)">
+    <path d="M32 6c-6.627 0-12 5.373-12 12 0 9.333 12 26 12 26s12-16.667 12-26c0-6.627-5.373-12-12-12z" fill="url(#g)" />
+    <circle cx="32" cy="20" r="6" fill="#fff" />
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/node_modules_34619a67._.js",
+      "static/chunks/components_selectable-map_tsx_438bbbe1._.js",
+      "static/chunks/components_selectable-map_tsx_b6945067._.js"
+    ]
+  }
+}

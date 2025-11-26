@@ -1,0 +1,12 @@
+{
+  "/login/page": "app/login/page.js",
+  "/map/page": "app/map/page.js",
+  "/new-pet/page": "app/new-pet/page.js",
+  "/page": "app/page.js",
+  "/pet/[id]/page": "app/pet/[id]/page.js",
+  "/profile/edit/page": "app/profile/edit/page.js",
+  "/profile/page": "app/profile/page.js",
+  "/profile/settings/page": "app/profile/settings/page.js",
+  "/services/page": "app/services/page.js",
+  "/signup/page": "app/signup/page.js"
+}
