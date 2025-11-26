@@ -1,466 +1,253 @@
-[00:00:02.366] Server  LOG      ✓ Ready in 1579ms
-[00:00:10.158] Server  LOG      ○ Compiling / ...
-[00:00:19.822] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:15.814] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:01:15.989] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:04:01.324] Browser WARN    Image with src "/logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:04:01.324] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:04:22.620] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[00:04:22.620] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[00:04:25.746] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[00:07:23.858] Browser ERROR   uncaughtError: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-[00:07:23.858] Browser ERROR   uncaughtError: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-[00:07:24.088] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:07:24.088] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[00:07:24.088] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[00:07:24.465] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[00:07:24.765] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[00:08:16.626] Server  LOG      ✓ Compiled in 586ms
-[00:08:19.019] Server  LOG      ✓ Compiled in 292ms
-[00:08:22.143] Server  LOG      ✓ Compiled in 332ms
-[00:08:24.554] Server  LOG      ✓ Compiled in 226ms
-[00:08:33.089] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:08:33.566] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:08:39.702] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:08:40.044] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[00:08:40.044] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[00:08:40.044] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[00:09:09.615] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:09:10.232] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:10:36.093] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:10:36.786] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[07:20:35.077] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[07:20:35.078] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[07:27:37.264] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:37.264] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:47.984] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[07:27:48.449] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
-      <AppDevOverlayErrorBoundary globalError={[...]}>
-        <ReplaySsrOnlyErrors>
-        <DevRootHTTPAccessFallbackBoundary>
-          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-              <RedirectBoundary>
-                <RedirectErrorBoundary router={{...}}>
-                  <Head>
-                  <__next_root_layout_boundary__>
-                    <SegmentViewNode type="layout" pagePath="layout.tsx">
-                      <SegmentTrieNode>
-                      <link>
-                      <script>
-                      <script>
-                      <script>
-                      <RootLayout>
-                        <html lang="pt-BR" suppressHydrationWarning={true}>
-                          <body
-+                           className="inter_5972bc34-module__OU16Qa__className"
--                           className="light"
-                          >
-                  ...
-
-[07:27:48.449] Browser ERROR   uncaughtError: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-[07:27:48.449] Browser ERROR   uncaughtError: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-[07:27:48.449] Browser ERROR   uncaughtError: NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.
-[07:27:50.445] Browser WARN    Image with src "/logo.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[07:27:50.445] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[07:27:50.980] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[07:27:52.336] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:52.337] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:54.519] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:55.889] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:55.889] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:57.824] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:27:58.982] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[07:28:01.067] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:28:01.067] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:28:01.734] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:28:01.734] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:28:14.983] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:28:14.983] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:28:15.755] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:28:15.755] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:30:08.854] Server  LOG      ✓ Compiled in 535ms
-[07:30:09.070] Browser ERROR   unhandledRejection: Error: No link element found for chunk /_next/static/chunks/%5Broot-of-the-server%5D__36b083e1._.css
-[07:30:30.353] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:30:30.353] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:30:34.932] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[07:33:45.599] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[07:33:50.751] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[07:33:51.132] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[07:33:56.033] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[07:33:56.485] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:33:56.485] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:33:56.485] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:33:56.485] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:34:05.604] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[07:34:05.958] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[07:34:08.532] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[07:34:08.836] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:34:08.836] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[07:34:09.150] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[07:34:09.150] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[10:25:53.376] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[10:25:53.784] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[10:25:55.433] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[10:26:46.143] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[10:26:50.212] Browser WARN    [GSI_LOGGER]: Provided button width is invalid: 100%
-[10:58:47.788] Server  LOG      ✓ Compiled in 558ms
-[11:05:52.486] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:05:52.486] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:05:53.383] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:05:54.025] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:06:00.105] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:06:00.105] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:06:01.261] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:09:19.087] Server  LOG      ✓ Compiled in 276ms
-[11:09:22.031] Server  LOG      ✓ Compiled in 330ms
-[11:09:24.488] Server  LOG      ✓ Compiled in 209ms
-[11:09:27.715] Server  LOG      ✓ Compiled in 378ms
-[11:09:30.126] Server  LOG      ✓ Compiled in 235ms
-[11:09:32.804] Server  LOG      ✓ Compiled in 251ms
-[11:09:36.375] Server  LOG      ✓ Compiled in 910ms
-[11:09:38.745] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[11:09:41.266] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[11:12:56.760] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[11:12:58.878] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:12:58.878] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:13:00.560] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:13:03.051] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[11:13:03.051] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:13:03.051] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:13:03.677] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:13:04.065] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:14:57.837] Server  LOG      ✓ Compiled in 192ms
-[11:14:58.078] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:15:00.569] Server  LOG      ✓ Compiled in 85ms
-[11:15:01.071] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:15:02.532] Server  LOG      ✓ Compiled in 105ms
-[11:15:03.078] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:15:05.961] Server  LOG      ✓ Compiled in 122ms
-[11:15:07.075] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:15:08.352] Server  LOG      ✓ Compiled in 182ms
-[11:15:10.071] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:15:10.072] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:15:18.862] Server  LOG      ✓ Compiled in 125ms
-[11:15:19.083] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:16:39.011] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 3 userLocation= undefined
-[11:16:40.491] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:16:41.090] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:16:42.765] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:23:24.848] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:23:24.848] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:23:25.475] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:23:25.677] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:24:55.144] Server  LOG      ✓ Compiled in 250ms
-[11:24:57.369] Server  LOG      ✓ Compiled in 212ms
-[11:25:29.468] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:25:29.468] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:25:30.278] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:25:30.460] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:25:38.015] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[11:25:38.455] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[11:25:38.751] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:25:38.751] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:25:38.982] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:27:56.147] Server  LOG      ✓ Compiled in 212ms
-[11:27:57.079] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:27:58.940] Server  LOG      ✓ Compiled in 304ms
-[11:28:01.073] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:28:01.073] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:28:22.769] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[11:28:24.994] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:28:24.994] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[11:28:25.540] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:28:25.540] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:30:08.821] Server  LOG      ✓ Compiled in 272ms
-[11:30:09.077] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[11:32:04.092] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[11:32:05.079] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[11:32:07.076] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:32:07.076] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:32:13.168] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[11:32:21.027] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[11:32:22.641] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[12:31:56.999] Server  LOG      ✓ Compiled in 1205ms
-[12:32:01.319] Server  LOG      ✓ Compiled in 382ms
-[12:32:04.632] Server  LOG      ✓ Compiled in 960ms
-[12:32:09.399] Server  LOG      ✓ Compiled in 289ms
-[12:32:21.415] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[12:32:22.085] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[12:32:23.078] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[12:32:23.078] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[12:34:42.478] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[12:36:12.877] Server  LOG      ✓ Compiled in 517ms
-[12:37:48.243] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[12:37:48.243] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[12:37:48.719] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[12:37:49.029] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 5 userLocation= undefined
-[14:10:36.001] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/auth-context.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[14:10:36.005] Server  LOG      ✓ Compiled in 855ms
-[14:10:40.029] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:10:41.083] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[14:10:43.512] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./lib/auth-context.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[14:10:43.536] Server  LOG      ✓ Compiled in 270ms
-[14:10:45.998] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:10:47.361] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[14:11:14.742] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1763921964/petfinder/misc/1763921961910_9z4zin.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[14:11:34.585] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:11:34.820] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[14:11:35.409] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7587456,"longitude":-52.3665408}
-[14:12:20.309] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[14:14:39.134] Server  LOG      ✓ Compiled in 410ms
-[14:14:48.230] Server  LOG      ✓ Compiled in 668ms
-[14:14:55.988] Server  LOG      ✓ Compiled in 195ms
-[14:15:05.333] Server  LOG      ✓ Compiled in 168ms
-[14:15:13.779] Server  LOG      ✓ Compiled in 218ms
-[14:15:23.673] Server  LOG      ✓ Compiled in 242ms
-[14:26:50.905] Server  LOG      ✓ Compiled in 399ms
-[14:26:58.523] Server  LOG      ✓ Compiled in 62ms
-[14:27:00.070] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'appendChild')
-[14:27:00.070] Browser ERROR   uncaughtError: Error: Map container is being reused by another instance
-[14:27:24.177] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:27:24.498] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[14:29:18.234] Server  LOG      ✓ Compiled in 239ms
-[14:29:20.083] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'appendChild')
-[14:29:20.084] Browser ERROR   uncaughtError: Error: Map container is being reused by another instance
-[14:29:28.266] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[14:29:29.435] Server  LOG      ✓ Compiled in 204ms
-[14:29:31.044] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:29:35.094] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[14:31:49.342] Server  LOG      ✓ Compiled in 471ms
-[14:32:01.726] Server  LOG      ✓ Compiled in 287ms
-[14:40:38.750] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[23:23:08.951] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7563755,"longitude":-52.3667502}
-[23:26:03.157] Server  LOG      ✓ Compiled in 1692ms
-[23:26:19.706] Server  LOG      ✓ Compiled in 679ms
-[23:26:20.328] Browser ERROR   The final argument passed to %s changed size between renders. The order and size of this array must remain constant.
-
-Previous: %s
-Incoming: %s useEffect [, , , , , [object Object],[object Object],[object Object],[object Object],[object Object]] [, , , , , [object Object],[object Object],[object Object],[object Object],[object Object], recent]
-[23:26:28.464] Server  LOG      ✓ Compiled in 282ms
-[23:28:42.284] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7587456,"longitude":-52.3665408}
-[23:29:24.438] Server  LOG      ✓ Compiled in 79ms
-[24:27:53.604] Server  LOG      ✓ Compiled in 178ms
-[24:27:56.420] Server  LOG      ✓ Compiled in 117ms
-[24:30:18.150] Server  LOG      ○ Compiling /new-pet ...
-[24:36:13.576] Server  LOG      ✓ Compiled in 181ms
-[24:36:15.626] Server  LOG      ✓ Compiled in 74ms
-[24:36:17.077] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'appendChild')
-[24:36:17.077] Browser ERROR   uncaughtError: Error: Map container is being reused by another instance
-[24:36:18.631] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[24:36:18.634] Server  LOG      ✓ Compiled in 186ms
-[24:36:20.150] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[24:36:22.074] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[24:37:07.035] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[24:37:10.875] Server  LOG      ✓ Compiled in 160ms
-[24:37:39.534] Server  LOG      ✓ Compiled in 152ms
-[24:45:17.546] Server  LOG      ✓ Compiled in 310ms
-[24:54:05.854] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[24:54:05.855] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[24:54:09.697] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:54:09.697] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:54:17.462] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:54:19.255] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:19.255] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:19.790] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:19.967] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:21.656] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:24.275] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:25.831] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:28.303] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:32.055] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:54:36.173] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:55:45.603] Server  LOG      ✓ Compiled in 128ms
-[24:55:46.077] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:00.379] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:02.246] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:03.660] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:05.905] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:06.416] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:09.680] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:10.393] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:14.669] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:59:14.669] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:59:14.785] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:59:18.147] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:18.147] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:18.678] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:18.926] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:20.713] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[24:59:25.088] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[24:59:25.088] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:03:35.509] Server  LOG      ✓ Compiled in 810ms
-[25:03:40.427] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[25:03:42.343] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[25:04:57.566] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[25:04:57.873] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:04:57.873] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:04:58.206] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:04:58.403] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:04:59.374] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:05:01.059] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:05:01.380] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:05:01.380] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:05:22.690] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:05:25.529] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:05:25.530] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:05:25.530] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:05:27.773] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:05:31.080] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:05:36.887] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 6 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:12:57.991] Browser WARN    [GSI_LOGGER]: Provided button width is invalid: 100%
-[25:14:39.132] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7563792,"longitude":-52.3667518}
-[25:24:04.245] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7587456,"longitude":-52.3665408}
-[25:28:02.658] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:28:02.658] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:28:03.274] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 8 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:28:03.274] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 8 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:35:33.320] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:35:33.320] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:35:34.221] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:35:34.221] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[25:35:34.221] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[25:35:35.756] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:35:36.417] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:35:40.879] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[25:35:40.879] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= undefined
-[25:35:41.711] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 9 userLocation= undefined
-[25:35:41.850] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 9 userLocation= undefined
-[25:36:00.968] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:36:00.968] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:44:05.529] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7650924,"lng":-52.4864935}
-[25:44:05.529] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7650924,"lng":-52.4864935}
-[25:44:06.117] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 10 userLocation= {"lat":-31.7650924,"lng":-52.4864935}
-[25:44:06.284] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 10 userLocation= {"lat":-31.7650924,"lng":-52.4864935}
-[25:44:08.933] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 10 userLocation= {"lat":-31.7650924,"lng":-52.4864935}
-[25:46:02.678] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7563792,"longitude":-52.3667518}
-[25:48:14.117] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:14.117] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:17.945] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:20.634] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:20.634] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:24.194] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:24.966] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:24.966] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:48:36.365] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:49:32.539] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:49:32.539] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:49:33.259] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:49:33.471] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:49:37.148] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:51:03.284] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7587456,"longitude":-52.3665408}
-[25:51:19.826] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:19.826] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:20.327] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:20.548] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:22.953] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:24.108] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:28.466] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:33.947] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:38.521] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:51:39.696] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7587456,"lng":-52.3665408}
-[25:52:11.788] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:52:11.788] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:52:11.982] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:52:12.663] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[25:53:33.169] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:53:33.169] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:53:34.034] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:53:34.214] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:50.241] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:50.241] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:50.759] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:50.929] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:52.392] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:53.089] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:54:56.359] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[25:55:01.233] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 11 userLocation= {"lat":-31.7563792,"lng":-52.3667518}
-[30:53:15.914] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:53:15.914] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:53:16.172] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:54:12.050] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[30:54:12.557] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[30:54:13.365] Browser WARN    Image with src "https://res.cloudinary.com/dn4zch2p8/image/upload/v1764091743/petfinder/misc/1764091742036_fu7lu7.jpg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[30:55:17.755] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[30:55:19.629] Browser WARN    [GSI_LOGGER]: Provided button width is invalid: 100%
-[30:55:29.640] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7587456,"longitude":-52.3665408}
-[30:55:34.922] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:34.922] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:39.338] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:39.338] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:39.504] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:45.599] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:45.599] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:55:45.733] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:56:22.558] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:56:22.558] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:56:26.093] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:56:37.442] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:56:37.442] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[30:56:40.084] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:01:45.721] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:01:45.721] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:01:49.436] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:10:49.595] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:10:49.595] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:11:30.354] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:29:31.300] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.7554688,"longitude":-52.3665408}
-[31:31:00.695] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:31:00.695] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 0 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:31:01.462] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:31:01.724] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:31:14.142] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:31:29.274] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:11.143] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:16.117] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:17.532] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:27.405] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:31.574] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:34.159] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:32:34.159] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:32:34.159] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:32:43.221] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:32:51.899] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:32:56.110] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:32:57.300] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:33:00.419] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:33:02.278] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 12 userLocation= {"lat":-31.7554688,"lng":-52.3665408}
-[31:33:07.653] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:33:07.654] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:33:21.708] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:33:35.897] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:33:37.999] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:34:01.992] Server  LOG      ○ Compiling /profile/edit ...
-[31:35:06.024] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[31:35:06.024] Browser WARN    Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
-[31:36:10.340] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:36:10.340] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:36:10.550] Browser INFO    [leaflet-debug] cssIncluded= true window.L= true markersCount= 1 userLocation= undefined
-[31:52:11.337] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.756384,"longitude":-52.3667279}
+[00:00:04.466] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
+[00:00:05.413] Server  LOG      ✓ Ready in 3.9s
+[00:00:08.522] Server  LOG      ○ Compiling / ...
+[00:00:24.264] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:54.513] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:00:54.513] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:00:54.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:01:01.869] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:01:14.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:01:15.507] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:01:24.501] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:01:54.515] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:02:24.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:02:54.514] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:03:24.504] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:03:54.212] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:04:24.506] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:04:54.531] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:05:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:05:54.502] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:06:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:07:50.514] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:08:50.499] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:09:50.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:10:50.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:10:54.499] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:11:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:12:50.502] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:13:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:14:50.498] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:15:50.501] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:15:54.509] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:16:51.500] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:17:50.517] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:18:50.499] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:19:50.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:20:50.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:20:54.508] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:21:50.523] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:22:50.506] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:23:00.408] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:23:12.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:23:22.061] Browser ERROR   Failed to load user pets {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:23:23.853] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:23:34.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:23:42.502] Browser ERROR   Failed to load user pets {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:23:44.506] Browser ERROR   Failed to load user sightings {"response":{"erro":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Avistamento"},"name":"PrismaClientKnownRequestError"}},"status":500}
+[00:23:44.506] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:23:45.535] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:23:55.502] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:24:05.509] Browser ERROR   Failed to load user sightings {"response":{"erro":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Avistamento"},"name":"PrismaClientKnownRequestError"}},"status":500}
+[00:24:07.509] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:24:24.514] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:25:27.881] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:25:29.509] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:25:48.859] Server  LOG      ✓ Compiled in 151ms
+[00:25:50.507] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:25:50.507] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:25:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:26:02.547] Server  LOG      ✓ Compiled in 190ms
+[00:26:10.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:26:12.511] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:26:21.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:26:51.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:27:21.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:27:51.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:28:21.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:28:33.576] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:28:34.507] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:28:56.510] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:28:56.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:28:56.510] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:29:16.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:29:17.504] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:29:26.500] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:29:56.511] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:30:26.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:30:56.500] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:31:26.502] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:31:56.504] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:32:50.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:33:50.556] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:33:56.510] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:34:50.547] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:35:50.563] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:36:50.568] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:37:50.594] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:38:50.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:38:56.502] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:39:50.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:40:50.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:41:50.499] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:42:50.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:43:50.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:43:56.499] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:44:51.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:45:07.310] Server  ERROR   C:\Users\vinic.VINICIUS\Desktop\PetFinder\Frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__992de1db._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:45:07.345] Server  ERROR    ⨯ ReferenceError: montserrat is not defined
+[00:45:07.425] Server  LOG      ✓ Compiled in 1473ms
+[00:45:07.514] Server  ERROR   C:\Users\vinic.VINICIUS\Desktop\PetFinder\Frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__992de1db._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:45:07.515] Server  ERROR    ⨯ ReferenceError: montserrat is not defined
+[00:45:09.015] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:45:10.518] Browser ERROR   uncaughtError: ReferenceError: montserrat is not defined
+[00:45:15.150] Server  LOG      ✓ Compiled in 215ms
+[00:45:17.094] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:45:18.503] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:45:34.461] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:45:34.582] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:45:38.535] Server  LOG      ✓ Compiled in 217ms
+[00:45:56.518] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:45:56.518] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:45:56.518] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:46:16.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:46:18.503] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:46:26.511] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:46:56.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:47:26.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:47:51.295] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:47:51.582] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:48:13.508] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:48:13.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:48:13.509] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:48:33.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:48:35.508] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:48:43.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:48:52.017] Server  ERROR   C:\Users\vinic.VINICIUS\Desktop\PetFinder\Frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__aa9e7d83._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:48:52.018] Server  ERROR    ⨯ ReferenceError: montserrat is not defined
+[00:48:52.025] Server  LOG      ✓ Compiled in 1327ms
+[00:48:52.051] Server  ERROR   C:\Users\vinic.VINICIUS\Desktop\PetFinder\Frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__aa9e7d83._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:48:52.052] Server  ERROR    ⨯ ReferenceError: montserrat is not defined
+[00:48:52.409] Server  ERROR   C:\Users\vinic.VINICIUS\Desktop\PetFinder\Frontend\.next\dev\server\chunks\ssr\[root-of-the-server]__aa9e7d83._.js: Invalid source map. Only conformant source maps can be used to find the original code. Cause: Error: sourceMapURL could not be parsed
+[00:48:52.410] Server  ERROR    ⨯ ReferenceError: montserrat is not defined
+[00:48:54.764] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:48:54.764] Browser ERROR   uncaughtError: ReferenceError: montserrat is not defined
+[00:49:03.795] Server  LOG      ✓ Compiled in 145ms
+[00:49:05.206] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:49:06.509] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:49:14.743] Server  LOG      ✓ Compiled in 166ms
+[00:49:28.503] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:49:28.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:49:28.503] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:49:48.506] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:49:49.498] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:49:58.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:50:28.515] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:50:58.498] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:51:28.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:51:58.511] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:52:28.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:53:51.786] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:54:04.203] Server  LOG      ✓ Compiled in 583ms
+[00:54:28.506] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:54:50.501] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:55:16.262] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:55:16.477] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:55:16.940] Browser WARN    [GSI_LOGGER]: Provided button width is invalid: 100%
+[00:55:38.503] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[00:55:38.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:55:58.525] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:56:08.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:56:38.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:57:08.501] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:57:38.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:58:08.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:58:38.500] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[00:59:50.498] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:00:39.513] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:00:50.210] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:00:51.849] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:00:52.250] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:00:52.250] Browser WARN    [GSI_LOGGER]: Provided button width is invalid: 100%
+[01:01:14.505] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:01:14.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:01:34.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:01:44.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:02:14.511] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:02:44.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:03:14.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:03:44.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:04:14.499] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:04:23.202] Server  LOG      ✓ Compiled in 566ms
+[01:04:38.546] Server  LOG      ✓ Compiled in 541ms
+[01:04:50.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:05:20.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:05:44.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:05:47.009] Server  LOG      ✓ Compiled in 785ms
+[01:06:14.504] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:06:15.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:06:44.509] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:07:45.316] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:08:14.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:08:15.672] Server  LOG      ✓ Compiled in 399ms
+[01:08:44.460] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:09:14.520] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:09:31.330] Server  LOG      ✓ Compiled in 648ms
+[01:09:44.506] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:10:14.235] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:10:33.859] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:10:44.514] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:10:56.499] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:10:57.509] Browser ERROR   Failed to load user pets {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:11:14.517] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:11:14.517] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:11:16.508] Browser ERROR   Failed to load publicacoes {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:11:17.511] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:11:17.512] Browser ERROR   Failed to load user pets {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Publicacao"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:11:19.534] Browser ERROR   Failed to load user sightings {"response":{"erro":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Avistamento"},"name":"PrismaClientKnownRequestError"}},"status":500}
+[01:11:39.515] Browser ERROR   Failed to load stats {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:11:40.510] Browser ERROR   Failed to load user sightings {"response":{"erro":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Avistamento"},"name":"PrismaClientKnownRequestError"}},"status":500}
+[01:11:44.508] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:12:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:13:14.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:13:44.499] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:14:43.091] Server  LOG      ✓ Compiled in 631ms
+[01:14:50.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:15:51.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:16:14.505] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:16:50.511] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:17:50.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:18:49.101] Server  LOG      ✓ Compiled in 363ms
+[01:18:50.500] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:18:59.206] Server  LOG      ✓ Compiled in 735ms
+[01:19:23.430] Server  LOG      ✓ Compiled in 368ms
+[01:19:50.506] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:20:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:20:56.416] Server  LOG      ✓ Compiled in 374ms
+[01:21:07.163] Server  LOG      ✓ Compiled in 117ms
+[01:21:14.508] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:21:50.514] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:22:50.501] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:23:50.505] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:24:35.174] Server  LOG      ✓ Compiled in 442ms
+[01:24:49.887] Server  LOG      ✓ Compiled in 442ms
+[01:24:50.242] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:25:14.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:25:44.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:26:14.514] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:26:14.514] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:26:50.507] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:27:50.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:28:50.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:29:50.222] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:30:14.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:30:35.666] Server  LOG      ✓ Compiled in 557ms
+[01:30:44.502] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:30:49.211] Server  LOG      ✓ Compiled in 495ms
+[01:31:14.506] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
+[01:31:50.510] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:32:50.503] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:33:50.802] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:34:23.792] Server  LOG      ✓ Compiled in 491ms
+[01:34:50.512] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
+[01:35:50.513] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}

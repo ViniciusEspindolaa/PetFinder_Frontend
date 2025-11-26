@@ -1,34 +1,16 @@
 {
   "app": {
     "[project]/app/login/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/map/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/new-pet/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/07454f8ad8aaac57-s.p.fc65572f.woff2"
     ],
     "[project]/app/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/pet/[id]/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/profile/edit/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/07454f8ad8aaac57-s.p.fc65572f.woff2"
     ],
     "[project]/app/profile/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/profile/settings/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/services/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
-    ],
-    "[project]/app/signup/page": [
-      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2"
+      "static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2",
+      "static/media/07454f8ad8aaac57-s.p.fc65572f.woff2"
     ]
   },
   "appUsingSizeAdjust": true,

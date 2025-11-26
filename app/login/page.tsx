@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
 import Script from 'next/script'
+import Image from 'next/image'
 
 declare global {
   interface Window {
@@ -80,24 +81,18 @@ export default function LoginPage() {
         onLoad={initializeGoogle}
       />
       <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 w-16 h-16 bg-teal-600 rounded-full flex items-center justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-8 h-8 text-white"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-              />
-            </svg>
+        <CardHeader className="text-center flex flex-col items-center">
+          <div className="mb-4 flex flex-col items-center">
+            <div className="flex flex-col items-center gap-2 mb-1">
+              <Image src="/logo.png" alt="PetFinder" width={80} height={80} className="rounded-xl mb-2" />
+              <span className="font-bold text-4xl font-[family-name:var(--font-nunito)]">
+                <span className="text-[#8EDCB9]">Pet</span>
+                <span className="text-[#F39C12]">Finder</span>
+              </span>
+            </div>
+            <span className="text-base text-muted-foreground font-medium mt-1">Reunindo famílias</span>
           </div>
-          <CardTitle className="text-2xl font-bold">Bem-vindo de volta</CardTitle>
+          <CardTitle className="text-xl font-bold mt-2 font-[family-name:var(--font-nunito)]">Bem-vindo de volta</CardTitle>
           <CardDescription>Entre para ajudar pets perdidos</CardDescription>
         </CardHeader>
         <CardContent>

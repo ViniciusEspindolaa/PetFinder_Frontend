@@ -40,37 +40,26 @@ export function SharePosterDialog({ pet, open, onClose }: SharePosterDialogProps
     })
   }
 
-  const handleDownload = async () => {
-    if (!posterRef.current) return
-
-    try {
-      // @ts-ignore
-      const html2canvas = (await import('html2canvas')).default
-      const canvas = await html2canvas(posterRef.current, {
-        scale: 5, // Increased scale for better print quality
-        backgroundColor: '#ffffff',
-        useCORS: true,
-        allowTaint: true,
-      })
-
-      const link = document.createElement('a')
-      link.download = `poster-${pet.name || 'pet'}-${pet.id}.png`
-      link.href = canvas.toDataURL('image/png')
-      link.click()
-    } catch (error) {
-      console.error(error)
-      alert('Erro ao gerar poster. Por favor, tente novamente.')
+  const getShareMessage = () => {
+    const name = pet.name || 'Este pet'
+    switch (pet.status) {
+      case 'adoption':
+        return `🏠 ADOÇÃO: ${name} procura um lar! Ajude a compartilhar ❤️`
+      case 'found':
+        return `👀 ENCONTRADO: ${name} foi encontrado! Ajude a achar o dono 🙏`
+      default:
+        return `🆘 PERDIDO: ${name} precisa de ajuda para voltar pra casa! 😢`
     }
   }
 
-  const handleShare = async (platform: 'instagram' | 'whatsapp' | 'facebook') => {
+  const handleNativeShare = async () => {
     if (!posterRef.current) return
 
     try {
       // @ts-ignore
       const html2canvas = (await import('html2canvas')).default
       const canvas = await html2canvas(posterRef.current, {
-        scale: 5, // Increased scale for better print quality
+        scale: 5,
         backgroundColor: '#ffffff',
         useCORS: true,
         allowTaint: true,
@@ -80,43 +69,61 @@ export function SharePosterDialog({ pet, open, onClose }: SharePosterDialogProps
         if (!blob) return
 
         const file = new File([blob], `poster-${pet.name || 'pet'}.png`, { type: 'image/png' })
-        const text = `${config.label}: ${pet.name || 'Pet sem nome'} - Ajude a encontrar!`
+        const message = getShareMessage()
         const url = window.location.href
+        const fullText = `${message}\n\n${url}\n\nvia PetFinder 🐾`
 
-        // Try Web Share API Level 2 (File Sharing)
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            try {
-                await navigator.share({
-                    files: [file],
-                    title: text,
-                    text: text,
-                })
-                return
-            } catch (error) {
-                if ((error as any).name !== 'AbortError') {
-                    console.error('Error sharing:', error)
-                }
-                // If aborted or failed, continue to fallback
+        if (navigator.share) {
+          try {
+            // Tenta compartilhar com a imagem (suportado na maioria dos mobiles modernos)
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                title: message,
+                text: fullText,
+              })
+            } else {
+              // Fallback para compartilhar apenas texto e link (se não suportar imagem)
+              await navigator.share({
+                title: message,
+                text: fullText,
+                url: url
+              })
             }
-        }
-
-        // Fallback for Desktop or browsers without file sharing support
-        if (platform === 'whatsapp') {
-          const message = encodeURIComponent(`${text}\n\n${url}`)
-          window.open(`https://wa.me/?text=${message}`, '_blank')
-        } else if (platform === 'facebook') {
-          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank')
-        } else if (platform === 'instagram') {
-          const link = document.createElement('a')
-          link.download = `poster-${pet.name || 'pet'}-instagram.png`
-          link.href = canvas.toDataURL('image/png')
-          link.click()
-          alert('Imagem baixada! Abra o Instagram e compartilhe a imagem nos Stories ou Feed.')
+          } catch (error) {
+            if ((error as any).name !== 'AbortError') {
+              console.error('Error sharing:', error)
+            }
+          }
+        } else {
+          alert('Seu navegador não suporta compartilhamento nativo. Use os botões abaixo.')
         }
       }, 'image/png')
     } catch (error) {
       console.error('Erro ao gerar poster:', error)
-      alert('Erro ao gerar imagem para compartilhamento.')
+      alert('Erro ao preparar compartilhamento.')
+    }
+  }
+
+  const handleDownload = async () => {
+    if (!posterRef.current) return
+
+    try {
+      // @ts-ignore
+      const html2canvas = (await import('html2canvas')).default
+      const canvas = await html2canvas(posterRef.current, {
+        scale: 5,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        allowTaint: true,
+      })
+
+      const link = document.createElement('a')
+      link.download = `poster-${pet.name || 'pet'}.png`
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } catch (error) {
+      console.error('Erro ao baixar poster:', error)
     }
   }
 
@@ -126,11 +133,12 @@ export function SharePosterDialog({ pet, open, onClose }: SharePosterDialogProps
         <DialogHeader>
           <DialogTitle>Compartilhar Anúncio</DialogTitle>
           <DialogDescription>
-            Baixe o poster ou compartilhe nas redes sociais
+            Ajude a divulgar para encontrar este pet mais rápido!
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex justify-center w-full overflow-y-auto overflow-x-hidden py-2">
+          {/* ...existing code... */}
           <div 
             ref={posterRef} 
             className="bg-white overflow-hidden flex flex-col shrink-0 shadow-lg relative w-full max-w-[400px] mx-auto rounded-xl" 
@@ -213,58 +221,17 @@ export function SharePosterDialog({ pet, open, onClose }: SharePosterDialogProps
         </div>
 
         <div className="space-y-3">
-          <Button onClick={handleDownload} className="w-full">
+          <Button onClick={handleNativeShare} className="w-full h-12 text-base bg-teal-600 hover:bg-teal-700 shadow-md">
+            <Share2 className="w-5 h-5 mr-2" />
+            Compartilhar
+          </Button>
+
+          <Button onClick={handleDownload} variant="outline" className="w-full">
             <Download className="w-4 h-4 mr-2" />
             Baixar Poster (PNG)
           </Button>
 
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-center">Compartilhar em:</p>
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                onClick={() => handleShare('whatsapp')}
-                className="bg-green-600 hover:bg-green-700 h-10 text-xs"
-              >
-                <div className="relative w-4 h-4 mr-1">
-                  <Image 
-                    src="/wpplogo.webp" 
-                    alt="WhatsApp" 
-                    fill 
-                    className="object-contain brightness-0 invert" 
-                  />
-                </div>
-                WhatsApp
-              </Button>
-              <Button
-                onClick={() => handleShare('facebook')}
-                className="bg-blue-600 hover:bg-blue-700 h-10 text-xs"
-              >
-                <div className="relative w-4 h-4 mr-1">
-                  <Image 
-                    src="/facebooklogo.webp" 
-                    alt="Facebook" 
-                    fill 
-                    className="object-contain brightness-0 invert" 
-                  />
-                </div>
-                Facebook
-              </Button>
-              <Button
-                onClick={() => handleShare('instagram')}
-                className="bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 h-10 text-xs"
-              >
-                <div className="relative w-4 h-4 mr-1">
-                  <Image 
-                    src="/instagramlogo.png" 
-                    alt="Instagram" 
-                    fill 
-                    className="object-contain brightness-0 invert" 
-                  />
-                </div>
-                Instagram
-              </Button>
-            </div>
-          </div>
+
         </div>
       </DialogContent>
     </Dialog>

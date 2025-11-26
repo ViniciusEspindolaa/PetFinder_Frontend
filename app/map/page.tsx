@@ -45,10 +45,8 @@ function MapContent() {
         console.error('Failed to load pets for map', err)
       }
     }
-    if (user) {
-      loadPets()
-    }
-  }, [user])
+    loadPets()
+  }, [])
 
   // removed bottom panel that showed selected pet; navigation to detail page is handled by popup
 
@@ -92,10 +90,6 @@ function MapContent() {
         </div>
       </div>
     )
-  }
-
-  if (!user) {
-    return null
   }
 
   return (

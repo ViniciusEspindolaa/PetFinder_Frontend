@@ -249,10 +249,6 @@ export default function HomePage() {
     )
   }
 
-  if (!user) {
-    return null
-  }
-
   const cities = Array.from(new Set(pets.map(p => p.location.city).filter(Boolean))).sort()
 
   const neighborhoods = Array.from(new Set(

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Nunito } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/lib/auth-context'
 import { Header } from '@/components/header'
@@ -9,14 +9,18 @@ import { HighContrastManager } from '@/components/high-contrast-manager'
 import { LocationUpdater } from '@/components/location-updater'
 
 const inter = Inter({ subsets: ['latin'] })
+const nunito = Nunito({ 
+  subsets: ['latin'],
+  variable: '--font-nunito',
+})
 
 export const metadata: Metadata = {
   title: 'PetFinder - Encontre Pets Perdidos',
   description: 'Plataforma para ajudar pets perdidos, encontrados e adoção',
     generator: 'v0.app',
     icons: {
-      icon: '/favicon.svg',
-      apple: '/favicon.svg'
+      icon: '/logo.png',
+      apple: '/logo.png'
     }
 }
 
@@ -27,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${nunito.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
