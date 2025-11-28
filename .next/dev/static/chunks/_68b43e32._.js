@@ -1581,7 +1581,7 @@ function PetDetailDialog({ pet, open, onClose, onViewSightings, onReportSighting
                                             children: [
                                                 pet.status === 'lost' && onReportSighting && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                     size: "sm",
-                                                    className: "bg-green-600 hover:bg-green-700",
+                                                    className: "bg-green-600 hover:bg-green-700 text-white",
                                                     onClick: ()=>{
                                                         handleAction(()=>{
                                                             onReportSighting(pet);
@@ -2240,7 +2240,7 @@ function PetCard({ pet, onViewSightings, onReportSighting, onViewMap, isOwner = 
                                             pet.status === 'lost' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                 size: "sm",
                                                 variant: "secondary",
-                                                className: `${compactMode ? 'text-[10px] h-6 px-1 w-full' : 'text-xs h-8 px-2 sm:h-10 w-full'} hover:bg-green-600 hover:text-white transition-colors`,
+                                                className: `${compactMode ? 'text-[10px] h-6 px-1 w-full' : 'text-xs h-8 px-2 sm:h-10 w-full'} text-white hover:bg-green-600 hover:text-white transition-colors`,
                                                 onClick: (e)=>{
                                                     e.stopPropagation();
                                                     handleAction(()=>onReportSighting(pet));

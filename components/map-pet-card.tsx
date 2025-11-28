@@ -111,7 +111,7 @@ export function MapPetCard({ pet, onReportSighting }: MapPetCardProps) {
             <Button
               size="sm"
               variant="secondary"
-              className="text-xs h-8"
+              className="text-xs h-8 text-white"
               onClick={() => onReportSighting(pet)}
             >
               <Eye className="w-3 h-3 mr-1" />

@@ -214,7 +214,7 @@ export default function PetShowPage() {
 
               <div className="pt-4 flex gap-2">
                 {pet.status === 'lost' && (
-                  <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => setSightingOpen(true)}>
+                  <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setSightingOpen(true)}>
                     Avistar
                   </Button>
                 )}

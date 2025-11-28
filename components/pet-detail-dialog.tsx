@@ -189,7 +189,7 @@ export function PetDetailDialog({
 
               <div className="pt-2 flex gap-2 flex-wrap">
                 {pet.status === 'lost' && onReportSighting && (
-                  <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => { 
+                  <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white" onClick={() => { 
                     handleAction(() => {
                       onReportSighting(pet); 
                       onClose(); 
