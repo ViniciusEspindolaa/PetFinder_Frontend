@@ -230,7 +230,16 @@ export function PetCard({
                   className={`${compactMode ? 'text-[10px] h-6 px-1 w-full' : 'text-xs h-8 px-2 sm:h-10 w-full'} text-white hover:bg-green-600 hover:text-white transition-colors`}
                   onClick={(e) => { 
                     e.stopPropagation(); 
-                    handleAction(() => onReportSighting(pet)) 
+                    if (!user) {
+                      toast({
+                        title: "Login necessário",
+                        description: "Você precisa estar logado para realizar esta ação.",
+                        variant: "destructive"
+                      })
+                      router.push('/login')
+                      return
+                    }
+                    onReportSighting(pet)
                   }}
                 >
                   <Eye className="w-3 h-3" />

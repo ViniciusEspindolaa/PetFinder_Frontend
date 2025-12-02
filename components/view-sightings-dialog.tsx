@@ -25,6 +25,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { useAuth } from '@/lib/auth-context'
 
 interface ViewSightingsDialogProps {
   pet: Pet | null
@@ -33,7 +34,8 @@ interface ViewSightingsDialogProps {
   isOwner?: boolean
 }
 
-export function ViewSightingsDialog({ pet, open, onClose, isOwner = false }: ViewSightingsDialogProps) {
+export function ViewSightingsDialog({ pet, open, onClose }: ViewSightingsDialogProps) {
+  const { user } = useAuth()
   const [editingSighting, setEditingSighting] = useState<Sighting | null>(null)
   const [deletingSighting, setDeletingSighting] = useState<Sighting | null>(null)
   const router = useRouter()
@@ -116,7 +118,8 @@ export function ViewSightingsDialog({ pet, open, onClose, isOwner = false }: Vie
                   </Button>
                 </div>
 
-                {isOwner && (
+                {/* Correção: só mostra se o usuário logado for o mesmo que fez o avistamento */}
+                {user && user.id === sighting.reporterId && (
                   <div className="flex gap-2 pt-2 border-t">
                     <Button
                       size="sm"
