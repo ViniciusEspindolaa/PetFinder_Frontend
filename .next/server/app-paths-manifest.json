@@ -2,6 +2,7 @@
   "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/api/users/location/route": "app/api/users/location/route.js",
+  "/forgot-password/page": "app/forgot-password/page.js",
   "/login/page": "app/login/page.js",
   "/map/page": "app/map/page.js",
   "/new-pet/page": "app/new-pet/page.js",
@@ -12,5 +13,7 @@
   "/profile/edit/page": "app/profile/edit/page.js",
   "/profile/page": "app/profile/page.js",
   "/profile/settings/page": "app/profile/settings/page.js",
+  "/reset-password/page": "app/reset-password/page.js",
+  "/services/page": "app/services/page.js",
   "/signup/page": "app/signup/page.js"
 }

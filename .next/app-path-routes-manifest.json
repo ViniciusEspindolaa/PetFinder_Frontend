@@ -2,6 +2,7 @@
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
   "/api/users/location/route": "/api/users/location",
+  "/forgot-password/page": "/forgot-password",
   "/login/page": "/login",
   "/map/page": "/map",
   "/new-pet/page": "/new-pet",
@@ -12,5 +13,7 @@
   "/profile/edit/page": "/profile/edit",
   "/profile/page": "/profile",
   "/profile/settings/page": "/profile/settings",
+  "/reset-password/page": "/reset-password",
+  "/services/page": "/services",
   "/signup/page": "/signup"
 }

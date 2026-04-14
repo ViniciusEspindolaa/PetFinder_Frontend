@@ -58,7 +58,7 @@ export function NotificationCenter() {
         // Silencioso: limpar lista e parar
         setNotificacoes([])
       } else {
-        console.error('Erro ao buscar notificações', err)
+        // console.error('Erro ao buscar notificações', err)
       }
     } finally {
       setLoading(false)

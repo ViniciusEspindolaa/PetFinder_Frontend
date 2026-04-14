@@ -67,15 +67,57 @@ export default function NewPetPage() {
     }
   }, [user, isLoading, router])
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
       setSelectedPhoto(file)
       const reader = new FileReader()
       reader.onloadend = () => {
-        setPhotoPreview(reader.result as string)
+        const base64String = reader.result as string;
+        setPhotoPreview(base64String)
+        
+        // Chamada à IA
+        analyzeImageWithAI(file);
       }
       reader.readAsDataURL(file)
+    }
+  }
+
+  const analyzeImageWithAI = async (file: File) => {
+    try {
+      toast({
+        title: "Analisando imagem...",
+        description: "Nossa IA está identificando o pet para você.",
+        duration: 3000,
+      });
+
+      const formData = new FormData();
+      formData.append('foto', file);
+
+      const res = await apiFetch('/api/ia/analyze-pet', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (res && res.type) {
+        setType(res.type);
+        setBreed(res.breed || '');
+        setSize(res.size as PetSize);
+        setDescription(prev => prev ? prev + ' ' + (res.description || '') : (res.description || ''));
+        
+        toast({
+          title: "Análise concluída",
+          description: "Os campos foram preenchidos automaticamente com base na foto.",
+          duration: 4000,
+        });
+      }
+    } catch (error) {
+      console.error('Erro na análise da IA', error);
+      toast({
+         variant: "destructive",
+         title: "Erro na IA",
+         description: "Não foi possível analisar a imagem. Você pode preencher manualmente.",
+      });
     }
   }
 

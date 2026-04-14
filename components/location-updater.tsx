@@ -84,7 +84,7 @@ export function LocationUpdater() {
           processingRef.current = false
         }
       } catch (error) {
-        console.error('[LocationUpdater] Erro no processo:', error)
+        // console.error('[LocationUpdater] Erro no processo:', error)
         processingRef.current = false
       }
     }
