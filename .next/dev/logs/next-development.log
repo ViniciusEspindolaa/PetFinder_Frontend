@@ -171,3 +171,12 @@
 [14:40:32.283] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
 [14:40:32.657] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
 [16:12:21.940] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
+[25:07:04.977] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[25:07:05.317] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[25:07:15.929] Browser WARN    [LocationUpdater] Erro ao obter geolocalização: Timeout expired
+[25:13:09.938] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
+[25:14:09.943] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
+[25:15:09.936] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
+[25:16:09.933] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
+[25:17:08.930] Browser WARN    Falha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.
+[25:17:08.930] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
