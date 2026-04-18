@@ -52,6 +52,8 @@ export default function HomePage() {
   const [filteredPets, setFilteredPets] = useState<Pet[]>([])
   const [isLoadingPets, setIsLoadingPets] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [semanticPets, setSemanticPets] = useState<Pet[]>([])
   const [sortBy, setSortBy] = useState('recent')
   const [stats, setStats] = useState<{ publicacoes: number, avistamentos: number, resolvidos: number } | null>(null)
   
@@ -120,19 +122,45 @@ export default function HomePage() {
     }
   }, [user, cityFilters])
 
+  // Debounce search query
   useEffect(() => {
-    let filtered = pets
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchQuery)
+    }, 500)
+    return () => clearTimeout(handler)
+  }, [searchQuery])
 
-    // Filter by search query
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (pet) =>
-          (pet.name && pet.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          pet.breed.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          pet.location.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          pet.location.city.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+  // Busca Inteligente Semí¢ntica via AI
+  useEffect(() => {
+    if (!debouncedSearch) {
+      setSemanticPets([])
+      return
     }
+
+    let mounted = true
+    async function fetchSemanticSearch() {
+      setIsLoadingPets(true)
+      try {
+        const data: any[] = await apiFetch(`/api/publicacoes/busca-inteligente?q=${encodeURIComponent(debouncedSearch)}`)
+        if (mounted) {
+          const mapped = data.map(mapPublicacaoToPet)
+          setSemanticPets(mapped)
+        }
+      } catch (err) {
+        console.error('Failed to load semantic search', err)
+      } finally {
+        if (mounted) {
+          setIsLoadingPets(false)
+        }
+      }
+    }
+
+    fetchSemanticSearch()
+    return () => { mounted = false }
+  }, [debouncedSearch])
+
+  useEffect(() => {
+    let filtered = debouncedSearch ? semanticPets : pets
 
     // Filter by status (multi-select)
     if (statusFilters.length > 0) {
@@ -158,33 +186,39 @@ export default function HomePage() {
 
     // Sort
     // Create a copy before sorting to ensure immutability and state update detection
-    const sorted = [...filtered].sort((a, b) => {
-      switch (sortBy) {
-        case 'recent':
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        case 'oldest':
-          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        case 'sightings':
-          return (b.sightings?.length || 0) - (a.sightings?.length || 0)
-        case 'interactions':
-          const lastInteractionA = Math.max(
-            new Date(a.createdAt).getTime(),
-            ...(a.sightings || []).map(s => new Date(s.createdAt).getTime())
-          )
-          const lastInteractionB = Math.max(
-            new Date(b.createdAt).getTime(),
-            ...(b.sightings || []).map(s => new Date(s.createdAt).getTime())
-          )
-          return lastInteractionB - lastInteractionA
-        case 'reward':
-          return (b.reward || 0) - (a.reward || 0)
-        default:
-          return 0
-      }
-    })
+    const sorted = [...filtered]
+    
+    // Na Busca Semí¢ntica (onde as cartas jí¡ víªm ordenadas por similaridade/releví¢ncia do banco),
+    // ignoramos o Sort de 'recentes', mas se o usuí¡rio escolher 'recompensa' etc, ordenamos.
+    if (!(debouncedSearch && sortBy === 'recent')) {
+      sorted.sort((a, b) => {
+        switch (sortBy) {
+          case 'recent':
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          case 'oldest':
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          case 'sightings':
+            return (b.sightings?.length || 0) - (a.sightings?.length || 0)
+          case 'interactions':
+            const lastInteractionA = Math.max(
+              new Date(a.createdAt).getTime(),
+              ...(a.sightings || []).map(s => new Date(s.createdAt).getTime())
+            )
+            const lastInteractionB = Math.max(
+              new Date(b.createdAt).getTime(),
+              ...(b.sightings || []).map(s => new Date(s.createdAt).getTime())
+            )
+            return lastInteractionB - lastInteractionA
+          case 'reward':
+            return (b.reward || 0) - (a.reward || 0)
+          default:
+            return 0
+        }
+      })
+    }
 
     setFilteredPets(sorted)
-  }, [searchQuery, statusFilters, typeFilters, cityFilters, neighborhoodFilters, pets, sortBy])
+  }, [debouncedSearch, semanticPets, statusFilters, typeFilters, cityFilters, neighborhoodFilters, pets, sortBy])
 
   const handleViewMap = (pet: Pet) => {
     router.push(`/map?petId=${pet.id}`)
@@ -230,7 +264,7 @@ export default function HomePage() {
         toast({ title: 'Avistamento reportado', description: 'O dono do pet será notificado.' })
       } catch (error) {
         console.error('Erro ao reportar avistamento:', error)
-        toast({ title: 'Erro', description: 'Não foi possível registrar o avistamento.', variant: 'destructive' })
+        toast({ title: 'Erro', description: 'Não foi possí­vel registrar o avistamento.', variant: 'destructive' })
       }
     } else if (!user) {
       toast({ title: 'Login necessário', description: 'Você precisa estar logado para reportar.', variant: 'destructive' })
@@ -277,7 +311,7 @@ export default function HomePage() {
           <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 items-center">
             {/* Sort Dropdown */}
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="h-9 w-[160px] text-xs sm:text-sm border-dashed">
+              <SelectTrigger className="h-9 w-[200px] text-xs sm:text-sm border-dashed">
                 <ArrowUpDown className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Ordenar por" />
               </SelectTrigger>
@@ -285,7 +319,7 @@ export default function HomePage() {
                 <SelectItem value="recent">Mais recentes</SelectItem>
                 <SelectItem value="oldest">Mais antigos</SelectItem>
                 <SelectItem value="sightings">Mais avistamentos</SelectItem>
-                <SelectItem value="interactions">Últimas interações</SelectItem>
+                <SelectItem value="interactions">Últimos avistamentos</SelectItem>
                 <SelectItem value="reward">Maior recompensa</SelectItem>
               </SelectContent>
             </Select>
@@ -304,7 +338,7 @@ export default function HomePage() {
                       <div className="flex space-x-1">
                         {statusFilters.map((option) => (
                           <Badge variant="secondary" key={option} className="rounded-sm px-1 font-normal">
-                            {option === 'lost' ? 'Perdido' : option === 'found' ? 'Encontrado' : 'Adoção'}
+                            {option === 'lost' ? 'Perdido' : option === 'found' ? 'Encontrado' : option === 'adoption' ? 'Adoção' : 'Resgate'}
                           </Badge>
                         ))}
                       </div>
@@ -315,7 +349,7 @@ export default function HomePage() {
               <DropdownMenuContent className="w-[200px]" align="start">
                 <DropdownMenuLabel>Status</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                {['lost', 'found', 'adoption'].map((status) => (
+                {['lost', 'found', 'adoption', 'rescue'].map((status) => (
                   <DropdownMenuCheckboxItem
                     key={status}
                     checked={statusFilters.includes(status as PetStatus)}
@@ -327,7 +361,7 @@ export default function HomePage() {
                       }
                     }}
                   >
-                    {status === 'lost' ? 'Perdido' : status === 'found' ? 'Encontrado' : 'Adoção'}
+                    {status === 'lost' ? 'Perdido' : status === 'found' ? 'Encontrado' : status === 'adoption' ? 'Adoção' : 'Resgate'}
                   </DropdownMenuCheckboxItem>
                 ))}
                 {statusFilters.length > 0 && (

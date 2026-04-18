@@ -39,6 +39,10 @@ export function InteractiveMap({ pets, selectedPetId, onPetSelect, statusFilter 
         return 'bg-blue-500'
       case 'adoption':
         return 'bg-green-500'
+      case 'rescue':
+        return 'bg-purple-500 animate-pulse'
+      default:
+        return 'bg-gray-500'
     }
   }
 
@@ -115,11 +119,20 @@ export function InteractiveMap({ pets, selectedPetId, onPetSelect, statusFilter 
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-green-500 rounded-full" />
-              <span className="text-xs">Adoção</span>
+              <span className="text-xs">Ado��o</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-purple-500 rounded-full animate-pulse flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-full opacity-80" />
+                </div>
+                <span className="text-xs font-semibold text-purple-700">SOS Resgate</span>
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   )
 }
+
+
+

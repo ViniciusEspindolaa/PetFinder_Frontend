@@ -52,6 +52,7 @@
         "image/webp"
       ],
       "maximumRedirects": 3,
+      "maximumResponseBody": 50000000,
       "dangerouslyAllowLocalIP": false,
       "dangerouslyAllowSVG": false,
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
@@ -66,7 +67,8 @@
       "qualities": [
         75
       ],
-      "unoptimized": true
+      "unoptimized": true,
+      "customCacheHandler": false
     },
     "devIndicators": {
       "position": "bottom-left"
@@ -87,7 +89,10 @@
     "httpAgentOptions": {
       "keepAlive": true
     },
-    "logging": {},
+    "logging": {
+      "serverFunctions": true,
+      "browserToTerminal": "warn"
+    },
     "compiler": {},
     "expireTime": 31536000,
     "staticPageGenerationTimeout": 60,
@@ -99,7 +104,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder",
+    "outputFileTracingRoot": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder\\Frontend",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -140,16 +145,20 @@
     },
     "cacheHandlers": {},
     "experimental": {
+      "appNewScrollHandler": false,
       "useSkewCookie": false,
       "cssChunking": true,
       "multiZoneDraftMode": false,
       "appNavFailHandling": false,
       "prerenderEarlyExit": true,
       "serverMinification": true,
-      "serverSourceMaps": false,
       "linkNoTouchStart": false,
       "caseSensitiveRoutes": false,
+      "cachedNavigations": false,
+      "partialFallbacks": false,
       "dynamicOnHover": false,
+      "varyParams": false,
+      "prefetchInlining": false,
       "preloadEntriesOnStart": true,
       "clientRouterFilter": true,
       "clientRouterFilterRedirects": false,
@@ -185,6 +194,7 @@
       "authInterrupts": false,
       "webpackMemoryOptimizations": false,
       "optimizeServerReact": true,
+      "strictRouteTypes": false,
       "viewTransition": false,
       "removeUncaughtErrorAndRejectionListeners": false,
       "validateRSCRequestHeaders": false,
@@ -192,19 +202,24 @@
         "dynamic": 0,
         "static": 300
       },
-      "reactDebugChannel": false,
+      "reactDebugChannel": true,
       "serverComponentsHmrCache": true,
       "staticGenerationMaxConcurrency": 8,
       "staticGenerationMinPagesPerWorker": 25,
+      "transitionIndicator": false,
+      "gestureTransition": false,
       "inlineCss": false,
       "useCache": false,
       "globalNotFound": false,
-      "browserDebugInfoInTerminal": false,
+      "browserDebugInfoInTerminal": "warn",
       "lockDistDir": true,
-      "isolatedDevBuild": true,
       "proxyClientMaxBodySize": 10485760,
       "hideLogsAfterAbort": false,
       "mcpServer": true,
+      "turbopackFileSystemCacheForDev": true,
+      "turbopackFileSystemCacheForBuild": false,
+      "turbopackInferModuleSideEffects": true,
+      "turbopackPluginRuntimeStrategy": "childProcesses",
       "optimizePackageImports": [
         "lucide-react",
         "date-fns",
@@ -289,12 +304,12 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
     "turbopack": {
-      "root": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder"
+      "root": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder\\Frontend"
     },
     "distDirRoot": ".next"
   },
   "appDir": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder\\Frontend",
-  "relativeAppDir": "Frontend",
+  "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",
     ".next\\server\\pages-manifest.json",
@@ -307,6 +322,7 @@
     ".next\\app-path-routes-manifest.json",
     ".next\\server\\server-reference-manifest.js",
     ".next\\server\\server-reference-manifest.json",
+    ".next\\server\\prefetch-hints.json",
     ".next\\BUILD_ID",
     ".next\\server\\next-font-manifest.js",
     ".next\\server\\next-font-manifest.json",

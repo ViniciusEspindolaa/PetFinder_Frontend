@@ -1,182 +1,52 @@
-[00:00:02.388] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
-[00:00:02.959] Server  LOG      ✓ Ready in 1907ms
-[00:00:06.156] Server  LOG      ○ Compiling /new-pet ...
-[00:00:11.767] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:15.936] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:00:15.936] Browser WARN    Falha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.
-[00:00:15.936] Browser ERROR   [LocationUpdater] Erro no processo: {}
-[00:00:15.936] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:00:15.936] Browser ERROR   Erro ao buscar notificações {}
-[00:00:15.936] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:00:15.936] Browser ERROR   Erro ao buscar notificações {}
-[00:00:54.777] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:55.414] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:00:58.010] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.77189427254447,"longitude":-52.34062141595895}
-[00:05:09.928] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:05:09.928] Browser ERROR   Erro ao buscar notificações {}
-[00:06:01.962] Browser WARN    Falha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.
-[00:06:01.962] Browser ERROR   [LocationUpdater] Erro no processo: {}
-[00:06:09.940] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:06:09.940] Browser ERROR   Erro ao buscar notificações {}
-[00:07:09.938] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:07:09.938] Browser ERROR   Erro ao buscar notificações {}
-[00:08:09.938] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:08:09.938] Browser ERROR   Erro ao buscar notificações {}
-[00:10:52.215] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:10:53.252] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:13:18.868] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:13:19.605] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:21:57.466] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:21:58.253] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:27:54.647] Browser ERROR   Erro na análise da IA {"response":{"message":"Erro ao analisar imagem com IA."},"status":500}
-[00:31:56.582] Browser ERROR   Erro na análise da IA {"response":{"message":"Erro ao analisar imagem com IA."},"status":500}
-[00:40:08.144] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:40:08.665] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:51:41.272] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:51:42.012] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:54:38.396] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:54:38.792] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:57:41.927] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[00:57:41.927] Browser ERROR   Erro ao buscar notificações {}
-[00:59:48.919] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:59:49.536] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[01:01:18.865] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:01:19.528] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[01:03:22.936] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[01:03:22.937] Browser ERROR   Erro ao buscar notificações {}
-[01:04:33.094] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:04:33.943] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[01:08:50.814] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:08:51.587] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[01:11:38.478] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:11:39.607] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[01:11:49.893] Browser WARN    [LocationUpdater] Erro ao obter geolocalização: Timeout expired
-[01:15:44.873] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:15:46.603] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[01:57:18.937] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[01:57:18.937] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ENOTFOUND","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[02:00:48.660] Browser LOG     [LocationUpdater] Atualizando localização do usuário... {"latitude":-31.756725272534947,"longitude":-52.366558357842116}
-[02:06:43.940] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[02:11:53.386] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:11:53.871] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[02:22:26.190] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:22:26.515] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[02:23:23.931] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[02:27:15.867] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:27:16.411] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[02:27:31.373] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[02:27:31.373] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0"},"status":400}
-[02:32:10.370] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[02:32:11.938] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[03:03:41.982] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:03:42.392] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[03:18:50.832] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:18:51.220] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[03:22:45.956] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:22:46.114] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[03:22:56.930] Browser WARN    [LocationUpdater] Erro ao obter geolocalização: Timeout expired
-[03:27:54.082] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:27:54.440] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[03:37:14.002] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:37:14.351] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[03:44:03.794] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[03:44:04.093] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[13:39:54.934] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:39:54.934] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[13:40:28.926] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:41:28.932] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:42:28.938] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:43:28.938] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:44:26.026] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[13:44:28.941] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:45:28.975] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:46:28.933] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:47:28.930] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:48:28.940] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:49:28.942] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:49:28.942] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[13:50:36.929] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:51:29.218] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:52:28.984] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:53:28.993] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:54:28.937] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:54:28.938] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[13:55:28.934] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:56:29.930] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:57:29.930] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:58:28.937] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:59:29.180] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[13:59:29.180] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:00:28.937] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:01:28.927] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:02:18.939] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:03:30.927] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:04:28.940] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:04:28.941] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:05:28.941] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:06:28.939] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:07:28.931] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:08:28.942] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:09:28.931] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:09:28.931] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:10:28.944] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:11:28.950] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:12:28.935] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:13:28.942] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:14:18.396] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:14:18.719] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[14:14:40.383] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:14:40.383] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:15:00.930] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:15:10.941] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:15:40.257] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:16:10.929] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:16:40.932] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:17:10.940] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:17:40.931] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:18:28.941] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:19:28.930] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:19:40.941] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:20:28.937] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:21:28.934] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:22:28.943] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:23:28.934] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:24:28.932] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:24:43.935] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:25:28.929] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:26:28.936] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:27:28.934] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:28:28.929] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:29:28.946] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:29:40.932] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:30:28.932] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:31:31.941] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:32:30.206] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:32:50.938] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:33:15.931] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:33:40.929] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:34:28.930] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:34:37.834] Server  LOG      ✓ Compiled in 183ms
-[14:34:40.933] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:34:58.415] Server  LOG      ✓ Compiled in 89ms
-[14:35:37.329] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:36:29.942] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[14:36:29.942] Browser ERROR   Erro ao buscar notificações {}
-[14:37:12.929] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:37:55.937] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:38:20.942] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:39:28.936] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:39:40.941] Browser ERROR   [LocationUpdater] Erro no processo: {"response":{"clientVersion":"6.5.0","code":"ETIMEDOUT","meta":{"modelName":"Usuario"},"name":"PrismaClientKnownRequestError"},"status":400}
-[14:40:28.938] Browser ERROR   Erro ao buscar notificações {"response":{"erro":"erro ao listar notificações"},"status":500}
-[14:40:32.283] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[14:40:32.657] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[16:12:21.940] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[25:07:04.977] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[25:07:05.317] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[25:07:15.929] Browser WARN    [LocationUpdater] Erro ao obter geolocalização: Timeout expired
-[25:13:09.938] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[25:14:09.943] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[25:15:09.936] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[25:16:09.933] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
-[25:17:08.930] Browser WARN    Falha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.
-[25:17:08.930] Browser WARN    Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.
+{"timestamp":"00:00:01.076","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:02.099","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:00:09.569","source":"Browser","level":"WARN","message":"Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior=\"smooth\"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior"}
+{"timestamp":"00:00:09.572","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mDetected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior=\\\"smooth\\\"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior\\u001b[39m\""}
+{"timestamp":"00:00:09.572","source":"Browser","level":"WARN","message":"\u001b[33mDetected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior=\"smooth\"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior\u001b[39m"}
+{"timestamp":"00:00:16.364","source":"Browser","level":"WARN","message":"Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}."}
+{"timestamp":"00:00:16.364","source":"Browser","level":"WARN","message":"Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}."}
+{"timestamp":"00:00:16.365","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mWarning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.\\u001b[39m\""}
+{"timestamp":"00:00:16.366","source":"Browser","level":"WARN","message":"\u001b[33mWarning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.\u001b[39m"}
+{"timestamp":"00:00:16.372","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mWarning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.\\u001b[39m\""}
+{"timestamp":"00:00:16.372","source":"Browser","level":"WARN","message":"\u001b[33mWarning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.\u001b[39m"}
+{"timestamp":"00:14:46.690","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline."}
+{"timestamp":"00:15:05.690","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline."}
+{"timestamp":"00:15:46.691","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline."}
+{"timestamp":"00:16:46.686","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline."}
+{"timestamp":"00:17:23.084","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:23.084","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:23.097","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:23.097","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:23.098","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:23.098","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:23.099","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:23.099","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:25.401","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:25.402","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:25.402","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline."}
+{"timestamp":"00:17:26.234","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:17:29.698","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/publicacoes. O servidor pode estar offline."}
+{"timestamp":"00:17:29.698","source":"Browser","level":"ERROR","message":"Failed to load publicacoes {}"}
+{"timestamp":"00:17:29.698","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline."}
+{"timestamp":"00:17:29.698","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline."}
+{"timestamp":"00:17:29.698","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline."}
+{"timestamp":"00:17:29.698","source":"Browser","level":"WARN","message":"Falha de conexão com http://localhost:3001/api/dashboard/gerais. O servidor pode estar offline."}
+{"timestamp":"00:17:29.698","source":"Browser","level":"ERROR","message":"Failed to load stats {}"}
+{"timestamp":"00:17:50.232","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/publicacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:50.232","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/publicacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:50.257","source":"Server","level":"ERROR","message":"[browser] \"Failed to load publicacoes\" \"\\u001b[31mTypeError: Failed to fetch\\u001b[39m\\n\\u001b[31m    at apiFetch (lib/api.ts:20:23)\\n    at load (app/page.tsx:83:43)\\n    at HomePage.useEffect (app/page.tsx:114:5)\\u001b[39m\\n  \\u001b[90m18 |\\u001b[0m\\n  \\u001b[90m19 |\\u001b[0m   \\u001b[36mtry\\u001b[0m {\\n\\u001b[31m\\u001b[1m>\\u001b[0m \\u001b[90m20 |\\u001b[0m     \\u001b[36mconst\\u001b[0m res = \\u001b[36mawait\\u001b[0m fetch(\\u001b[32m`\\u001b[0m${\\u001b[33mAPI_BASE\\u001b[0m\\u001b[32m}\\u001b[0m${path\\u001b[32m}`\\u001b[0m, {\\n  \\u001b[90m   |\\u001b[0m                       \\u001b[31m\\u001b[1m^\\u001b[0m\\n  \\u001b[90m21 |\\u001b[0m       ...options,\\n  \\u001b[90m22 |\\u001b[0m       headers,\\n  \\u001b[90m23 |\\u001b[0m       credentials: options.credentials ?? \\u001b[32m'same-origin'\\u001b[0m\" \"\\u001b[2m(app/page.tsx:90:17)\\u001b[22m\""}
+{"timestamp":"00:17:50.257","source":"Browser","level":"ERROR","message":"Failed to load publicacoes \"\\u001b[31mTypeError: Failed to fetch\\u001b[39m\\n\\u001b[31m    at apiFetch (lib/api.ts:20:23)\\n    at load (app/page.tsx:83:43)\\n    at HomePage.useEffect (app/page.tsx:114:5)\\u001b[39m\\n  \\u001b[90m18 |\\u001b[0m\\n  \\u001b[90m19 |\\u001b[0m   \\u001b[36mtry\\u001b[0m {\\n\\u001b[31m\\u001b[1m>\\u001b[0m \\u001b[90m20 |\\u001b[0m     \\u001b[36mconst\\u001b[0m res = \\u001b[36mawait\\u001b[0m fetch(\\u001b[32m`\\u001b[0m${\\u001b[33mAPI_BASE\\u001b[0m\\u001b[32m}\\u001b[0m${path\\u001b[32m}`\\u001b[0m, {\\n  \\u001b[90m   |\\u001b[0m                       \\u001b[31m\\u001b[1m^\\u001b[0m\\n  \\u001b[90m21 |\\u001b[0m       ...options,\\n  \\u001b[90m22 |\\u001b[0m       headers,\\n  \\u001b[90m23 |\\u001b[0m       credentials: options.credentials ?? \\u001b[32m'same-origin'\\u001b[0m\" \"\\u001b[2m(app/page.tsx:90:17)\\u001b[22m\""}
+{"timestamp":"00:17:50.258","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:50.258","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/usuarios/244dfc28-e43f-4df6-a98e-dd18e5a19795. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:50.259","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:50.259","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:50.259","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:50.260","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/notificacoes. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:50.277","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mFalha de conexão com http://localhost:3001/api/dashboard/gerais. O servidor pode estar offline.\\u001b[39m\" \"\\u001b[2m(lib/api.ts:43:15)\\u001b[22m\""}
+{"timestamp":"00:17:50.277","source":"Browser","level":"WARN","message":"\u001b[33mFalha de conexão com http://localhost:3001/api/dashboard/gerais. O servidor pode estar offline.\u001b[39m"}
+{"timestamp":"00:17:50.294","source":"Server","level":"ERROR","message":"[browser] \"Failed to load stats\" \"\\u001b[31mTypeError: Failed to fetch\\u001b[39m\\n\\u001b[31m    at apiFetch (lib/api.ts:20:23)\\n    at load (app/page.tsx:97:46)\\u001b[39m\\n  \\u001b[90m18 |\\u001b[0m\\n  \\u001b[90m19 |\\u001b[0m   \\u001b[36mtry\\u001b[0m {\\n\\u001b[31m\\u001b[1m>\\u001b[0m \\u001b[90m20 |\\u001b[0m     \\u001b[36mconst\\u001b[0m res = \\u001b[36mawait\\u001b[0m fetch(\\u001b[32m`\\u001b[0m${\\u001b[33mAPI_BASE\\u001b[0m\\u001b[32m}\\u001b[0m${path\\u001b[32m}`\\u001b[0m, {\\n  \\u001b[90m   |\\u001b[0m                       \\u001b[31m\\u001b[1m^\\u001b[0m\\n  \\u001b[90m21 |\\u001b[0m       ...options,\\n  \\u001b[90m22 |\\u001b[0m       headers,\\n  \\u001b[90m23 |\\u001b[0m       credentials: options.credentials ?? \\u001b[32m'same-origin'\\u001b[0m\" \"\\u001b[2m(app/page.tsx:110:17)\\u001b[22m\""}
+{"timestamp":"00:17:50.294","source":"Browser","level":"ERROR","message":"Failed to load stats \"\\u001b[31mTypeError: Failed to fetch\\u001b[39m\\n\\u001b[31m    at apiFetch (lib/api.ts:20:23)\\n    at load (app/page.tsx:97:46)\\u001b[39m\\n  \\u001b[90m18 |\\u001b[0m\\n  \\u001b[90m19 |\\u001b[0m   \\u001b[36mtry\\u001b[0m {\\n\\u001b[31m\\u001b[1m>\\u001b[0m \\u001b[90m20 |\\u001b[0m     \\u001b[36mconst\\u001b[0m res = \\u001b[36mawait\\u001b[0m fetch(\\u001b[32m`\\u001b[0m${\\u001b[33mAPI_BASE\\u001b[0m\\u001b[32m}\\u001b[0m${path\\u001b[32m}`\\u001b[0m, {\\n  \\u001b[90m   |\\u001b[0m                       \\u001b[31m\\u001b[1m^\\u001b[0m\\n  \\u001b[90m21 |\\u001b[0m       ...options,\\n  \\u001b[90m22 |\\u001b[0m       headers,\\n  \\u001b[90m23 |\\u001b[0m       credentials: options.credentials ?? \\u001b[32m'same-origin'\\u001b[0m\" \"\\u001b[2m(app/page.tsx:110:17)\\u001b[22m\""}
+{"timestamp":"00:17:51.508","source":"Browser","level":"INFO","message":"%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold"}
+{"timestamp":"00:17:53.251","source":"Browser","level":"WARN","message":"Image with src \"https://res.cloudinary.com/dn4zch2p8/image/upload/v1776467742/petfinder/misc/1776467739509_hy1c4u.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading"}
+{"timestamp":"00:17:53.254","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"https://res.cloudinary.com/dn4zch2p8/image/upload/v1776467742/petfinder/misc/1776467739509_hy1c4u.jpg\\\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\\\"eager\\\"` property if this image is above the fold.\\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\\u001b[39m\""}
+{"timestamp":"00:17:53.254","source":"Browser","level":"WARN","message":"\u001b[33mImage with src \"https://res.cloudinary.com/dn4zch2p8/image/upload/v1776467742/petfinder/misc/1776467739509_hy1c4u.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\u001b[39m"}

@@ -70,6 +70,13 @@ export function CompletePetDialog({ pet, open, onOpenChange, onComplete }: Compl
           'Desistiu da doação',
           'Outros'
         ]
+      case 'rescue':
+        return [
+          'O pet foi resgatado com sucesso',
+          'Ajudamos no resgate',
+          'Pet encaminhado para tratamento',
+          'Outros'
+        ]
       default:
         return ['Outros']
     }
@@ -79,13 +86,15 @@ export function CompletePetDialog({ pet, open, onOpenChange, onComplete }: Compl
     if (!pet) return ''
     switch (pet.status) {
       case 'lost':
-        return 'Pet foi encontrado?'
+        return 'Pet foi ení­ontrado?'
       case 'found':
         return 'Dono do pet foi localizado?'
       case 'adoption':
-        return 'Pet foi adotado?'
-      default:
-        return 'Finalizar publicação'
+          return 'Pet foi adotado?'
+        case 'rescue':
+          return 'Resgate concluí­do?'
+        default:
+        return 'Finalizar Publicação'
     }
   }
 
@@ -106,7 +115,7 @@ export function CompletePetDialog({ pet, open, onOpenChange, onComplete }: Compl
             </p>
             
             <div className="space-y-2">
-              <Label htmlFor="reasonType">Motivo da finalização *</Label>
+              <Label htmlFor="reasonType">Motivo da finalizaçí­o *</Label>
               <Select value={reasonType} onValueChange={setReasonType}>
                 <SelectTrigger id="reasonType">
                   <SelectValue placeholder="Selecione o motivo" />
@@ -127,7 +136,7 @@ export function CompletePetDialog({ pet, open, onOpenChange, onComplete }: Compl
                 id="reason"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                placeholder="Ex: Pet foi encontrado e está em casa com segurança!"
+                placeholder="Ex: Pet foi encontrado e está em segurança!"
                 rows={4}
                 className="resize-none"
               />
@@ -159,3 +168,5 @@ export function CompletePetDialog({ pet, open, onOpenChange, onComplete }: Compl
     </Dialog>
   )
 }
+
+

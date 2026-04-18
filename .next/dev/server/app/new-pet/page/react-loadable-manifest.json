@@ -1,10 +1,10 @@
 {
-  "[project]/Frontend/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/Frontend/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/75472__pnpm_ff7f9926._.js",
-      "static/chunks/Frontend_components_selectable-map_tsx_14e1ead7._.js",
-      "static/chunks/Frontend_components_selectable-map_tsx_7e7f807c._.js"
+      "static/chunks/node_modules_08.~i2u._.js",
+      "static/chunks/components_selectable-map_tsx_0bo6ycq._.js",
+      "static/chunks/components_selectable-map_tsx_0e27d-2._.js"
     ]
   }
 }

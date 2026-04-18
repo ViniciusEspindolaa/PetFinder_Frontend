@@ -1,4 +1,4 @@
-export type PetStatus = 'lost' | 'found' | 'adoption'
+export type PetStatus = 'lost' | 'found' | 'adoption' | 'rescue'
 export type PetType = 'dog' | 'cat' | 'other'
 export type PetSize = 'small' | 'medium' | 'large'
 
@@ -52,6 +52,8 @@ export interface Pet {
   contactName: string
   sightings: Sighting[]
   createdAt: Date
+  urgencia?: 'BAIXA' | 'MEDIA' | 'ALTA'
+  condicao_medica?: string
   completed?: boolean
   completionReason?: string
   completedAt?: Date

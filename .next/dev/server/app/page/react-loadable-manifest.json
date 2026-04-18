@@ -1,26 +1,26 @@
 {
-  "[project]/Frontend/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/Frontend/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/75472__pnpm_54f16fdb._.js",
-      "static/chunks/Frontend_components_leaflet-map_client_tsx_a68ae800._.js",
-      "static/chunks/Frontend_components_leaflet-map_client_tsx_4d626191._.js"
+      "static/chunks/node_modules_0itu~27._.js",
+      "static/chunks/components_leaflet-map_client_tsx_0bz5wkx._.js",
+      "static/chunks/components_leaflet-map_client_tsx_12ezmre._.js"
     ]
   },
-  "[project]/Frontend/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/Frontend/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/75472__pnpm_ff7f9926._.js",
-      "static/chunks/Frontend_components_selectable-map_tsx_14e1ead7._.js",
-      "static/chunks/Frontend_components_selectable-map_tsx_4d626191._.js"
+      "static/chunks/node_modules_08.~i2u._.js",
+      "static/chunks/components_selectable-map_tsx_0bo6ycq._.js",
+      "static/chunks/components_selectable-map_tsx_12ezmre._.js"
     ]
   },
-  "[project]/Frontend/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/Frontend/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/75472__pnpm_2b5d6a25._.js",
-      "static/chunks/Frontend_components_location-picker_tsx_cab16126._.js",
-      "static/chunks/Frontend_components_location-picker_tsx_4d626191._.js"
+      "static/chunks/node_modules_0pk~nxv._.js",
+      "static/chunks/components_location-picker_tsx_0v3nw68._.js",
+      "static/chunks/components_location-picker_tsx_12ezmre._.js"
     ]
   }
 }

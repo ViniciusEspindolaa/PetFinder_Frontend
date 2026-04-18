@@ -16,7 +16,7 @@ export function Header() {
     <header className="bg-white border-b sticky top-0 z-[2000] shadow-sm">
       <div className="container mx-auto px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between gap-3">
         <Link href="/" className="flex items-center gap-3">
-          <Image src="/logo.png" alt="PetFinder" width={36} height={36} className="rounded-md" />
+            <Image src="/logo.png" alt="PetFinder" width={36} height={36} className="rounded-md w-9 h-9 object-cover" priority />
           <span className="font-bold text-lg font-[family-name:var(--font-nunito)]">
             <span className="text-[#8EDCB9]">Pet</span>
             <span className="text-[#F39C12]">Finder</span>

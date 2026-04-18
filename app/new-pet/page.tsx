@@ -51,6 +51,8 @@ export default function NewPetPage() {
   const [contactPhone, setContactPhone] = useState('')
   const [contactName, setContactName] = useState('')
   const [sex, setSex] = useState<string>('INDEFINIDO')
+  const [urgencia, setUrgencia] = useState<'BAIXA' | 'MEDIA' | 'ALTA'>('MEDIA')
+  const [condicaoMedica, setCondicaoMedica] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
 
@@ -246,13 +248,13 @@ export default function NewPetPage() {
     }
 
     try {
-      const tipoMap: Record<string, string> = { lost: 'PERDIDO', found: 'ENCONTRADO', adoption: 'ADOCAO' }
+      const tipoMap: Record<string, string> = { lost: 'PERDIDO', found: 'ENCONTRADO', adoption: 'ADOCAO', rescue: 'RESGATE' }
       const especieMap: Record<string, string> = { dog: 'CACHORRO', cat: 'GATO', other: 'OUTRO' }
       const porteMap: Record<string, string> = { small: 'PEQUENO', medium: 'MEDIO', large: 'GRANDE' }
 
       const formData = new FormData()
       formData.append('usuarioId', user?.id || '')
-      formData.append('titulo', `${status === 'lost' ? 'Pet perdido' : status === 'found' ? 'Pet encontrado' : 'Pet para adoção'} - ${name || breed || 'Sem nome'}`)
+      formData.append('titulo', `${status === 'rescue' ? 'Pet para resgate' : status === 'lost' ? 'Pet perdido' : status === 'found' ? 'Pet encontrado' : 'Pet para adoção'} - ${name || breed || 'Sem nome'}`)
       formData.append('descricao', description)
       formData.append('latitude', String(mapLocation.lat))
       formData.append('longitude', String(mapLocation.lng))
@@ -273,6 +275,11 @@ export default function NewPetPage() {
       if (reward) formData.append('recompensa', reward)
       if (contactPhone) formData.append('telefone_contato', contactPhone)
       formData.append('data_evento', eventDate || new Date().toISOString())
+      
+      if (status === 'rescue') {
+        formData.append('urgencia', urgencia)
+        if (condicaoMedica) formData.append('condicao_medica', condicaoMedica)
+      }
 
       if (selectedPhoto) {
         formData.append('fotos', selectedPhoto)
@@ -362,8 +369,12 @@ export default function NewPetPage() {
                       <div className="w-2 h-2 bg-green-500 rounded-full" />
                       <span>Adoção - Pet para adotar</span>
                     </div>
-                  </SelectItem>
-                </SelectContent>
+                  </SelectItem>                  <SelectItem value="rescue">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full" />
+                      <span>Resgate - SOS Emergência</span>
+                    </div>
+                  </SelectItem>                </SelectContent>
               </Select>
             </CardContent>
           </Card>
@@ -540,6 +551,39 @@ export default function NewPetPage() {
               </div>
             </CardContent>
           </Card>
+
+          {status === 'rescue' && (
+            <Card>
+              <CardContent className="p-3 sm:p-4 space-y-4">
+                <h3 className="font-semibold text-sm">Informações de Urgência Médica</h3>
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="urgencia" className="text-xs sm:text-sm">Nível de Urgência *</Label>
+                    <Select value={urgencia} onValueChange={(val) => setUrgencia(val as 'BAIXA' | 'MEDIA' | 'ALTA')}>
+                      <SelectTrigger id="urgencia" className="h-9 text-sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="BAIXA">Baixa (Pode aguardar)</SelectItem>
+                        <SelectItem value="MEDIA">Média (Precisa de ajuda em breve)</SelectItem>
+                        <SelectItem value="ALTA">Alta (Emergência/Risco de vida)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="condicaoMedica" className="text-xs sm:text-sm">Condição Médica</Label>
+                    <Textarea
+                      id="condicaoMedica"
+                      value={condicaoMedica}
+                      onChange={(e) => setCondicaoMedica(e.target.value)}
+                      placeholder="Ex: Atropelado, desnutrido, precisa de cirurgia..."
+                      className="text-sm min-h-[80px]"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Location */}
           <Card>

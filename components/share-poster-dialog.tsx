@@ -28,6 +28,7 @@ export function SharePosterDialog({ pet, open, onClose }: SharePosterDialogProps
     lost: { label: 'PERDIDO', color: '#dc2626', datePrefix: 'Perdido em' }, // red-600
     found: { label: 'ENCONTRADO', color: '#2563eb', datePrefix: 'Encontrado em' }, // blue-600
     adoption: { label: 'PARA ADOÇÃO', color: '#16a34a', datePrefix: 'Disponível desde' }, // green-600
+    rescue: { label: 'SOS RESGATE', color: '#9333ea', datePrefix: 'Emergência desde' } // purple-600
   }
 
   const config = statusConfig[pet.status]

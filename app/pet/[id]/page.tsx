@@ -55,6 +55,7 @@ export default function PetShowPage() {
     lost: { label: 'Perdido', color: 'bg-red-500 text-white' },
     found: { label: 'Encontrado', color: 'bg-blue-500 text-white' },
     adoption: { label: 'Adoção', color: 'bg-green-500 text-white' },
+    rescue: { label: 'SOS Resgate', color: 'bg-purple-600 animate-pulse text-white font-bold' }
   }
 
   const typeConfig: Record<string, string> = {

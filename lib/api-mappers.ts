@@ -5,6 +5,7 @@ function mapTipo(tipo: string): Pet['status'] {
     case 'PERDIDO': return 'lost'
     case 'ENCONTRADO': return 'found'
     case 'ADOCAO': return 'adoption'
+    case 'RESGATE': return 'rescue'
     default: return 'lost'
   }
 }
@@ -82,6 +83,8 @@ export function mapPublicacaoToPet(pub: any): Pet {
     contactName: pub.usuario?.nome || '',
     sightings,
     createdAt: pub.data_publicacao ? new Date(pub.data_publicacao) : new Date(),
+    urgencia: pub.urgencia || undefined,
+    condicao_medica: pub.condicao_medica || undefined,
     completed: pub.status === 'RESOLVIDO' || pub.status === 'RESGATADO',
     completionReason: pub.motivo_encerramento || undefined
   }

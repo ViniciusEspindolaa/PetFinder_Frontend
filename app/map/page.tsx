@@ -29,7 +29,7 @@ function MapContent() {
   const [selectedPetForSighting, setSelectedPetForSighting] = useState<Pet | null>(null)
   const [selectedPetForDetails, setSelectedPetForDetails] = useState<Pet | null>(null)
   const [selectedPetForViewing, setSelectedPetForViewing] = useState<Pet | null>(null)
-  const [statusFilter, setStatusFilter] = useState<'all' | 'lost' | 'found' | 'adoption'>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | PetStatus>('all')
 
   useEffect(() => {
     // Removed redirect to login
@@ -114,10 +114,10 @@ function MapContent() {
             <Button size="sm" variant={statusFilter === 'lost' ? 'default' : 'outline'} onClick={() => setStatusFilter('lost')}>Perdidos</Button>
             <Button size="sm" variant={statusFilter === 'found' ? 'default' : 'outline'} onClick={() => setStatusFilter('found')}>Encontrados</Button>
             <Button size="sm" variant={statusFilter === 'adoption' ? 'default' : 'outline'} onClick={() => setStatusFilter('adoption')}>Adoção</Button>
+              <Button size="sm" variant={statusFilter === 'rescue' ? 'default' : 'outline'} onClick={() => setStatusFilter('rescue')}>Resgate</Button>
           </div>
         </div>
       </div>
-
       <div className="flex-1 flex flex-col overflow-hidden pb-20 sm:pb-16">
         <div className="flex-1 transition-all h-full">
           <div className="h-full w-full bg-white z-0">
@@ -175,3 +175,7 @@ export default function MapPage() {
     </Suspense>
   )
 }
+
+
+
+

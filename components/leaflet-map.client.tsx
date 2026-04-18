@@ -66,7 +66,7 @@ export default function LeafletMap({
   onReportSighting?: (p: Pet) => void
   onViewDetails?: (p: Pet) => void
   onDeselect?: () => void
-  statusFilter?: 'all' | 'lost' | 'found' | 'adoption'
+  statusFilter?: 'all' | 'lost' | 'found' | 'adoption' | 'rescue'
   userLocation?: { lat: number; lng: number }
 }) {
   // Inject Leaflet CSS in the browser because importing 'leaflet/dist/leaflet.css'
@@ -117,6 +117,7 @@ export default function LeafletMap({
     lost: '#ef4444',
     found: '#3b82f6',
     adoption: '#10b981',
+    rescue: '#a855f7',
     default: '#6b7280',
   }
 
@@ -181,6 +182,7 @@ export default function LeafletMap({
         if (statusFilter === 'lost') return m.status === 'lost'
         if (statusFilter === 'found') return m.status === 'found'
         if (statusFilter === 'adoption') return m.status === 'adoption'
+        if (statusFilter === 'rescue') return m.status === 'rescue'
         return true
       })
   }, [pets, statusFilter])
@@ -238,12 +240,9 @@ export default function LeafletMap({
           `
           const icon = L.divIcon({
             html: svg,
-            className: 'custom-div-icon',
-            iconSize: [36, 36],
-            iconAnchor: [18, 34],
+            className: `custom-div-icon ${m.status === 'rescue' ? 'drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]' : ''}`,
             popupAnchor: [0, -36]
           })
-
           const isSelected = selectedPetId === m.id
 
           return (
@@ -370,7 +369,8 @@ export default function LeafletMap({
           <div className="flex flex-col gap-1">
             <LegendRow label="Perdido" color={STATUS_COLORS.lost} />
             <LegendRow label="Encontrado" color={STATUS_COLORS.found} />
-            <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
+              <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
+              <LegendRow label="Resgate" color={STATUS_COLORS.rescue} />
             <div className="flex items-center gap-2">
               <span className="inline-block" style={{ width: 18, height: 18 }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -407,7 +407,8 @@ export default function LeafletMap({
             </div>
             <LegendRow label="Perdido" color={STATUS_COLORS.lost} />
             <LegendRow label="Encontrado" color={STATUS_COLORS.found} />
-            <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
+              <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
+              <LegendRow label="Resgate" color={STATUS_COLORS.rescue} />
             <div className="flex items-center gap-2">
               <span className="inline-block" style={{ width: 18, height: 18 }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -519,3 +520,6 @@ function LegendRow({ label, color }: { label: string; color: string }) {
     </div>
   )
 }
+
+
+
