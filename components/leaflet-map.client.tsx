@@ -52,6 +52,11 @@ function FlyToSelected({ lat, lng }: { lat?: number; lng?: number }) {
 
 export default function LeafletMap({
   pets = [],
+  services = [],
+  events = [],
+  showPets = true,
+  showServices = true,
+  showEvents = true,
   selectedPetId,
   onPetSelect,
   onReportSighting,
@@ -61,6 +66,11 @@ export default function LeafletMap({
   userLocation,
 }: {
   pets?: Pet[]
+  services?: any[]
+  events?: any[]
+  showPets?: boolean
+  showServices?: boolean
+  showEvents?: boolean
   selectedPetId?: string | null
   onPetSelect?: (p: Pet) => void
   onReportSighting?: (p: Pet) => void
@@ -117,7 +127,7 @@ export default function LeafletMap({
     lost: '#ef4444',
     found: '#3b82f6',
     adoption: '#10b981',
-    rescue: '#a855f7',
+    rescue: '#0d9488',
     default: '#6b7280',
   }
 
@@ -154,11 +164,43 @@ export default function LeafletMap({
     iconAnchor: [16, 16],
   })
 
+  
+  const serviceIcon = L.divIcon({
+    html: `
+      <div style="background-color: #a855f7; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+      </div>
+    `,
+    className: 'custom-div-icon service-icon',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+  })
+
+  const eventIcon = L.divIcon({
+    html: `
+      <div style="background-color: #eab308; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+      </div>
+    `,
+    className: 'custom-div-icon event-icon',
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+  })
+
   const router = useRouter()
-  const markers = useMemo(() => {
+  
+  const petMarkers = useMemo(() => {
+    if (!showPets) return [];
     return (pets || [])
       .map((p) => {
-        // Support different shapes: `localizacao: { latitude, longitude }` or `location: { lat, lng }`
         const lat = p?.localizacao?.latitude ?? p?.location?.lat ?? p?.localizacao?.lat
         const lng = p?.localizacao?.longitude ?? p?.location?.lng ?? p?.localizacao?.lng
         const photo = Array.isArray(p.fotos_urls) && p.fotos_urls.length
@@ -185,15 +227,57 @@ export default function LeafletMap({
         if (statusFilter === 'rescue') return m.status === 'rescue'
         return true
       })
-  }, [pets, statusFilter])
+  }, [pets, statusFilter, showPets])
 
+  const serviceMarkers = useMemo(() => {
+    if (!showServices) return [];
+    const validServices = Array.isArray(services) ? services : (services?.data || services?.servicos || services?.items || []);
+    return (Array.isArray(validServices) ? validServices : [])
+      .map((s) => {
+        const lat = s.lat ?? s.latitude ?? s.endereco?.lat ?? s.endereco?.latitude;
+        const lng = s.lng ?? s.longitude ?? s.endereco?.lng ?? s.endereco?.longitude;
+        return {
+          id: s.id,
+          nome: s.nome,
+          lat: lat !== undefined ? Number(lat) : undefined,
+          lng: lng !== undefined ? Number(lng) : undefined,
+          photo: s.foto || s.imagem || (Array.isArray(s.fotos_urls) ? s.fotos_urls[0] : undefined),
+          raw: s,
+          categoria: s.categoria || s.tipo
+        }
+      })
+      .filter((m) => typeof m.lat === 'number' && !isNaN(m.lat) && typeof m.lng === 'number' && !isNaN(m.lng) && !!m.lat && !!m.lng)
+  }, [services, showServices])
+
+  const eventMarkers = useMemo(() => {
+    if (!showEvents) return [];
+    const validEvents = Array.isArray(events) ? events : (events?.data || events?.eventos || events?.items || []);
+    return (Array.isArray(validEvents) ? validEvents : [])
+      .map((e) => {
+        const lat = e.lat ?? e.latitude ?? e.endereco?.lat ?? e.endereco?.latitude;
+        const lng = e.lng ?? e.longitude ?? e.endereco?.lng ?? e.endereco?.longitude;
+        return {
+          id: e.id,
+          nome: e.titulo || e.nome,
+          lat: lat !== undefined ? Number(lat) : undefined,
+          lng: lng !== undefined ? Number(lng) : undefined,
+          photo: e.foto || e.imagem || (Array.isArray(e.fotos_urls) ? e.fotos_urls[0] : undefined),
+          raw: e,
+          data_inicio: e.data_inicio || e.data
+        }
+      })
+      .filter((m) => typeof m.lat === 'number' && !isNaN(m.lat) && typeof m.lng === 'number' && !isNaN(m.lng) && !!m.lat && !!m.lng)
+  }, [events, showEvents])
+
+
+  const markers = petMarkers;
   // Debug: log presence of Leaflet resources and markers to help diagnose render issues
   React.useEffect(() => {
     if (typeof window === 'undefined') return
     const hasCss = !!document.getElementById('leaflet-css')
     const hasL = typeof (window as any).L !== 'undefined'
     // eslint-disable-next-line no-console
-    console.info('[leaflet-debug] cssIncluded=', hasCss, 'window.L=', hasL, 'markersCount=', markers.length, 'userLocation=', userLocation)
+    console.info('[leaflet-debug] cssIncluded=', hasCss, 'window.L=', hasL, 'markersCount=', petMarkers.length + serviceMarkers.length + eventMarkers.length, 'userLocation=', userLocation)
   }, [markers, userLocation])
 
   // default center: User location or São Paulo
@@ -207,7 +291,7 @@ export default function LeafletMap({
     return [-23.55, -46.63]
   }, [markers, selectedPetId, userLocation])
 
-  const selected = markers.find((m) => m.id === selectedPetId)
+  const selected = petMarkers.find((m) => m.id === selectedPetId)
 
   return (
     <div className="w-full h-full relative">
@@ -246,7 +330,7 @@ export default function LeafletMap({
           const isSelected = selectedPetId === m.id
 
           return (
-            <React.Fragment key={m.id}>
+            <React.Fragment key={`pet-${m.id}`}>
               <Marker 
                 position={[m.lat || 0, m.lng || 0]} 
                 icon={icon}
@@ -345,7 +429,71 @@ export default function LeafletMap({
           )
         })}
 
-        <FlyToSelected lat={selected?.lat} lng={selected?.lng} />
+        {serviceMarkers.map((m) => (
+  <Marker key={"srv-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={serviceIcon}>
+    <Popup>
+      <div style={{ maxWidth: 240 }} className="text-sm">
+        <div className="font-bold mb-1">{m.nome}</div>
+        <div className="text-xs text-muted-foreground mb-2">{m.categoria || "Servi�o"}</div>
+        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
+        <div className="flex justify-end gap-2 mt-2">
+          <Button size="sm" className="h-8 px-2 text-xs bg-teal-600 hover:bg-teal-700" onClick={() => window.location.href = "/servicos/" + m.id}>
+            Ver Servi�o
+          </Button>
+        </div>
+      </div>
+    </Popup>
+  </Marker>
+))}
+{eventMarkers.map((m) => (
+  <Marker key={"evt-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={eventIcon}>
+    <Popup>
+      <div style={{ maxWidth: 240 }} className="text-sm">
+        <div className="font-bold mb-1">{m.nome}</div>
+        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
+        {m.data_inicio && <div className="text-xs mb-1">In�cio: {new Date(m.data_inicio).toLocaleDateString()}</div>}
+        <div className="flex justify-end gap-2 mt-2">
+          <Button size="sm" className="h-8 px-2 text-xs bg-yellow-500 hover:bg-yellow-600" onClick={() => window.location.href = "/eventos/" + m.id}>
+            Ver Evento
+          </Button>
+        </div>
+      </div>
+    </Popup>
+  </Marker>
+))}
+{serviceMarkers.map((m) => (
+  <Marker key={"srv-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={serviceIcon}>
+    <Popup>
+      <div style={{ maxWidth: 240 }} className="text-sm">
+        <div className="font-bold mb-1">{m.nome}</div>
+        <div className="text-xs text-muted-foreground mb-2">{m.categoria || "Servi�o"}</div>
+        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
+        <div className="flex justify-end gap-2 mt-2">
+          <Button size="sm" className="h-8 px-2 text-xs bg-teal-600 hover:bg-teal-700" onClick={() => window.location.href = "/servicos/" + m.id}>
+            Ver Servi�o
+          </Button>
+        </div>
+      </div>
+    </Popup>
+  </Marker>
+))}
+{eventMarkers.map((m) => (
+  <Marker key={"evt-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={eventIcon}>
+    <Popup>
+      <div style={{ maxWidth: 240 }} className="text-sm">
+        <div className="font-bold mb-1">{m.nome}</div>
+        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
+        {m.data_inicio && <div className="text-xs mb-1">In�cio: {new Date(m.data_inicio).toLocaleDateString()}</div>}
+        <div className="flex justify-end gap-2 mt-2">
+          <Button size="sm" className="h-8 px-2 text-xs bg-yellow-500 hover:bg-yellow-600" onClick={() => window.location.href = "/eventos/" + m.id}>
+            Ver Evento
+          </Button>
+        </div>
+      </div>
+    </Popup>
+  </Marker>
+))}
+<FlyToSelected lat={selected?.lat} lng={selected?.lng} />
         <MapController userLocation={userLocation} />
         <LocationHandler onLocationFound={setLiveLocation} />
         <MapClickHandler onDeselect={onDeselect} />
@@ -371,6 +519,10 @@ export default function LeafletMap({
             <LegendRow label="Encontrado" color={STATUS_COLORS.found} />
               <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
               <LegendRow label="Resgate" color={STATUS_COLORS.rescue} />
+              <LegendRow label="Eventos" color="#eab308" />
+              <LegendRow label="Serviços" color="#0d9488" />
+
+
             <div className="flex items-center gap-2">
               <span className="inline-block" style={{ width: 18, height: 18 }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -409,6 +561,10 @@ export default function LeafletMap({
             <LegendRow label="Encontrado" color={STATUS_COLORS.found} />
               <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
               <LegendRow label="Resgate" color={STATUS_COLORS.rescue} />
+
+              <LegendRow label="Eventos" color="#eab308" />
+              <LegendRow label="Serviços" color="#0d9488" />
+
             <div className="flex items-center gap-2">
               <span className="inline-block" style={{ width: 18, height: 18 }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

@@ -2,19 +2,19 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Map, Briefcase, User } from 'lucide-react'
+import { Home, Map, Briefcase, CalendarClock, User, CalendarDays } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import { apiFetch } from '@/lib/api'
 
 export function MobileNav() {
   const pathname = usePathname()
-  // unreadCount removed as notifications are now in the header/notification center
 
   const links = [
-    { href: '/', icon: Home, label: 'Início' },
+    { href: '/', icon: Home, label: 'Pets' },
     { href: '/map', icon: Map, label: 'Mapa' },
-    { href: '/services', icon: Briefcase, label: 'Serviços' },
+    { href: '/eventos', icon: CalendarDays, label: 'Eventos' },
+    { href: '/servicos', icon: Briefcase, label: 'Serviços' },
     { href: '/profile', icon: User, label: 'Perfil' },
   ]
 

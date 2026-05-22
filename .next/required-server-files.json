@@ -104,7 +104,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder\\Frontend",
+    "outputFileTracingRoot": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -304,12 +304,12 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.mjs",
     "turbopack": {
-      "root": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder\\Frontend"
+      "root": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder"
     },
     "distDirRoot": ".next"
   },
   "appDir": "C:\\Users\\vinic.VINICIUS\\Desktop\\PetFinder\\Frontend",
-  "relativeAppDir": "",
+  "relativeAppDir": "Frontend",
   "files": [
     ".next\\routes-manifest.json",
     ".next\\server\\pages-manifest.json",

@@ -55,11 +55,16 @@ export function PetDetailDialog({
   }
 
   const getDisplayName = () => {
-    if (pet.status === 'found') {
+    let baseName = pet.name || 'Pet'
+    if (baseName.includes(' - ')) {
+      baseName = baseName.split(' - ').slice(1).join(' - ')
+    }
+
+    if (pet.status === 'found' && (!baseName || baseName === 'Sem nome')) {
       const species = pet.type === 'dog' ? 'Cachorro' : pet.type === 'cat' ? 'Gato' : 'Pet'
       return `${species} encontrado`
     }
-    return pet.name
+    return baseName
   }
 
   const displayName = getDisplayName()
@@ -126,6 +131,9 @@ export function PetDetailDialog({
                     <li><strong>Cidade:</strong> {pet.location.city}</li>
                     {pet.location.neighborhood && <li><strong>Bairro:</strong> {pet.location.neighborhood}</li>}
                     <li><strong>Endereço:</strong> {pet.location.address}</li>
+                    {pet.description && (
+                      <li className="mt-2 text-justify"><strong>Descrição:</strong> <br/> {pet.description}</li>
+                    )}
                     
                     {pet.status === 'adoption' ? (
                       <li><strong>Criado em:</strong> {new Date(pet.createdAt).toLocaleString('pt-BR')}</li>

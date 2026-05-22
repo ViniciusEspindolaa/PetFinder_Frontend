@@ -1,12 +1,17 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
+  "/agendamentos/page": "/agendamentos",
   "/api/users/location/route": "/api/users/location",
+  "/eventos/[id]/page": "/eventos/[id]",
+  "/eventos/page": "/eventos",
   "/forgot-password/page": "/forgot-password",
   "/login/page": "/login",
   "/map/page": "/map",
   "/new-pet/page": "/new-pet",
   "/notifications/page": "/notifications",
+  "/novo-evento/page": "/novo-evento",
+  "/novo-servico/page": "/novo-servico",
   "/page": "/",
   "/pet/[id]/edit/page": "/pet/[id]/edit",
   "/pet/[id]/page": "/pet/[id]",
@@ -15,5 +20,8 @@
   "/profile/settings/page": "/profile/settings",
   "/reset-password/page": "/reset-password",
   "/services/page": "/services",
-  "/signup/page": "/signup"
+  "/servicos/[id]/page": "/servicos/[id]",
+  "/servicos/page": "/servicos",
+  "/signup/page": "/signup",
+  "/test/page": "/test"
 }

@@ -1,26 +1,26 @@
 {
-  "[project]/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/Frontend/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/Frontend/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/node_modules_0itu~27._.js",
-      "static/chunks/components_leaflet-map_client_tsx_0bz5wkx._.js",
-      "static/chunks/components_leaflet-map_client_tsx_12_7_g-._.js"
+      "static/chunks/Frontend_components_leaflet-map_client_tsx_0soizb8._.js",
+      "static/chunks/0k5-__pnpm_06i38ye._.js",
+      "static/chunks/Frontend_components_leaflet-map_client_tsx_0rf36jx._.js"
     ]
   },
-  "[project]/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/Frontend/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/Frontend/components/location-picker.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/node_modules_0pk~nxv._.js",
-      "static/chunks/components_location-picker_tsx_0v3nw68._.js",
-      "static/chunks/components_location-picker_tsx_12_7_g-._.js"
+      "static/chunks/0k5-__pnpm_0p4tcc4._.js",
+      "static/chunks/Frontend_components_location-picker_tsx_0ywzvz7._.js",
+      "static/chunks/Frontend_components_location-picker_tsx_0rf36jx._.js"
     ]
   },
-  "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
-    "id": "[project]/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
+  "[project]/Frontend/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/Frontend/components/selectable-map.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/node_modules_08.~i2u._.js",
-      "static/chunks/components_selectable-map_tsx_0bo6ycq._.js",
-      "static/chunks/components_selectable-map_tsx_12_7_g-._.js"
+      "static/chunks/0k5-__pnpm_0.xc7om._.js",
+      "static/chunks/Frontend_components_selectable-map_tsx_03nk5g2._.js",
+      "static/chunks/Frontend_components_selectable-map_tsx_0rf36jx._.js"
     ]
   }
 }

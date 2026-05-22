@@ -1,12 +1,17 @@
 {
   "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/agendamentos/page": "app/agendamentos/page.js",
   "/api/users/location/route": "app/api/users/location/route.js",
+  "/eventos/[id]/page": "app/eventos/[id]/page.js",
+  "/eventos/page": "app/eventos/page.js",
   "/forgot-password/page": "app/forgot-password/page.js",
   "/login/page": "app/login/page.js",
   "/map/page": "app/map/page.js",
   "/new-pet/page": "app/new-pet/page.js",
   "/notifications/page": "app/notifications/page.js",
+  "/novo-evento/page": "app/novo-evento/page.js",
+  "/novo-servico/page": "app/novo-servico/page.js",
   "/page": "app/page.js",
   "/pet/[id]/edit/page": "app/pet/[id]/edit/page.js",
   "/pet/[id]/page": "app/pet/[id]/page.js",
@@ -15,5 +20,8 @@
   "/profile/settings/page": "app/profile/settings/page.js",
   "/reset-password/page": "app/reset-password/page.js",
   "/services/page": "app/services/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/servicos/[id]/page": "app/servicos/[id]/page.js",
+  "/servicos/page": "app/servicos/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/test/page": "app/test/page.js"
 }

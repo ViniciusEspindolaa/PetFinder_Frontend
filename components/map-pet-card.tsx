@@ -33,9 +33,24 @@ export function MapPetCard({ pet, onReportSighting }: MapPetCardProps) {
     rescue: { label: 'SOS Resgate', color: 'bg-purple-600 animate-pulse text-white font-bold' }
   }
 
+  const getDisplayName = () => {
+    let baseName = pet.name || 'Pet'
+    if (baseName.includes(' - ')) {
+      baseName = baseName.split(' - ').slice(1).join(' - ')
+    }
+
+    if (pet.status === 'found' && (!baseName || baseName === 'Sem nome')) {
+      const species = pet.type === 'dog' ? 'Cachorro' : pet.type === 'cat' ? 'Gato' : 'Pet'
+      return `${species} encontrado`
+    }
+    return baseName
+  }
+
+  const displayName = getDisplayName()
+
   const handleWhatsAppContact = () => {
     const message = encodeURIComponent(
-      `Olá! Vi seu anúncio sobre ${pet.name || 'o pet'} no PetFinder.`
+      `OlÃ¡! Vi seu anÃºncio sobre ${displayName} no PetFinder.`
     )
     const phone = pet.contactPhone.replace(/\D/g, '')
     window.open(`https://wa.me/${phone}?text=${message}`, '_blank')
@@ -69,7 +84,7 @@ export function MapPetCard({ pet, onReportSighting }: MapPetCardProps) {
 
         <div className="flex-1 min-w-0">
           <div className="mb-2">
-            {pet.name && <h3 className="font-bold text-base leading-tight">{pet.name}</h3>}
+            {displayName && <h3 className="font-bold text-base leading-tight">{displayName}</h3>}
             <p className="text-xs text-muted-foreground">
               {pet.breed} • {pet.size === 'small' ? 'Pequeno' : pet.size === 'medium' ? 'Médio' : 'Grande'}
             </p>
@@ -143,7 +158,7 @@ export function MapPetCard({ pet, onReportSighting }: MapPetCardProps) {
     <Dialog open={detailOpen} onOpenChange={(open) => setDetailOpen(open)}>
       <DialogContent className="max-w-3xl w-full max-h-[80vh] overflow-y-auto p-4">
         <DialogHeader>
-          <DialogTitle>{pet.name || `${pet.type}`}</DialogTitle>
+          <DialogTitle>{displayName || `${pet.type}`}</DialogTitle>
           <DialogDescription>
             {pet.breed} • {pet.size === 'small' ? 'Pequeno' : pet.size === 'medium' ? 'Médio' : 'Grande'}
           </DialogDescription>
@@ -171,8 +186,11 @@ export function MapPetCard({ pet, onReportSighting }: MapPetCardProps) {
                   {pet.age && <li><strong>Idade:</strong> {pet.age}</li>}
                   <li><strong>Cidade:</strong> {pet.location.city}</li>
                   {pet.location.neighborhood && <li><strong>Bairro:</strong> {pet.location.neighborhood}</li>}
-                  <li><strong>Endereço:</strong> {pet.location.address}</li>
-                  <li><strong>Última vista:</strong> {new Date(pet.lastSeenDate).toLocaleDateString('pt-BR')}</li>
+                    <li><strong>Endereço:</strong> {pet.location.address}</li>
+                    {pet.description && (
+                      <li className="mt-2 text-justify"><strong>Descrição:</strong> <br/> {pet.description}</li>
+                    )}
+                    <li><strong>Última vista:</strong> {new Date(pet.lastSeenDate).toLocaleDateString('pt-BR')}</li>
                 </ul>
               </div>
 

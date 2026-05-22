@@ -299,17 +299,18 @@ export default function HomePage() {
         <div className="mb-4">
 
           <div className="relative mb-2.5">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Buscar por nome, raça, localidade..."
-              className="pl-9 h-9 text-sm sm:h-10"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+        <Input
+          placeholder="Buscar por nome, raça, localidade..."
+          className="pl-9 h-9 text-sm sm:h-10"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
 
-          <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 items-center">
-            {/* Sort Dropdown */}
+      <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 items-center justify-between">
+        <div className="flex items-center gap-2">
+        {/* Sort Dropdown */}
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="h-9 w-[200px] text-xs sm:text-sm border-dashed">
                 <ArrowUpDown className="mr-2 h-4 w-4" />
@@ -500,13 +501,14 @@ export default function HomePage() {
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
+            </div>
 
             {/* Neighborhood Filter */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="outline" 
-                  className="h-9 border-dashed text-sm px-3"
+                  className="h-9 border-dashed text-sm px-3 ml-auto"
                   disabled={cityFilters.length === 0}
                 >
                   <Plus className="mr-2 h-4 w-4" />

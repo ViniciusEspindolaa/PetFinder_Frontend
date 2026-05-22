@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Bell, Check, X, ExternalLink } from 'lucide-react'
 import apiFetch from '../lib/api'
 import { formatDistanceToNow } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
+import { ptBR } from 'date-fns/locale/pt-BR'
 import { useRouter } from 'next/navigation'
 
 type Notificacao = {

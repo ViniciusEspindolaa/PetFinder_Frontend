@@ -23,6 +23,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/eventos/[id]",
+      "regex": "^/eventos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/eventos/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/pet/[id]",
       "regex": "^/pet/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -37,6 +45,14 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/pet/(?<nxtPid>[^/]+?)/edit(?:/)?$"
+    },
+    {
+      "page": "/servicos/[id]",
+      "regex": "^/servicos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/servicos/(?<nxtPid>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -59,10 +75,22 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/agendamentos",
+      "regex": "^/agendamentos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/agendamentos(?:/)?$"
+    },
+    {
       "page": "/api/users/location",
       "regex": "^/api/users/location(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/users/location(?:/)?$"
+    },
+    {
+      "page": "/eventos",
+      "regex": "^/eventos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/eventos(?:/)?$"
     },
     {
       "page": "/forgot-password",
@@ -95,6 +123,18 @@
       "namedRegex": "^/notifications(?:/)?$"
     },
     {
+      "page": "/novo-evento",
+      "regex": "^/novo\\-evento(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/novo\\-evento(?:/)?$"
+    },
+    {
+      "page": "/novo-servico",
+      "regex": "^/novo\\-servico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/novo\\-servico(?:/)?$"
+    },
+    {
       "page": "/profile",
       "regex": "^/profile(?:/)?$",
       "routeKeys": {},
@@ -125,10 +165,22 @@
       "namedRegex": "^/services(?:/)?$"
     },
     {
+      "page": "/servicos",
+      "regex": "^/servicos(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/servicos(?:/)?$"
+    },
+    {
       "page": "/signup",
       "regex": "^/signup(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/signup(?:/)?$"
+    },
+    {
+      "page": "/test",
+      "regex": "^/test(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/test(?:/)?$"
     }
   ],
   "dataRoutes": [],

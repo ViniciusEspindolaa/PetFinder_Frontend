@@ -1,4 +1,13 @@
 {
+  "/agendamentos/page": "app/agendamentos/page.js",
+  "/eventos/[id]/page": "app/eventos/[id]/page.js",
+  "/eventos/page": "app/eventos/page.js",
+  "/login/page": "app/login/page.js",
+  "/new-pet/page": "app/new-pet/page.js",
+  "/novo-evento/page": "app/novo-evento/page.js",
+  "/novo-servico/page": "app/novo-servico/page.js",
   "/page": "app/page.js",
-  "/profile/page": "app/profile/page.js"
+  "/profile/page": "app/profile/page.js",
+  "/servicos/page": "app/servicos/page.js",
+  "/signup/page": "app/signup/page.js"
 }

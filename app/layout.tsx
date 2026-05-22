@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from '@/components/theme-provider'
 import { HighContrastManager } from '@/components/high-contrast-manager'
 import { LocationUpdater } from '@/components/location-updater'
+import { MobileNav } from '@/components/mobile-nav'
 
 const inter = Inter({ subsets: ['latin'] })
 const nunito = Nunito({ 
@@ -44,6 +45,7 @@ export default function RootLayout({
             <LocationUpdater />
             <Header />
             {children}
+            <MobileNav />
             <Toaster />
           </AuthProvider>
         </ThemeProvider>

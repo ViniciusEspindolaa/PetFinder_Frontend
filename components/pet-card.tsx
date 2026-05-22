@@ -53,11 +53,16 @@ export function PetCard({
   }
 
   const getDisplayName = () => {
-    if (pet.status === 'found') {
+    let baseName = pet.name || 'Pet'
+    if (baseName.includes(' - ')) {
+      baseName = baseName.split(' - ').slice(1).join(' - ')
+    }
+
+    if (pet.status === 'found' && (!baseName || baseName === 'Sem nome')) {
       const species = pet.type === 'dog' ? 'Cachorro' : pet.type === 'cat' ? 'Gato' : 'Pet'
       return `${species} encontrado`
     }
-    return pet.name
+    return baseName
   }
 
   const displayName = getDisplayName()
@@ -154,15 +159,15 @@ export function PetCard({
                 {pet.location.city}
               </p>
               <p className={compactMode ? "text-muted-foreground text-[9px] mt-0.5" : "text-muted-foreground text-[11px] sm:text-xs mt-0.5"}>
-                {pet.status === 'lost' ? 'Visto' : pet.status === 'found' ? 'Encontrado' : 'Local'}: {new Date(pet.lastSeenDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
+                  {pet.status === 'lost' ? 'Visto' : pet.status === 'found' ? 'Encontrado' : 'Adicionado'}: {new Date(pet.lastSeenDate).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })}
               </p>
             </div>
           </div>
 
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-snug">{pet.description}</p>
+
           {!compactMode && (
             <>
-              <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-snug">{pet.description}</p>
-
               {pet.completed && pet.completionReason && (
                 <div className="bg-gray-50 rounded-lg p-2 border border-gray-200">
                   <p className="text-xs text-gray-700">
