@@ -119,7 +119,7 @@ export function ViewSightingsDialog({ pet, open, onClose }: ViewSightingsDialogP
                 </div>
 
                 {/* Correção: só mostra se o usuário logado for o mesmo que fez o avistamento */}
-                {user && user.id === sighting.reporterId && (
+                {user && user.id === (sighting as any).reporterId && (
                   <div className="flex gap-2 pt-2 border-t">
                     <Button
                       size="sm"

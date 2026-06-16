@@ -1,16 +1,21 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { apiFetch } from "@/lib/api"
+import { reverseGeocode } from "@/lib/geocoding"
 import { useAuth } from "@/lib/auth-context"
-import { ArrowLeft, Calendar, Clock, MapPin, Users, Edit2, X, Upload } from "lucide-react"
+import { ArrowLeft, Calendar, MapPin, Users, Edit2, X, Upload, Flag } from "lucide-react"
 import Link from "next/link"
+import dynamic from "next/dynamic"
+import { ReportDialog } from "@/components/report-dialog"
+
+const SelectableMap = dynamic(() => import('@/components/selectable-map'), { ssr: false })
 
 interface Evento {
   id: number
@@ -18,6 +23,8 @@ interface Evento {
   descricao: string
   fotos_urls: string[]
   endereco_texto: string
+  latitude?: number
+  longitude?: number
   data_hora_inicio: string
   data_hora_fim?: string
   status: string
@@ -29,6 +36,7 @@ interface Evento {
 export default function EventoDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user } = useAuth()
   const { toast } = useToast()
   const [evento, setEvento] = useState<Evento | null>(null)
@@ -36,6 +44,9 @@ export default function EventoDetailPage() {
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [isUploadingFotos, setIsUploadingFotos] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
+  const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number } | null>(null)
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
   const [formData, setFormData] = useState({
     titulo: "",
     descricao: "",
@@ -54,6 +65,9 @@ export default function EventoDetailPage() {
       setIsLoading(true)
       const data = await apiFetch(`/api/eventos/${params.id}`)
       setEvento(data)
+      const lat = data.latitude ? Number(data.latitude) : null
+      const lng = data.longitude ? Number(data.longitude) : null
+      if (lat && lng) setMapLocation({ lat, lng })
       setFormData({
         titulo: data.titulo,
         descricao: data.descricao,
@@ -71,6 +85,44 @@ export default function EventoDetailPage() {
       })
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (searchParams.get('edit') === '1' && evento && user?.id === evento.usuario.id) {
+      setIsEditing(true)
+    }
+  }, [searchParams, evento, user])
+
+  useEffect(() => {
+    const doReverse = async () => {
+      if (!mapLocation || !isEditing) return
+      try {
+        const { endereco_texto } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
+        setFormData((prev) => ({ ...prev, endereco_texto }))
+      } catch (err) {
+        console.error("Erro no reverse geocoding", err)
+      }
+    }
+    doReverse()
+  }, [mapLocation, isEditing])
+
+  const handleGetCurrentLocation = () => {
+    setIsGettingLocation(true)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords
+          setMapLocation({ lat: latitude, lng: longitude })
+          setIsGettingLocation(false)
+        },
+        () => {
+          setIsGettingLocation(false)
+          toast({ variant: "destructive", title: "Erro", description: "Não foi possível obter sua localização." })
+        }
+      )
+    } else {
+      setIsGettingLocation(false)
     }
   }
 
@@ -130,8 +182,8 @@ export default function EventoDetailPage() {
         data_hora_fim: formData.data_hora_fim ? new Date(formData.data_hora_fim).toISOString() : undefined,
         capacidade_max: formData.capacidade_max ? parseInt(formData.capacidade_max) : undefined,
         fotos_urls: evento?.fotos_urls || [],
-        latitude: -23.5505,
-        longitude: -46.6333,
+        latitude: mapLocation?.lat ?? (evento?.latitude ? Number(evento.latitude) : -23.5505),
+        longitude: mapLocation?.lng ?? (evento?.longitude ? Number(evento.longitude) : -46.6333),
       }
 
       await apiFetch(`/api/eventos/${params.id}`, {
@@ -228,10 +280,28 @@ export default function EventoDetailPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold">Endereço</label>
+              <label className="text-sm font-semibold">Localização</label>
+              <div className="h-48 w-full rounded-md overflow-hidden border">
+                <SelectableMap
+                  latitude={mapLocation?.lat ?? null}
+                  longitude={mapLocation?.lng ?? null}
+                  onChange={(lat, lng) => setMapLocation({ lat, lng })}
+                />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGetCurrentLocation}
+                disabled={isGettingLocation}
+                className="w-full h-8 text-xs"
+              >
+                <MapPin className="w-3 h-3 mr-2" />
+                {isGettingLocation ? "Obtendo..." : "Usar Minha Localização"}
+              </Button>
               <Input
                 value={formData.endereco_texto}
                 onChange={(e) => setFormData({ ...formData, endereco_texto: e.target.value })}
+                placeholder="Endereço"
               />
             </div>
 
@@ -346,13 +416,15 @@ export default function EventoDetailPage() {
               <CardTitle className="text-2xl text-teal-800">{evento.titulo}</CardTitle>
             </div>
             {canEdit && (
-              <button
-                onClick={() => setIsEditing(true)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
-              >
-                <Edit2 className="w-4 h-4" />
-                Editar
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  Editar Evento
+                </button>
+              </div>
             )}
           </CardHeader>
           <CardContent className="pt-6 space-y-6">
@@ -425,14 +497,31 @@ export default function EventoDetailPage() {
               </div>
             )}
 
-            <div className="pt-4 border-t">
+            <div className="pt-4 border-t flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <p className="text-xs text-muted-foreground">
                 Organizado por: <span className="font-semibold text-foreground">{evento.usuario.nome}</span>
               </p>
+              {!canEdit && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-amber-700 border-amber-200 hover:bg-amber-50"
+                  onClick={() => setReportOpen(true)}
+                >
+                  <Flag className="w-4 h-4 mr-2" />
+                  Denunciar
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
       )}
+
+      <ReportDialog
+        target={evento ? { type: 'evento', id: evento.id, titulo: evento.titulo } : null}
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
+      />
     </div>
   )
 }

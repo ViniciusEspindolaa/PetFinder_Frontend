@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Mail, Star, ExternalLink, CalendarPlus } from "lucide-react"
 import { useState } from "react"
 import { useToast } from "@/hooks/use-toast"
+import { VerifiedBadge } from '@/components/verified-badge'
 import { ServiceDetailDialog } from "@/components/service-detail-dialog"
 import { BookingDialog } from "@/components/booking-dialog"
 
@@ -23,7 +24,15 @@ interface ServiceCardProps {
   tipo_agendamento?: string
   usuario?: {
     email: string
+    telefone_verificado?: boolean
+    email_verificado?: boolean
+    foto_perfil?: string
+    verificacaoPrestador?: { status: string }
   }
+  prestador_verificado?: boolean
+  identidade_verificada?: boolean
+  publicado?: boolean
+  atende_domicilio?: boolean
   link_rede_social?: string
 }
 
@@ -74,7 +83,12 @@ export function ServiceCard(props: ServiceCardProps) {
       <div className="p-4 space-y-3">
         <div>
           <h3 className="font-bold text-lg line-clamp-1">{props.nome}</h3>
-          <p className="text-sm text-gray-600 line-clamp-2">{props.descricao}</p>
+          <VerifiedBadge
+            contatoVerificado={props.prestador_verificado}
+            identidadeVerificada={props.identidade_verificada}
+            className="mt-1"
+          />
+          <p className="text-sm text-gray-600 line-clamp-2 mt-1">{props.descricao}</p>
         </div>
 
         {props.avaliacoes !== undefined && props.total_avaliacoes !== undefined && props.total_avaliacoes > 0 && (
@@ -176,6 +190,9 @@ export function ServiceCard(props: ServiceCardProps) {
         servicoNome={props.nome}
         ofereceAgendamento={props.oferece_agendamento}
         tipoAgendamento={props.tipo_agendamento}
+        atendeDomicilio={props.atende_domicilio}
+        prestadorVerificado={props.prestador_verificado}
+        identidadeVerificada={props.identidade_verificada}
         open={bookingOpen}
         onOpenChange={setBookingOpen}
       />

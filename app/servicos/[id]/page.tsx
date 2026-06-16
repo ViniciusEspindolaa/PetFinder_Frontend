@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -15,10 +15,16 @@ import {
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { apiFetch } from "@/lib/api"
+import { reverseGeocode } from "@/lib/geocoding"
 import { useAuth } from "@/lib/auth-context"
-import { ArrowLeft, Phone, Mail, MapPin, Clock, Star, Edit2, X, Calendar } from "lucide-react"
+import { ArrowLeft, Phone, Mail, MapPin, Clock, Star, Edit2, X, Calendar, Flag } from "lucide-react"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import { BookingDialog } from "@/components/booking-dialog"
+import { ReportDialog } from "@/components/report-dialog"
+import { VerifiedBadge } from "@/components/verified-badge"
+
+const SelectableMap = dynamic(() => import('@/components/selectable-map'), { ssr: false })
 
 interface Servico {
   id: number
@@ -28,13 +34,27 @@ interface Servico {
   endereco_texto: string
   bairro?: string
   cidade?: string
+  latitude?: number
+  longitude?: number
   fotos_urls: string[]
   avaliacoes?: number
   total_avaliacoes?: number
   telefone?: string
   email?: string
   horario?: string
-  usuario: { id: string; nome: string; email: string; telefone: string }
+  oferece_agendamento?: boolean
+  tipo_agendamento?: string
+  valor_base?: number
+  hora_inicio?: string
+  hora_fim?: string
+  duracao_agendamento?: number
+  dias_funcionamento?: string[]
+  atende_domicilio?: boolean
+  taxa_domicilio?: number
+  variacoes?: { nome: string; preco: number }[]
+  prestador_verificado?: boolean
+  identidade_verificada?: boolean
+  usuario: { id: string; nome: string; email: string; telefone: string; foto_perfil?: string }
 }
 
 const tipoNome: Record<string, string> = {
@@ -48,6 +68,7 @@ const tipoNome: Record<string, string> = {
 export default function ServicoDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user } = useAuth()
   const { toast } = useToast()
   const [servico, setServico] = useState<Servico | null>(null)
@@ -55,6 +76,9 @@ export default function ServicoDetailPage() {
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [openBookingDialog, setOpenBookingDialog] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
+  const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number } | null>(null)
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
   const [formData, setFormData] = useState({
     nome: "",
     tipo: "",
@@ -84,6 +108,9 @@ export default function ServicoDetailPage() {
       setIsLoading(true)
       const data = await apiFetch(`/api/servicos/${params.id}`)
       setServico(data)
+      const lat = data.latitude ? Number(data.latitude) : null
+      const lng = data.longitude ? Number(data.longitude) : null
+      if (lat && lng) setMapLocation({ lat, lng })
       setFormData({
         nome: data.nome,
         tipo: data.tipo,
@@ -107,6 +134,49 @@ export default function ServicoDetailPage() {
     }
   }
 
+  useEffect(() => {
+    if (searchParams.get('edit') === '1' && servico && user?.id === servico.usuario.id) {
+      setIsEditing(true)
+    }
+  }, [searchParams, servico, user])
+
+  useEffect(() => {
+    const doReverse = async () => {
+      if (!mapLocation || !isEditing) return
+      try {
+        const { endereco_texto, bairro, cidade } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
+        setFormData((prev) => ({
+          ...prev,
+          endereco_texto,
+          bairro: bairro || prev.bairro,
+          cidade: cidade || prev.cidade,
+        }))
+      } catch (err) {
+        console.error("Erro no reverse geocoding", err)
+      }
+    }
+    doReverse()
+  }, [mapLocation, isEditing])
+
+  const handleGetCurrentLocation = () => {
+    setIsGettingLocation(true)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords
+          setMapLocation({ lat: latitude, lng: longitude })
+          setIsGettingLocation(false)
+        },
+        () => {
+          setIsGettingLocation(false)
+          toast({ variant: "destructive", title: "Erro", description: "Não foi possível obter sua localização." })
+        }
+      )
+    } else {
+      setIsGettingLocation(false)
+    }
+  }
+
   const handleSave = async () => {
     try {
       setIsSaving(true)
@@ -121,8 +191,8 @@ export default function ServicoDetailPage() {
         email: formData.email || undefined,
         horario: formData.horario || undefined,
         fotos_urls: servico?.fotos_urls || [],
-        latitude: -23.5505,
-        longitude: -46.6333,
+        latitude: mapLocation?.lat ?? (servico?.latitude ? Number(servico.latitude) : -23.5505),
+        longitude: mapLocation?.lng ?? (servico?.longitude ? Number(servico.longitude) : -46.6333),
       }
 
       await apiFetch(`/api/servicos/${params.id}`, {
@@ -235,10 +305,28 @@ export default function ServicoDetailPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-semibold">Endereço</label>
+              <label className="text-sm font-semibold">Localização</label>
+              <div className="h-48 w-full rounded-md overflow-hidden border">
+                <SelectableMap
+                  latitude={mapLocation?.lat ?? null}
+                  longitude={mapLocation?.lng ?? null}
+                  onChange={(lat, lng) => setMapLocation({ lat, lng })}
+                />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleGetCurrentLocation}
+                disabled={isGettingLocation}
+                className="w-full h-8 text-xs"
+              >
+                <MapPin className="w-3 h-3 mr-2" />
+                {isGettingLocation ? "Obtendo..." : "Usar Minha Localização"}
+              </Button>
               <Input
                 value={formData.endereco_texto}
                 onChange={(e) => setFormData({ ...formData, endereco_texto: e.target.value })}
+                placeholder="Endereço"
               />
             </div>
 
@@ -305,14 +393,19 @@ export default function ServicoDetailPage() {
             <div>
               <CardTitle className="text-2xl text-teal-800">{servico.nome}</CardTitle>
               <p className="text-sm text-gray-600 mt-1">{tipoNome[servico.tipo]}</p>
+              <VerifiedBadge
+                contatoVerificado={servico.prestador_verificado}
+                identidadeVerificada={servico.identidade_verificada}
+                className="mt-2"
+              />
             </div>
             {canEdit && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
               >
                 <Edit2 className="w-4 h-4" />
-                Editar
+                Editar Serviço
               </button>
             )}
           </CardHeader>
@@ -376,14 +469,27 @@ export default function ServicoDetailPage() {
               )}
             </div>
 
-            <div className="pt-4 border-t">
-              <p className="text-xs text-muted-foreground">
-                Oferecido por: <span className="font-semibold text-foreground">{servico.usuario.nome}</span>
-              </p>
-              {servico.usuario.telefone && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Contato: {servico.usuario.telefone}
+            <div className="pt-4 border-t flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <p className="text-xs text-muted-foreground">
+                  Oferecido por: <span className="font-semibold text-foreground">{servico.usuario.nome}</span>
                 </p>
+                {servico.usuario.telefone && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Contato: {servico.usuario.telefone}
+                  </p>
+                )}
+              </div>
+              {!canEdit && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-amber-700 border-amber-200 hover:bg-amber-50"
+                  onClick={() => setReportOpen(true)}
+                >
+                  <Flag className="w-4 h-4 mr-2" />
+                  Denunciar
+                </Button>
               )}
             </div>
 
@@ -403,9 +509,27 @@ export default function ServicoDetailPage() {
       <BookingDialog
         servicoId={servico?.id || 0}
         servicoNome={servico?.nome || ""}
+        ofereceAgendamento={servico?.oferece_agendamento}
+        tipoAgendamento={servico?.tipo_agendamento}
+        valorBase={servico?.valor_base}
+        horaInicio={servico?.hora_inicio}
+        horaFim={servico?.hora_fim}
+        duracao={servico?.duracao_agendamento}
+        diasFuncionamento={servico?.dias_funcionamento}
+        atendeDomicilio={servico?.atende_domicilio}
+        taxaDomicilio={servico?.taxa_domicilio}
+        variacoes={servico?.variacoes}
+        prestadorVerificado={servico?.prestador_verificado}
+        identidadeVerificada={servico?.identidade_verificada}
         open={openBookingDialog}
         onOpenChange={setOpenBookingDialog}
         onSuccess={loadServico}
+      />
+
+      <ReportDialog
+        target={servico ? { type: 'servico', id: servico.id, titulo: servico.nome } : null}
+        open={reportOpen}
+        onClose={() => setReportOpen(false)}
       />
     </div>
   )

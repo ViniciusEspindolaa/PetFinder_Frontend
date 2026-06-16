@@ -1,10 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
 import { apiFetch } from '@/lib/api'
 import { useToast } from '@/hooks/use-toast'
+import { ToastAction } from '@/components/ui/toast'
+import { SimilarPetsDialog, type SimilarPet } from '@/components/similar-pets-dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -17,7 +19,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Card, CardContent } from '@/components/ui/card'
-import { ArrowLeft, Upload, X, MapPin, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, Upload, X, MapPin, AlertTriangle, Wand2 } from 'lucide-react'
 import { PetStatus, PetType, PetSize } from '@/lib/types'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -55,13 +57,20 @@ export default function NewPetPage() {
   const [condicaoMedica, setCondicaoMedica] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGettingLocation, setIsGettingLocation] = useState(false)
+  const [similarPets, setSimilarPets] = useState<SimilarPet[]>([])
+  const [loadingSimilar, setLoadingSimilar] = useState(false)
+  const [showSimilarDialog, setShowSimilarDialog] = useState(false)
+  const lastSimilarIdsRef = useRef('')
+  const [iaColors, setIaColors] = useState<string[]>([])
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [iaDetected, setIaDetected] = useState<{ breed: string; type: string; size: string; colors: string[] } | null>(null)
 
   useEffect(() => {
     if (!isLoading && !user) {
       router.push('/login')
     } else if (user) {
-      if (user.telefone || user.phone) {
-        setContactPhone(user.telefone || user.phone)
+      if ((user as any).telefone || user.phone) {
+        setContactPhone((user as any).telefone || user.phone)
       }
       if (user.name) {
         setContactName(user.name)
@@ -85,7 +94,99 @@ export default function NewPetPage() {
     }
   }
 
+  const tipoMap: Record<string, string> = { lost: 'PERDIDO', found: 'ENCONTRADO', adoption: 'ADOCAO', rescue: 'RESGATE' }
+  const especieMap: Record<string, string> = { dog: 'CACHORRO', cat: 'GATO', other: 'OUTRO' }
+  const porteMap: Record<string, string> = { small: 'PEQUENO', medium: 'MEDIO', large: 'GRANDE' }
+
+  const fetchSimilarPets = async (coords?: { lat: number; lng: number }, iaOverride?: { breed?: string; size?: string; type?: string; colors?: string[] }) => {
+    const loc = coords || mapLocation
+    if (!loc || (status !== 'lost' && status !== 'found')) {
+      setSimilarPets([])
+      return
+    }
+
+    // iaOverride permite passar os valores recém-detectados pela IA, evitando stale closure do React
+    const effectiveType = iaOverride?.type ?? type
+    const effectiveBreed = iaOverride?.breed ?? breed
+    const effectiveSize = iaOverride?.size ?? size
+    const effectiveColors = iaOverride?.colors ?? iaColors
+
+    setLoadingSimilar(true)
+    try {
+      const params = new URLSearchParams({
+        latitude: String(loc.lat),
+        longitude: String(loc.lng),
+        raio_km: '15',
+        especie: especieMap[effectiveType] || 'OUTRO',
+        tipo: tipoMap[status] || 'PERDIDO',
+      })
+      if (effectiveBreed) params.set('raca', effectiveBreed)
+      if (effectiveColors[0]) params.set('cor', effectiveColors[0])
+      if (effectiveSize) params.set('porte', porteMap[effectiveSize] || effectiveSize.toUpperCase())
+
+      const res = await apiFetch(`/api/publicacoes/buscar/similares-proximos?${params}`)
+      const pets: SimilarPet[] = res?.publicacoes || []
+      setSimilarPets(pets)
+
+      if (pets.length > 0) {
+        const idsKey = pets.map((p) => p.id).join(',')
+        if (idsKey !== lastSimilarIdsRef.current) {
+          lastSimilarIdsRef.current = idsKey
+          const countLabel =
+            pets.length === 1
+              ? '1 pet parecido'
+              : `${pets.length} pets parecidos`
+          const contextLabel =
+            status === 'lost'
+              ? `${countLabel} encontrado${pets.length > 1 ? 's' : ''} por perto`
+              : `${countLabel} perdido${pets.length > 1 ? 's' : ''} por perto`
+
+          toast({
+            title: 'Correspondências encontradas!',
+            description: `Encontramos ${contextLabel}. Confira se pode ser o mesmo pet.`,
+            duration: 8000,
+            action: (
+              <ToastAction altText="Ver pets similares" onClick={() => setShowSimilarDialog(true)}>
+                Ver
+              </ToastAction>
+            ),
+          })
+          setShowSimilarDialog(true)
+        }
+      } else {
+        lastSimilarIdsRef.current = ''
+      }
+    } catch (err) {
+      console.error('Erro ao buscar pets similares', err)
+      setSimilarPets([])
+      lastSimilarIdsRef.current = ''
+    } finally {
+      setLoadingSimilar(false)
+    }
+  }
+
+  const resolveCoordsForSimilarSearch = (): Promise<{ lat: number; lng: number } | null> => {
+    if (mapLocation) return Promise.resolve(mapLocation)
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) return resolve(null)
+      navigator.geolocation.getCurrentPosition(
+        (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+        () => resolve(null),
+        { timeout: 8000 }
+      )
+    })
+  }
+
+  useEffect(() => {
+    if (!breed || (status !== 'lost' && status !== 'found')) return
+    const timer = setTimeout(() => {
+      if (mapLocation) fetchSimilarPets()
+    }, 600)
+    return () => clearTimeout(timer)
+  }, [mapLocation, type, breed, size, status, iaColors])
+
   const analyzeImageWithAI = async (file: File) => {
+    setIsAnalyzing(true)
     try {
       toast({
         title: "Analisando imagem...",
@@ -102,24 +203,53 @@ export default function NewPetPage() {
       });
 
       if (res && res.type) {
-        setType(res.type);
-        setBreed(res.breed || '');
-        setSize(res.size as PetSize);
+        const detectedBreed = res.breed || ''
+        const detectedSize = res.size as PetSize
+        const detectedType = res.type
+        const detectedColors = Array.isArray(res.colors) ? res.colors : []
+
+        setType(detectedType);
+        setBreed(detectedBreed);
+        setSize(detectedSize);
+        setIaColors(detectedColors);
+        setIaDetected({ breed: detectedBreed, type: detectedType, size: detectedSize, colors: detectedColors });
         setDescription(prev => prev ? prev + ' ' + (res.description || '') : (res.description || ''));
-        
+
         toast({
           title: "Análise concluída",
           description: "Os campos foram preenchidos automaticamente com base na foto.",
           duration: 4000,
         });
+
+        const coords = await resolveCoordsForSimilarSearch()
+        if (coords && (status === 'lost' || status === 'found')) {
+          // Passa os valores detectados diretamente — setBreed/setSize são assíncronos
+          // e o closure de fetchSimilarPets capturaria valores antigos sem este override
+          fetchSimilarPets(coords, { breed: detectedBreed, size: detectedSize, type: detectedType, colors: detectedColors })
+        }
       }
-    } catch (error) {
+    } catch (error: any) {
+      setIaDetected(null);
       console.error('Erro na análise da IA', error);
+      const errMsg = error?.message || (error instanceof Error ? error.message : '');
+      if (errMsg.toLowerCase().includes('animal')) {
+        toast({
+          variant: 'destructive',
+          title: 'Imagem Recusada',
+          description: errMsg || 'A imagem parece não conter um animal.',
+          duration: 5000,
+        });
+        setPhotoPreview(null);
+        setSelectedPhoto(null);
+        return;
+      }
       toast({
-         variant: "destructive",
-         title: "Erro na IA",
-         description: "Não foi possível analisar a imagem. Você pode preencher manualmente.",
+         variant: 'destructive',
+         title: 'Erro na IA',
+         description: 'Não foi possível analisar a imagem. Você pode preencher manualmente.',
       });
+    } finally {
+      setIsAnalyzing(false);
     }
   }
 
@@ -391,6 +521,7 @@ export default function NewPetPage() {
                     onClick={() => {
                       setPhotoPreview(null)
                       setSelectedPhoto(null)
+                      setIaDetected(null)
                     }}
                     className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-lg hover:bg-gray-100 active:scale-95"
                   >
@@ -411,8 +542,87 @@ export default function NewPetPage() {
                   />
                 </label>
               )}
+              {photoPreview && isAnalyzing && (
+                <div className="mt-2 flex items-center gap-2 text-xs text-teal-700 bg-teal-50 border border-teal-200 rounded-lg px-3 py-2">
+                  <div className="w-3 h-3 border-2 border-teal-600 border-t-transparent rounded-full animate-spin shrink-0" />
+                  <span>Analisando imagem com IA...</span>
+                </div>
+              )}
+              {photoPreview && iaDetected && !isAnalyzing && (
+                <div className="mt-2 flex items-start gap-2 text-xs text-teal-800 bg-teal-50 border border-teal-200 rounded-lg px-3 py-2">
+                  <Wand2 className="w-3.5 h-3.5 shrink-0 mt-0.5 text-teal-600" />
+                  <div>
+                    <span className="font-semibold">Detectado pela IA: </span>
+                    {[
+                      iaDetected.breed,
+                      iaDetected.size === 'small' ? 'Pequeno' : iaDetected.size === 'medium' ? 'Médio' : 'Grande',
+                      ...(iaDetected.colors.length > 0 ? [iaDetected.colors.slice(0, 2).join(', ')] : [])
+                    ].filter(Boolean).join(' · ')}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
+
+          {(status === 'lost' || status === 'found') && (loadingSimilar || similarPets.length > 0) && (
+            <Card className="border-amber-200 bg-amber-50/50">
+              <CardContent className="p-3 sm:p-4 space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+                    <h3 className="font-semibold text-sm">
+                      {status === 'lost' ? 'Pets encontrados parecidos por perto' : 'Pets perdidos parecidos por perto'}
+                    </h3>
+                  </div>
+                  {!loadingSimilar && similarPets.length > 0 && (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="h-7 text-xs shrink-0"
+                      onClick={() => setShowSimilarDialog(true)}
+                    >
+                      Ver todos
+                    </Button>
+                  )}
+                </div>
+                {loadingSimilar ? (
+                  <p className="text-xs text-muted-foreground">Buscando correspondências com base na foto e localização...</p>
+                ) : (
+                  <div className="space-y-2">
+                    {similarPets.map((pet) => (
+                      <div key={pet.id} className="flex gap-3 items-center bg-white rounded-lg p-2 border">
+                        {pet.fotos_urls?.[0] && (
+                          <img src={pet.fotos_urls[0]} alt={pet.titulo} className="w-14 h-14 rounded object-cover shrink-0" />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm truncate">{pet.titulo || pet.nome_pet}</p>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <p className="text-xs text-muted-foreground flex-1 truncate">
+                              {pet.raca || pet.especie} · {pet.distancia_km} km
+                            </p>
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0 ${
+                              (pet.score_compatibilidade ?? 0) >= 12 ? 'bg-green-100 text-green-700' :
+                              (pet.score_compatibilidade ?? 0) >= 6 ? 'bg-yellow-100 text-yellow-700' :
+                              'bg-gray-100 text-gray-600'
+                            }`}>
+                              {Math.round(((pet.score_compatibilidade ?? 0) / 20) * 100)}%
+                            </span>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="outline" className="shrink-0 h-8 text-xs" onClick={() => router.push(`/pet/${pet.id}`)}>
+                          Ver
+                        </Button>
+                      </div>
+                    ))}
+                    <p className="text-xs text-muted-foreground">
+                      Sugestões automáticas com base na espécie, raça, cor e distância. Confira se pode ser o mesmo pet.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
 
           {/* Pet Information */}
           <Card>
@@ -781,6 +991,15 @@ export default function NewPetPage() {
           </Button>
         </form>
       </main>
+
+      {(status === 'lost' || status === 'found') && (
+        <SimilarPetsDialog
+          pets={similarPets}
+          open={showSimilarDialog}
+          onOpenChange={setShowSimilarDialog}
+          status={status}
+        />
+      )}
     </div>
   )
 }

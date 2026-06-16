@@ -78,7 +78,7 @@ export function EditPetDialog({ pet, open, onOpenChange, onSuccess }: EditPetDia
       setEventDate(pet.lastSeenDate ? new Date(pet.lastSeenDate).toISOString().split('T')[0] : '')
       setMapLocation({ lat: pet.location.lat, lng: pet.location.lng })
       setDescription(pet.description || '')
-      setReward(pet.reward || '')
+      setReward(pet.reward ? String(pet.reward) : '')
       setPhotoPreview(pet.photoUrl || null)
       setContactPhone(pet.contactPhone || user?.phone || '')
     }

@@ -1,10 +1,14 @@
 {
   "app": {
-    "[project]/Frontend/app/agendamentos/page": [
+    "[project]/Frontend/app/_not-found/page": [
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
-    "[project]/Frontend/app/eventos/[id]/page": [
+    "[project]/Frontend/app/admin/verificacoes/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
+    ],
+    "[project]/Frontend/app/agendamentos/page": [
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
@@ -16,15 +20,11 @@
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
+    "[project]/Frontend/app/map/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
+    ],
     "[project]/Frontend/app/new-pet/page": [
-      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
-      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
-    ],
-    "[project]/Frontend/app/novo-evento/page": [
-      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
-      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
-    ],
-    "[project]/Frontend/app/novo-servico/page": [
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
@@ -32,15 +32,31 @@
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
+    "[project]/Frontend/app/pet/[id]/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
+    ],
+    "[project]/Frontend/app/prestador/verificacao/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
+    ],
+    "[project]/Frontend/app/profile/edit/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
+    ],
     "[project]/Frontend/app/profile/page": [
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
-    "[project]/Frontend/app/servicos/page": [
+    "[project]/Frontend/app/profile/settings/page": [
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ],
-    "[project]/Frontend/app/signup/page": [
+    "[project]/Frontend/app/servicos/[id]/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
+    ],
+    "[project]/Frontend/app/servicos/page": [
       "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
       "static/media/07454f8ad8aaac57-s.p.0tqkxa-w3pk~c.woff2"
     ]

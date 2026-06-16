@@ -8,6 +8,7 @@ import { Locate } from 'lucide-react'
 import L from 'leaflet'
 import { DirectionsDialog } from '@/components/directions-dialog'
 import { Eye } from 'lucide-react'
+import { getServiceTypeLabel } from '@/lib/service-types'
 
 // We dynamically inject Leaflet CSS at runtime to avoid Next.js global CSS restrictions
 // and to ensure the stylesheet is present only in the browser.
@@ -63,6 +64,8 @@ export default function LeafletMap({
   onViewDetails,
   onDeselect,
   statusFilter = 'all',
+  serviceTypeFilter = 'all',
+  eventStatusFilter = 'all',
   userLocation,
 }: {
   pets?: Pet[]
@@ -77,6 +80,8 @@ export default function LeafletMap({
   onViewDetails?: (p: Pet) => void
   onDeselect?: () => void
   statusFilter?: 'all' | 'lost' | 'found' | 'adoption' | 'rescue'
+  serviceTypeFilter?: string
+  eventStatusFilter?: string
   userLocation?: { lat: number; lng: number }
 }) {
   // Inject Leaflet CSS in the browser because importing 'leaflet/dist/leaflet.css'
@@ -109,6 +114,11 @@ export default function LeafletMap({
             padding: 0 !important;
           }
           .custom-div-icon svg { width: 36px; height: 36px; display: block; }
+          .custom-div-icon.service-icon svg,
+          .custom-div-icon.event-icon svg {
+            width: 14px !important;
+            height: 14px !important;
+          }
           /* remove default icon image fallback box-sizing that can hide svg */
           .leaflet-marker-icon { box-sizing: content-box; }
         `
@@ -127,7 +137,7 @@ export default function LeafletMap({
     lost: '#ef4444',
     found: '#3b82f6',
     adoption: '#10b981',
-    rescue: '#0d9488',
+    rescue: '#9333ea',
     default: '#6b7280',
   }
 
@@ -167,7 +177,7 @@ export default function LeafletMap({
   
   const serviceIcon = L.divIcon({
     html: `
-      <div style="background-color: #a855f7; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+      <div style="background-color: #0d9488; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
           <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -181,18 +191,21 @@ export default function LeafletMap({
 
   const eventIcon = L.divIcon({
     html: `
-      <div style="background-color: #eab308; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+      <div style="background-color: #ea580c; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border: 2.5px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.35);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="#ffffff" fill-opacity="0.15"></rect>
           <line x1="16" y1="2" x2="16" y2="6"></line>
           <line x1="8" y1="2" x2="8" y2="6"></line>
           <line x1="3" y1="10" x2="21" y2="10"></line>
+          <line x1="8" y1="15" x2="8" y2="15.01" stroke-width="3"></line>
+          <line x1="12" y1="15" x2="12" y2="15.01" stroke-width="3"></line>
+          <line x1="16" y1="15" x2="16" y2="15.01" stroke-width="3"></line>
         </svg>
       </div>
     `,
     className: 'custom-div-icon event-icon',
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
   })
 
   const router = useRouter()
@@ -231,7 +244,7 @@ export default function LeafletMap({
 
   const serviceMarkers = useMemo(() => {
     if (!showServices) return [];
-    const validServices = Array.isArray(services) ? services : (services?.data || services?.servicos || services?.items || []);
+    const validServices = Array.isArray(services) ? services : ((services as any)?.data || (services as any)?.servicos || (services as any)?.items || []);
     return (Array.isArray(validServices) ? validServices : [])
       .map((s) => {
         const lat = s.lat ?? s.latitude ?? s.endereco?.lat ?? s.endereco?.latitude;
@@ -247,11 +260,16 @@ export default function LeafletMap({
         }
       })
       .filter((m) => typeof m.lat === 'number' && !isNaN(m.lat) && typeof m.lng === 'number' && !isNaN(m.lng) && !!m.lat && !!m.lng)
-  }, [services, showServices])
+      .filter((m) => {
+        if (serviceTypeFilter === 'all') return true
+        const tipo = String(m.categoria || (m.raw as any)?.tipo || '').toUpperCase()
+        return tipo === serviceTypeFilter
+      })
+  }, [services, showServices, serviceTypeFilter])
 
   const eventMarkers = useMemo(() => {
     if (!showEvents) return [];
-    const validEvents = Array.isArray(events) ? events : (events?.data || events?.eventos || events?.items || []);
+    const validEvents = Array.isArray(events) ? events : ((events as any)?.data || (events as any)?.eventos || (events as any)?.items || []);
     return (Array.isArray(validEvents) ? validEvents : [])
       .map((e) => {
         const lat = e.lat ?? e.latitude ?? e.endereco?.lat ?? e.endereco?.latitude;
@@ -263,14 +281,22 @@ export default function LeafletMap({
           lng: lng !== undefined ? Number(lng) : undefined,
           photo: e.foto || e.imagem || (Array.isArray(e.fotos_urls) ? e.fotos_urls[0] : undefined),
           raw: e,
-          data_inicio: e.data_inicio || e.data
+          status: e.status || 'AGENDADO',
+          data_inicio: e.data_inicio || e.data_hora_inicio || e.data
         }
       })
       .filter((m) => typeof m.lat === 'number' && !isNaN(m.lat) && typeof m.lng === 'number' && !isNaN(m.lng) && !!m.lat && !!m.lng)
-  }, [events, showEvents])
+      .filter((m) => {
+        if (eventStatusFilter === 'all') return true
+        const status = String((m as any).status || 'AGENDADO').toUpperCase()
+        return status === eventStatusFilter
+      })
+  }, [events, showEvents, eventStatusFilter])
 
+  const markers = useMemo(() => {
+    return [...petMarkers, ...serviceMarkers, ...eventMarkers];
+  }, [petMarkers, serviceMarkers, eventMarkers]);
 
-  const markers = petMarkers;
   // Debug: log presence of Leaflet resources and markers to help diagnose render issues
   React.useEffect(() => {
     if (typeof window === 'undefined') return
@@ -301,9 +327,9 @@ export default function LeafletMap({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {markers.map((m) => {
+        {petMarkers.map((m) => {
           // create a colored DivIcon based on publication status (lost/found/adoption)
-          const color = STATUS_COLORS[m.status || 'default'] || STATUS_COLORS.default
+          const color = STATUS_COLORS[(m as any).status || 'default'] || STATUS_COLORS.default
           const svg = `
             <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pin">
               <defs>
@@ -324,7 +350,7 @@ export default function LeafletMap({
           `
           const icon = L.divIcon({
             html: svg,
-            className: `custom-div-icon ${m.status === 'rescue' ? 'drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]' : ''}`,
+            className: `custom-div-icon ${(m as any).status === 'rescue' ? 'drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]' : ''}`,
             popupAnchor: [0, -36]
           })
           const isSelected = selectedPetId === m.id
@@ -368,7 +394,7 @@ export default function LeafletMap({
                       >
                         Como chegar
                       </Button>
-                      {onReportSighting && m.status === 'lost' && (
+                      {onReportSighting && (m as any).status === 'lost' && (
                         <Button
                           size="sm"
                           variant="secondary"
@@ -404,7 +430,7 @@ export default function LeafletMap({
               </Marker>
 
               {/* Render Sightings if this pet is selected */}
-              {isSelected && m.sightings && m.sightings.map((s: any) => (
+              {isSelected && (m as any).sightings && (m as any).sightings.map((s: any) => (
                 <Marker
                   key={`sighting-${s.id}`}
                   position={[s.location.lat, s.location.lng]}
@@ -429,71 +455,45 @@ export default function LeafletMap({
           )
         })}
 
-        {serviceMarkers.map((m) => (
-  <Marker key={"srv-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={serviceIcon}>
-    <Popup>
-      <div style={{ maxWidth: 240 }} className="text-sm">
-        <div className="font-bold mb-1">{m.nome}</div>
-        <div className="text-xs text-muted-foreground mb-2">{m.categoria || "Servi�o"}</div>
-        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
-        <div className="flex justify-end gap-2 mt-2">
-          <Button size="sm" className="h-8 px-2 text-xs bg-teal-600 hover:bg-teal-700" onClick={() => window.location.href = "/servicos/" + m.id}>
-            Ver Servi�o
-          </Button>
+      
+  {serviceMarkers.map((m) => (
+    <Marker key={"srv-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={serviceIcon}>
+      <Popup>
+        <div style={{ maxWidth: 240 }} className="text-sm">
+          <div className="font-bold mb-1">{m.nome}</div>
+          <div className="text-xs text-muted-foreground mb-2">{getServiceTypeLabel(m.categoria)}</div>
+          {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
+          <div className="flex justify-end gap-2 mt-2">
+            <Button size="sm" className="h-8 px-2 text-xs bg-teal-600 hover:bg-teal-700" onClick={() => window.location.href = "/servicos/" + m.id}>
+              Ver Serviço
+            </Button>
+          </div>
         </div>
-      </div>
-    </Popup>
-  </Marker>
-))}
-{eventMarkers.map((m) => (
-  <Marker key={"evt-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={eventIcon}>
-    <Popup>
-      <div style={{ maxWidth: 240 }} className="text-sm">
-        <div className="font-bold mb-1">{m.nome}</div>
-        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
-        {m.data_inicio && <div className="text-xs mb-1">In�cio: {new Date(m.data_inicio).toLocaleDateString()}</div>}
-        <div className="flex justify-end gap-2 mt-2">
-          <Button size="sm" className="h-8 px-2 text-xs bg-yellow-500 hover:bg-yellow-600" onClick={() => window.location.href = "/eventos/" + m.id}>
-            Ver Evento
-          </Button>
+      </Popup>
+    </Marker>
+  ))}
+  {eventMarkers.map((m) => (
+    <Marker key={"evt-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={eventIcon}>
+      <Popup>
+        <div style={{ maxWidth: 240 }} className="text-sm">
+          <div className="font-bold mb-1">{m.nome}</div>
+          {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
+          {m.data_inicio && <div className="text-xs mb-1">Início: {new Date(m.data_inicio).toLocaleDateString()}</div>}
+          <div className="flex justify-end gap-2 mt-2">
+            <Button size="sm" className="h-8 px-2 text-xs bg-orange-600 hover:bg-orange-700" onClick={() => window.location.href = "/eventos/" + m.id}>
+              Ver Evento
+            </Button>
+          </div>
         </div>
-      </div>
-    </Popup>
-  </Marker>
-))}
-{serviceMarkers.map((m) => (
-  <Marker key={"srv-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={serviceIcon}>
-    <Popup>
-      <div style={{ maxWidth: 240 }} className="text-sm">
-        <div className="font-bold mb-1">{m.nome}</div>
-        <div className="text-xs text-muted-foreground mb-2">{m.categoria || "Servi�o"}</div>
-        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
-        <div className="flex justify-end gap-2 mt-2">
-          <Button size="sm" className="h-8 px-2 text-xs bg-teal-600 hover:bg-teal-700" onClick={() => window.location.href = "/servicos/" + m.id}>
-            Ver Servi�o
-          </Button>
-        </div>
-      </div>
-    </Popup>
-  </Marker>
-))}
-{eventMarkers.map((m) => (
-  <Marker key={"evt-" + m.id} position={[m.lat || 0, m.lng || 0]} icon={eventIcon}>
-    <Popup>
-      <div style={{ maxWidth: 240 }} className="text-sm">
-        <div className="font-bold mb-1">{m.nome}</div>
-        {m.photo && <img src={m.photo} alt={m.nome} className="w-full h-24 object-cover rounded mb-2" />}
-        {m.data_inicio && <div className="text-xs mb-1">In�cio: {new Date(m.data_inicio).toLocaleDateString()}</div>}
-        <div className="flex justify-end gap-2 mt-2">
-          <Button size="sm" className="h-8 px-2 text-xs bg-yellow-500 hover:bg-yellow-600" onClick={() => window.location.href = "/eventos/" + m.id}>
-            Ver Evento
-          </Button>
-        </div>
-      </div>
-    </Popup>
-  </Marker>
-))}
-<FlyToSelected lat={selected?.lat} lng={selected?.lng} />
+      </Popup>
+    </Marker>
+  ))}
+
+        
+  
+  
+
+        <FlyToSelected lat={selected?.lat} lng={selected?.lng} />
         <MapController userLocation={userLocation} />
         <LocationHandler onLocationFound={setLiveLocation} />
         <MapClickHandler onDeselect={onDeselect} />
@@ -519,8 +519,28 @@ export default function LeafletMap({
             <LegendRow label="Encontrado" color={STATUS_COLORS.found} />
               <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
               <LegendRow label="Resgate" color={STATUS_COLORS.rescue} />
-              <LegendRow label="Eventos" color="#eab308" />
-              <LegendRow label="Serviços" color="#0d9488" />
+              
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center bg-orange-600 rounded-full border border-white shadow-sm" style={{ width: 18, height: 18 }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </span>
+                <span>Eventos</span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center bg-[#0d9488] rounded-full border border-white shadow-sm" style={{ width: 18, height: 18 }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </span>
+                <span>Serviços</span>
+              </div>
 
 
             <div className="flex items-center gap-2">
@@ -561,9 +581,28 @@ export default function LeafletMap({
             <LegendRow label="Encontrado" color={STATUS_COLORS.found} />
               <LegendRow label="Adoção" color={STATUS_COLORS.adoption} />
               <LegendRow label="Resgate" color={STATUS_COLORS.rescue} />
-
-              <LegendRow label="Eventos" color="#eab308" />
-              <LegendRow label="Serviços" color="#0d9488" />
+              
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center bg-orange-600 rounded-full border border-white shadow-sm" style={{ width: 18, height: 18 }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                </span>
+                <span>Eventos</span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center justify-center bg-[#0d9488] rounded-full border border-white shadow-sm" style={{ width: 18, height: 18 }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                  </svg>
+                </span>
+                <span>Serviços</span>
+              </div>
 
             <div className="flex items-center gap-2">
               <span className="inline-block" style={{ width: 18, height: 18 }}>

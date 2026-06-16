@@ -1,13 +1,17 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/verificacoes/page": "app/admin/verificacoes/page.js",
   "/agendamentos/page": "app/agendamentos/page.js",
-  "/eventos/[id]/page": "app/eventos/[id]/page.js",
   "/eventos/page": "app/eventos/page.js",
   "/login/page": "app/login/page.js",
+  "/map/page": "app/map/page.js",
   "/new-pet/page": "app/new-pet/page.js",
-  "/novo-evento/page": "app/novo-evento/page.js",
-  "/novo-servico/page": "app/novo-servico/page.js",
   "/page": "app/page.js",
+  "/pet/[id]/page": "app/pet/[id]/page.js",
+  "/prestador/verificacao/page": "app/prestador/verificacao/page.js",
+  "/profile/edit/page": "app/profile/edit/page.js",
   "/profile/page": "app/profile/page.js",
-  "/servicos/page": "app/servicos/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/profile/settings/page": "app/profile/settings/page.js",
+  "/servicos/[id]/page": "app/servicos/[id]/page.js",
+  "/servicos/page": "app/servicos/page.js"
 }

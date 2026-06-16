@@ -2,7 +2,7 @@
   "[project]/Frontend/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)": {
     "id": "[project]/Frontend/components/leaflet-map.client.tsx [app-client] (ecmascript, next/dynamic entry)",
     "files": [
-      "static/chunks/Frontend_components_0_h30t5._.js",
+      "static/chunks/Frontend_0phxi24._.js",
       "static/chunks/0k5-__pnpm_0tt1oqp._.js",
       "static/chunks/Frontend_components_leaflet-map_client_tsx_04.fmcz._.js"
     ]

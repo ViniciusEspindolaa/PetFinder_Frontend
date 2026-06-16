@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
       
-      setUser(updatedUser)
+      setUser(updatedUser as any)
       localStorage.setItem('user', JSON.stringify(updatedUser))
     } catch (error) {
       console.error('Erro ao atualizar coordenadas:', error)

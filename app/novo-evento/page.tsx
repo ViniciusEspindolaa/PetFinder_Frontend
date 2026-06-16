@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,9 +8,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { apiFetch } from "@/lib/api"
+import { reverseGeocode } from "@/lib/geocoding"
 import { useAuth } from "@/lib/auth-context"
 import { ArrowLeft, Calendar, MapPin, Users, Upload, X } from "lucide-react"
 import Link from "next/link"
+import dynamic from "next/dynamic"
+const SelectableMap = dynamic(() => import('@/components/selectable-map'), { ssr: false })
 
 export default function NovoEventoPage() {
   const router = useRouter()
@@ -18,6 +21,8 @@ export default function NovoEventoPage() {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [isUploadingFotos, setIsUploadingFotos] = useState(false)
+  const [mapLocation, setMapLocation] = useState<{ lat: number; lng: number } | null>(null)
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
 
   const [formData, setFormData] = useState({
     titulo: "",
@@ -71,6 +76,57 @@ export default function NovoEventoPage() {
     }
   }
 
+  const handleGetCurrentLocation = () => {
+    setIsGettingLocation(true)
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords
+          setMapLocation({ lat: latitude, lng: longitude })
+          setIsGettingLocation(false)
+          toast({
+            title: "Localização capturada",
+            description: `Coordenadas: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`,
+            duration: 3000,
+          })
+        },
+        () => {
+          setIsGettingLocation(false)
+          toast({
+            variant: "destructive",
+            title: "Erro de localização",
+            description: "Não foi possível obter sua localização. Verifique as permissões.",
+            duration: 3000,
+          })
+        }
+      )
+    } else {
+      setIsGettingLocation(false)
+      toast({
+        variant: "destructive",
+        title: "Erro",
+        description: "Geolocalização não é suportada pelo seu navegador.",
+        duration: 3000,
+      })
+    }
+  }
+
+  useEffect(() => {
+    const doReverse = async () => {
+      if (!mapLocation) return
+      try {
+        const { endereco_texto } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
+        setFormData((prev) => ({
+          ...prev,
+          endereco_texto,
+        }))
+      } catch (err) {
+        console.error("Erro no reverse geocoding", err)
+      }
+    }
+    doReverse()
+  }, [mapLocation])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -93,6 +149,15 @@ export default function NovoEventoPage() {
       return
     }
 
+    if (!mapLocation) {
+      toast({
+        title: "Localização necessária",
+        description: 'Selecione o local no mapa ou use "Usar Minha Localização Atual" antes de criar o evento.',
+        variant: "destructive",
+      })
+      return
+    }
+
     setIsLoading(true)
     try {
       // Combina data e hora
@@ -110,8 +175,8 @@ export default function NovoEventoPage() {
         data_hora_fim: dataHoraFim?.toISOString(),
         capacidade_max: formData.capacidade_max ? parseInt(formData.capacidade_max) : undefined,
         fotos_urls: formData.fotos_urls,
-        latitude: -23.5505,
-        longitude: -46.6333,
+        latitude: mapLocation.lat,
+        longitude: mapLocation.lng,
       }
 
       const response = await apiFetch("/api/eventos", {
@@ -197,8 +262,36 @@ export default function NovoEventoPage() {
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="endereco" className="text-sm font-semibold flex items-center gap-2">
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-semibold flex items-center gap-2 mb-2">
+                  <MapPin className="w-4 h-4" />
+                  Selecione o Local no Mapa *
+                </label>
+                <SelectableMap
+                  latitude={mapLocation?.lat ?? null}
+                  longitude={mapLocation?.lng ?? null}
+                  onChange={(lat, lng) => {
+                    setMapLocation({ lat, lng })
+                  }}
+                />
+                <div className="mt-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleGetCurrentLocation}
+                    disabled={isGettingLocation}
+                    className="w-full text-sm"
+                  >
+                    <MapPin className="w-4 h-4 mr-2" />
+                    {isGettingLocation ? "Obtendo localização..." : "Usar Minha Localização Atual"}
+                  </Button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-2"><label htmlFor="endereco" className="text-sm font-semibold flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
                 Endereço *
               </label>

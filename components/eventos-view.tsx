@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, MapPin, Calendar, Clock, Users, Plus, Heart } from "lucide-react"
+import { Search, MapPin, Calendar, Clock, Users, Plus, Heart, Edit2, Flag } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
 import { Badge } from "@/components/ui/badge"
 import { EventoDetailDialog } from "@/components/evento-detail-dialog"
+import { ReportDialog } from "@/components/report-dialog"
 import { useAuth } from "@/lib/auth-context"
 
 interface Evento {
@@ -25,9 +26,18 @@ interface Evento {
   capacidade_max?: number
   vagas_ocupadas: number
   inscricoes?: { usuarioId: string }[]
+  usuario?: { id: string }
 }
 
-function EventCardItem({ evento, setSelectedEventoId, user, toast }: any) {
+function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
+  evento: Evento
+  setSelectedEventoId: (id: number) => void
+  user: any
+  toast: any
+  onReport: (evento: Evento) => void
+}) {
+  const router = useRouter()
+  const isOwner = user && evento.usuario?.id === user.id
   const isUserAttending = user && evento.inscricoes ? evento.inscricoes.some((i: any) => i.usuarioId === user.id) : false
   const [isAttending, setIsAttending] = useState(isUserAttending)
   const [loadingAttend, setLoadingAttend] = useState(false)
@@ -48,10 +58,6 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast }: any) {
         method: "POST"
       });
       setIsAttending(res.attending);
-      toast({
-        title: res.attending ? "Evento Curtido!" : "Curtida Removida",
-        description: res.message,
-      });
       evento.inscricoes = res.attending ? [...(evento.inscricoes || []), {usuarioId: user.id}] : (evento.inscricoes || []).filter((i: any) => i.usuarioId !== user.id);
     } catch (error: any) {
       console.error(error);
@@ -79,12 +85,15 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast }: any) {
       onClick={() => setSelectedEventoId(evento.id)}
     >
       {evento.fotos_urls && evento.fotos_urls.length > 0 && (
-        <div className="w-full h-40 overflow-hidden bg-gray-100 shrink-0">
+        <div className="w-full h-40 overflow-hidden bg-gray-100 shrink-0 relative">
           <img
             src={evento.fotos_urls[0]}
             alt={evento.titulo}
             className="w-full h-full object-cover"
           />
+          {isOwner && (
+            <Badge className="absolute top-2 left-2 bg-teal-600 text-white text-xs">Meu evento</Badge>
+          )}
         </div>
       )}
       <CardHeader className="pb-3 text-left">
@@ -128,18 +137,43 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast }: any) {
           </div>
         )}
       </CardContent>
-      <CardFooter className="pt-0 mt-auto flex flex-col sm:flex-row gap-2">
-        <Button 
-          disabled={loadingAttend}
-          variant={isAttending ? "secondary" : "outline"}
-          className={`w-full sm:w-1/2 text-xs py-1 h-9 ${isAttending ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'text-gray-600 hover:text-red-600'}`}
-          onClick={toggleAttend}
-        >
-          {isAttending ? <><Heart className="w-3 h-3 mr-1 fill-current" /> Curtiu</> : <><Heart className="w-3 h-3 mr-1" /> Curtir</>}
-        </Button>
+      <CardFooter className="pt-0 mt-auto flex flex-col gap-2">
+        {isOwner ? (
+          <Button
+            className="w-full bg-teal-600 hover:bg-teal-700 text-xs h-9"
+            onClick={(e) => {
+              e.stopPropagation()
+              router.push(`/eventos/${evento.id}?edit=1`)
+            }}
+          >
+            <Edit2 className="w-3 h-3 mr-1" />
+            Editar Evento
+          </Button>
+        ) : (
+          <div className="flex gap-2 w-full">
+            <Button 
+              disabled={loadingAttend}
+              variant={isAttending ? "secondary" : "outline"}
+              className={`flex-1 text-xs py-1 h-9 ${isAttending ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'text-gray-600 hover:text-red-600'}`}
+              onClick={toggleAttend}
+            >
+              {isAttending ? <><Heart className="w-3 h-3 mr-1 fill-current" /> Curtiu</> : <><Heart className="w-3 h-3 mr-1" /> Curtir</>}
+            </Button>
+            <Button
+              variant="outline"
+              className="text-xs h-9 px-2 text-amber-700 border-amber-200 hover:bg-amber-50"
+              onClick={(e) => {
+                e.stopPropagation()
+                onReport(evento)
+              }}
+            >
+              <Flag className="w-3 h-3" />
+            </Button>
+          </div>
+        )}
         <Button 
           variant="outline" 
-          className="w-full sm:w-1/2 text-xs py-1 h-9" 
+          className="w-full text-xs py-1 h-9" 
           onClick={(e) => {
             e.stopPropagation()
             setSelectedEventoId(evento.id)
@@ -157,11 +191,11 @@ export default function EventosPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState("")
   const [cidadeFilter, setCidadeFilter] = useState("")
-  const [filter, setFilter] = useState("proximos") // 'todos', 'proximos'
+  const [filter, setFilter] = useState("proximos")
   const [selectedEventoId, setSelectedEventoId] = useState<number | null>(null)
+  const [reportTarget, setReportTarget] = useState<{ id: number; titulo: string } | null>(null)
   const { toast } = useToast()
   const { user } = useAuth()
-  const router = useRouter()
 
   useEffect(() => {
     fetchEventos()
@@ -170,10 +204,15 @@ export default function EventosPage() {
   const fetchEventos = async () => {
     setIsLoading(true)
     try {
-      const endpoint = filter === "proximos" ? "/api/eventos/proximos" : "/api/eventos"
+      let endpoint = "/api/eventos"
+      if (filter === "proximos") {
+        endpoint = "/api/eventos/proximos"
+      } else if (filter !== "todos") {
+        endpoint = `/api/eventos/proximos?dias=${filter}`
+      }
+
       const data = await apiFetch(endpoint)
-      // Ajuste de resposta para bater com a rota (A rota proximos retorna um obj com 'eventos')
-      if (filter === "proximos" && data.eventos) {
+      if (data.eventos) {
         setEventos(data.eventos)
       } else {
         setEventos(data)
@@ -213,7 +252,6 @@ export default function EventosPage() {
             Encontre feiras de adoção, campanhas de vacinação e outros eventos.
           </p>
         </div>
-        
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
@@ -236,11 +274,15 @@ export default function EventosPage() {
           />
         </div>
         <Select value={filter} onValueChange={setFilter}>
-          <SelectTrigger className="w-full sm:w-[180px] bg-white">
-            <SelectValue placeholder="Filtro" />
+          <SelectTrigger className="w-full sm:w-[200px] bg-white">
+            <SelectValue placeholder="Período" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="proximos">Próximos 30 dias</SelectItem>
+            <SelectItem value="proximos">Próximos eventos</SelectItem>
+            <SelectItem value="7">Próximos 7 dias</SelectItem>
+            <SelectItem value="15">Próximos 15 dias</SelectItem>
+            <SelectItem value="30">Próximos 30 dias</SelectItem>
+            <SelectItem value="60">Próximos 60 dias</SelectItem>
             <SelectItem value="todos">Todos os eventos</SelectItem>
           </SelectContent>
         </Select>
@@ -259,7 +301,14 @@ export default function EventosPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredEventos.map((evento) => (
-            <EventCardItem key={evento.id} evento={evento} setSelectedEventoId={setSelectedEventoId} user={user} toast={toast} />
+            <EventCardItem
+              key={evento.id}
+              evento={evento}
+              setSelectedEventoId={setSelectedEventoId}
+              user={user}
+              toast={toast}
+              onReport={(e) => setReportTarget({ id: e.id, titulo: e.titulo })}
+            />
           ))}
         </div>
       )}
@@ -272,6 +321,12 @@ export default function EventosPage() {
           onUpdate={fetchEventos}
         />
       )}
+
+      <ReportDialog
+        target={reportTarget ? { type: 'evento', id: reportTarget.id, titulo: reportTarget.titulo } : null}
+        open={!!reportTarget}
+        onClose={() => setReportTarget(null)}
+      />
     </div>
   )
 }

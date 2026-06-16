@@ -17,7 +17,63 @@ import { PetDetailDialog } from '@/components/pet-detail-dialog'
 import { ViewSightingsDialog } from '@/components/view-sightings-dialog'
 import { MobileNav } from '@/components/mobile-nav'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, PawPrint, Briefcase, CalendarDays } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+const SERVICE_TYPE_FILTERS = [
+  { value: 'all', label: 'Todos' },
+  { value: 'PET_SITTER', label: 'Pet Sitter' },
+  { value: 'DOG_WALKER', label: 'Dog Walker' },
+  { value: 'BANHO_TOSA', label: 'Banho e Tosa' },
+  { value: 'HOSPEDAGEM_CRECHE', label: 'Hospedagem' },
+  { value: 'ADESTRADOR', label: 'Adestrador' },
+] as const
+
+const EVENT_STATUS_FILTERS = [
+  { value: 'all', label: 'Todos' },
+  { value: 'AGENDADO', label: 'Agendados' },
+  { value: 'EM_ANDAMENTO', label: 'Em andamento' },
+  { value: 'CONCLUIDO', label: 'Concluídos' },
+] as const
+
+type ServiceTypeFilter = (typeof SERVICE_TYPE_FILTERS)[number]['value']
+type EventStatusFilter = (typeof EVENT_STATUS_FILTERS)[number]['value']
+
+function MapFilterRow({
+  label,
+  activeValue,
+  options,
+  onChange,
+  activeClassName,
+}: {
+  label: string
+  activeValue: string
+  options: readonly { value: string; label: string }[]
+  onChange: (value: string) => void
+  activeClassName: string
+}) {
+  return (
+    <div className="flex flex-wrap gap-2 mb-3">
+      <span className="text-sm font-medium flex items-center mr-2">{label}</span>
+      {options.map((opt) => (
+        <Button
+          key={opt.value}
+          size="sm"
+          variant="outline"
+          className={cn(
+            "transition-all",
+            activeValue === opt.value
+              ? cn(activeClassName, "shadow-sm ring-1 ring-offset-1")
+              : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
+          )}
+          onClick={() => onChange(opt.value)}
+        >
+          {opt.label}
+        </Button>
+      ))}
+    </div>
+  )
+}
 
 function MapContent() {
   const { user, isLoading } = useAuth()
@@ -31,7 +87,9 @@ function MapContent() {
   const [selectedPetForSighting, setSelectedPetForSighting] = useState<Pet | null>(null)
   const [selectedPetForDetails, setSelectedPetForDetails] = useState<Pet | null>(null)
   const [selectedPetForViewing, setSelectedPetForViewing] = useState<Pet | null>(null)
-  const [statusFilter, setStatusFilter] = useState<'all' | PetStatus>('all')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'lost' | 'found' | 'adoption' | 'rescue'>('all')
+  const [serviceTypeFilter, setServiceTypeFilter] = useState<ServiceTypeFilter>('all')
+  const [eventStatusFilter, setEventStatusFilter] = useState<EventStatusFilter>('all')
   const [showPets, setShowPets] = useState(true)
   const [showServices, setShowServices] = useState(true)
   const [showEvents, setShowEvents] = useState(true)
@@ -53,7 +111,7 @@ function MapContent() {
     async function loadServices() {
       try {
         const res = await apiFetch('/api/servicos')
-        setServices(res.data || res || [])
+        setServices(res?.servicos || res?.data || res || [])
       } catch (err) {
         console.error('Failed to load services for map', err)
       }
@@ -61,7 +119,7 @@ function MapContent() {
     async function loadEvents() {
       try {
         const res = await apiFetch('/api/eventos')
-        setEvents(res.data || res || [])
+        setEvents(res?.eventos || res?.data || res || [])
       } catch (err) {
         console.error('Failed to load events for map', err)
       }
@@ -133,21 +191,85 @@ function MapContent() {
           </div>
 
           <div className="mt-2 sm:mt-0 sm:ml-auto flex flex-wrap gap-2">
-              <Button size="sm" variant={showPets ? 'default' : 'outline'} className={showPets ? "bg-white text-zinc-800 border-zinc-200 shadow-sm" : ""} onClick={() => setShowPets(!showPets)}>Pets</Button>
-              <Button size="sm" variant={showServices ? 'default' : 'outline'} className={showServices ? "bg-purple-500 hover:bg-purple-600 text-white border-purple-500 shadow-sm" : ""} onClick={() => setShowServices(!showServices)}>Serviços</Button>
-              <Button size="sm" variant={showEvents ? 'default' : 'outline'} className={showEvents ? "bg-yellow-500 hover:bg-yellow-600 text-white border-yellow-500 shadow-sm" : ""} onClick={() => setShowEvents(!showEvents)}>Eventos</Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={cn(
+                "gap-1.5 font-semibold transition-all",
+                showPets
+                  ? "bg-blue-600 hover:bg-blue-700 text-white border-blue-700 shadow-md ring-2 ring-blue-400 ring-offset-1"
+                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              )}
+              onClick={() => setShowPets(!showPets)}
+            >
+              <PawPrint className="w-4 h-4" />
+              Pets
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={cn(
+                "gap-1.5 font-semibold transition-all",
+                showServices
+                  ? "bg-teal-600 hover:bg-teal-700 text-white border-teal-700 shadow-md ring-2 ring-teal-400 ring-offset-1"
+                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              )}
+              onClick={() => setShowServices(!showServices)}
+            >
+              <Briefcase className="w-4 h-4" />
+              Serviços
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={cn(
+                "gap-1.5 font-semibold transition-all",
+                showEvents
+                  ? "bg-orange-600 hover:bg-orange-700 text-white border-orange-700 shadow-md ring-2 ring-orange-400 ring-offset-1"
+                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              )}
+              onClick={() => setShowEvents(!showEvents)}
+            >
+              <CalendarDays className="w-4 h-4" />
+              Eventos
+            </Button>
           </div>
         </div>
 
         {showPets && (
-          <div className="flex flex-wrap gap-2 mb-3">
-            <span className="text-sm font-medium flex items-center mr-2">Filtro Pets:</span>
-            <Button size="sm" variant={statusFilter === 'all' ? 'default' : 'outline'} onClick={() => setStatusFilter('all')}>Todos</Button>
-            <Button size="sm" variant={statusFilter === 'lost' ? 'default' : 'outline'} onClick={() => setStatusFilter('lost')}>Perdidos</Button>
-            <Button size="sm" variant={statusFilter === 'found' ? 'default' : 'outline'} onClick={() => setStatusFilter('found')}>Encontrados</Button>
-            <Button size="sm" variant={statusFilter === 'adoption' ? 'default' : 'outline'} onClick={() => setStatusFilter('adoption')}>Adoção</Button>
-            <Button size="sm" variant={statusFilter === 'rescue' ? 'default' : 'outline'} onClick={() => setStatusFilter('rescue')}>Resgate</Button>
-          </div>
+          <MapFilterRow
+            label="Filtro Pets:"
+            activeValue={statusFilter}
+            options={[
+              { value: 'all', label: 'Todos' },
+              { value: 'lost', label: 'Perdidos' },
+              { value: 'found', label: 'Encontrados' },
+              { value: 'adoption', label: 'Adoção' },
+              { value: 'rescue', label: 'Resgate' },
+            ]}
+            onChange={(value) => setStatusFilter(value as typeof statusFilter)}
+            activeClassName="bg-slate-800 hover:bg-slate-900 text-white border-slate-800 ring-slate-400"
+          />
+        )}
+
+        {showServices && (
+          <MapFilterRow
+            label="Filtro Serviços:"
+            activeValue={serviceTypeFilter}
+            options={SERVICE_TYPE_FILTERS}
+            onChange={(value) => setServiceTypeFilter(value as ServiceTypeFilter)}
+            activeClassName="bg-teal-600 hover:bg-teal-700 text-white border-teal-600 ring-teal-400"
+          />
+        )}
+
+        {showEvents && (
+          <MapFilterRow
+            label="Filtro Eventos:"
+            activeValue={eventStatusFilter}
+            options={EVENT_STATUS_FILTERS}
+            onChange={(value) => setEventStatusFilter(value as EventStatusFilter)}
+            activeClassName="bg-orange-600 hover:bg-orange-700 text-white border-orange-600 ring-orange-400"
+          />
         )}
       </div>
       <div className="flex-1 flex flex-col overflow-hidden pb-20 sm:pb-16">
@@ -162,10 +284,12 @@ function MapContent() {
               showEvents={showEvents}
               selectedPetId={petId}
               onPetSelect={(pet) => router.push(`/map?petId=${pet.id}`)}
-              onReportSighting={setSelectedPetForSighting}
-              onViewDetails={setSelectedPetForDetails}
+              onReportSighting={setSelectedPetForSighting as any}
+              onViewDetails={setSelectedPetForDetails as any}
               onDeselect={() => router.push('/map')}
               statusFilter={statusFilter}
+              serviceTypeFilter={serviceTypeFilter}
+              eventStatusFilter={eventStatusFilter}
               userLocation={user?.location ? { lat: user.location.lat, lng: user.location.lng } : undefined}
             />
           </div>

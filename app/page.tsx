@@ -292,6 +292,8 @@ export default function HomePage() {
       .filter(Boolean)
   )).sort() as string[]
 
+  const totalActiveFilters = statusFilters.length + typeFilters.length + cityFilters.length + neighborhoodFilters.length
+
   return (
     <div className="min-h-screen bg-linear-to-br from-teal-50 to-orange-50 pb-20">
 
@@ -576,9 +578,48 @@ export default function HomePage() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+          {totalActiveFilters > 0 && (
+            <div className="flex items-center gap-2 mt-2">
+              <Badge variant="secondary" className="text-xs">
+                {totalActiveFilters} filtro{totalActiveFilters > 1 ? 's' : ''} ativo{totalActiveFilters > 1 ? 's' : ''}
+              </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 text-xs px-2 text-muted-foreground hover:text-red-600"
+                onClick={() => {
+                  setStatusFilters([])
+                  setTypeFilters([])
+                  setCityFilters([])
+                  setNeighborhoodFilters([])
+                }}
+              >
+                × Limpar tudo
+              </Button>
+            </div>
+          )}
         </div>
         {isLoadingPets ? (
-          <div className="text-center py-12">Carregando publicações...</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="rounded-xl overflow-hidden border bg-white animate-pulse">
+                <div className="aspect-square bg-gray-200" />
+                <div className="p-3 space-y-2.5">
+                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="flex gap-1">
+                    <div className="h-4 bg-gray-200 rounded w-16" />
+                    <div className="h-4 bg-gray-200 rounded w-12" />
+                  </div>
+                  <div className="h-3 bg-gray-200 rounded w-full" />
+                  <div className="h-3 bg-gray-200 rounded w-2/3" />
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <div className="h-8 bg-gray-200 rounded" />
+                    <div className="h-8 bg-gray-200 rounded" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : filteredPets.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-sm">Nenhum pet encontrado com os filtros selecionados</p>

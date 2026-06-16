@@ -1,0 +1,16 @@
+const fs = require('fs');
+const p = 'C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/leaflet-map.client.tsx';
+let c = fs.readFileSync(p, 'utf8');
+c = c.replace(/services\?: any\[\]/, 'services?: any');
+c = c.replace(/events\?: any\[\]/, 'events?: any');
+c = c.replace(/m\.status === 'lost'/g, '(m as any).status === \'lost\'');
+c = c.replace(/m\.status === 'rescue'/g, '(m as any).status === \'rescue\'');
+c = c.replace(/STATUS_COLORS\[m\.status \|\| 'default'\]/g, 'STATUS_COLORS[(m as any).status || \\'default\\']');
+c = c.replace(/m\.sightings/g, '(m as any).sightings');
+fs.writeFileSync(p, c, 'utf8');
+const p2 = 'C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/app/map/page.tsx';
+let c2 = fs.readFileSync(p2, 'utf8');
+c2 = c2.replace(/useState\<'all' \| PetStatus\>/g, 'useState<\\'all\\' | \\'lost\\' | \\'found\\' | \\'adoption\\' | \\'rescue\\'>');
+c2 = c2.replace(/onReportSighting=\{setSelectedPetForSighting\}/g, 'onReportSighting={setSelectedPetForSighting as any}');
+c2 = c2.replace(/onViewDetails=\{setSelectedPetForDetails\}/g, 'onViewDetails={setSelectedPetForDetails as any}');
+fs.writeFileSync(p2, c2, 'utf8');

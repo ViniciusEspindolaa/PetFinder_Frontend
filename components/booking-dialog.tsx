@@ -1,6 +1,6 @@
 ﻿"use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "@/lib/auth-context"
 import { apiFetch } from "@/lib/api"
 import { Button } from "@/components/ui/button"
@@ -33,6 +33,8 @@ interface BookingDialogProps {
   atendeDomicilio?: boolean
   taxaDomicilio?: number
   variacoes?: { nome: string; preco: number }[]
+  prestadorVerificado?: boolean
+  identidadeVerificada?: boolean
   open: boolean
   onOpenChange: (open: boolean) => void
   onSuccess?: () => void
@@ -51,6 +53,8 @@ export function BookingDialog({
   atendeDomicilio,
   taxaDomicilio = 0,
   variacoes = [],
+  prestadorVerificado,
+  identidadeVerificada,
   open,
   onOpenChange,
   onSuccess,
@@ -65,9 +69,22 @@ export function BookingDialog({
   const [emDomicilio, setEmDomicilio] = useState(false)
   const [selectedVariacaoIndex, setSelectedVariacaoIndex] = useState("-1")
   const [erro, setErro] = useState("")
+  const [ocupados, setOcupados] = useState<{ horarios: string[]; turnos: string[] }>({ horarios: [], turnos: [] })
 
   const isHorario = tipoAgendamento === "HORARIO"
   const isTurno = tipoAgendamento === "TURNO"
+
+  // Busca horários/turnos já ocupados quando a data muda
+  useEffect(() => {
+    if (!data || !servicoId) {
+      setOcupados({ horarios: [], turnos: [] })
+      return
+    }
+    setHora("")
+    apiFetch(`/api/agendamentos/servico/${servicoId}/ocupados?data=${data}`)
+      .then((res) => setOcupados(res))
+      .catch(() => setOcupados({ horarios: [], turnos: [] }))
+  }, [data, servicoId])
 
   // Calcular valor total dinâmico
   const calcValorBase = selectedVariacaoIndex !== '-1' && variacoes.length > 0 ? Number(variacoes[parseInt(selectedVariacaoIndex)]?.preco || 0) : Number(valorBase) || 0
@@ -100,7 +117,7 @@ export function BookingDialog({
     return horarios
   }
 
-  const horariosDisponiveis = gerarHorarios()
+  const horariosDisponiveis = gerarHorarios().filter((h) => !ocupados.horarios.includes(h))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -136,6 +153,7 @@ export function BookingDialog({
           formaPagamento: formaPagamento,
           forma_pagamento: formaPagamento,
           valor_simulado: valorFinal,
+          atendimento_domicilio: emDomicilio,
         }),
       })
 
@@ -264,9 +282,15 @@ export function BookingDialog({
                   <SelectValue placeholder="Selecione o turno" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="MANHA">Manhã (08:00 - 12:00)</SelectItem>
-                  <SelectItem value="TARDE">Tarde (13:00 - 18:00)</SelectItem>
-                  <SelectItem value="NOITE">Noite (18:00 - 22:00)</SelectItem>
+                  {[
+                    { value: "MANHA", label: "Manhã (08:00 - 12:00)" },
+                    { value: "TARDE", label: "Tarde (13:00 - 18:00)" },
+                    { value: "NOITE", label: "Noite (18:00 - 22:00)" },
+                  ].map((t) => (
+                    <SelectItem key={t.value} value={t.value} disabled={ocupados.turnos.includes(t.value)}>
+                      {t.label}{ocupados.turnos.includes(t.value) ? " — Ocupado" : ""}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -298,18 +322,32 @@ export function BookingDialog({
             </div>
 
             {atendeDomicilio && (
-              <div className="flex items-center space-x-2 border p-3 rounded bg-accent">
-                <input
-                  type="checkbox"
-                  id="emDomicilio"
-                  checked={emDomicilio}
-                  onChange={(e) => setEmDomicilio(e.target.checked)}
-                  className="rounded border-gray-300"
-                />
-                <label htmlFor="emDomicilio" className="text-sm">
-                  Atendimento em Domicílio (adicional de R$ {taxaDomicilio?.toFixed(2)})
-                </label>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2 border p-3 rounded bg-accent">
+                  <input
+                    type="checkbox"
+                    id="emDomicilio"
+                    checked={emDomicilio}
+                    onChange={(e) => setEmDomicilio(e.target.checked)}
+                    className="rounded border-gray-300"
+                    disabled={!identidadeVerificada}
+                  />
+                  <label htmlFor="emDomicilio" className="text-sm">
+                    Atendimento em Domicílio (adicional de R$ {taxaDomicilio?.toFixed(2)})
+                  </label>
+                </div>
+                {!identidadeVerificada && (
+                  <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+                    Atendimento em domicílio indisponível: o prestador ainda não concluiu a verificação de identidade.
+                  </p>
+                )}
               </div>
+            )}
+
+            {prestadorVerificado === false && (
+              <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+                Este prestador ainda não concluiu a verificação de contato na plataforma.
+              </p>
             )}
 
             <div className="space-y-2 border-t pt-2">

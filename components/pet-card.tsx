@@ -26,10 +26,10 @@ interface PetCardProps {
   compactMode?: boolean
 }
 
-export function PetCard({ 
-  pet, 
-  onViewSightings, 
-  onReportSighting, 
+export function PetCard({
+  pet,
+  onViewSightings,
+  onReportSighting,
   onViewMap,
   isOwner = false,
   onEdit,
@@ -44,6 +44,7 @@ export function PetCard({
   const [contactDialogOpen, setContactDialogOpen] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
   const [imageOpen, setImageOpen] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
   
   const statusConfig = {
     lost: { label: 'Perdido', color: 'bg-red-500 text-white' },
@@ -82,15 +83,17 @@ export function PetCard({
 
   return (
     <>
-      <Card onClick={() => setDetailOpen(true)} className="cursor-pointer w-full overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98] pt-0">
+      <Card onClick={() => setDetailOpen(true)} className={`cursor-pointer w-full overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98] pt-0 ${pet.completed ? 'opacity-70' : ''}`}>
         <div className={compactMode ? "relative h-40 bg-gray-100" : "relative aspect-4/3 sm:aspect-square bg-gray-100"}>
+          {!imageLoaded && <div className="absolute inset-0 bg-gray-200 animate-pulse" />}
           <Image
             src={pet.photoUrl || "/placeholder.svg"}
             alt={displayName || 'Pet'}
             fill
-            className="object-cover"
+            className={`object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
             priority={false}
             loading="lazy"
+            onLoad={() => setImageLoaded(true)}
           />
           <div className="absolute top-1.5 left-1.5 flex gap-1 flex-wrap">
             <Badge className={`${statusConfig[pet.status].color} text-[10px] px-1.5 py-0.5 ${compactMode ? 'sm:text-xs sm:px-2' : 'text-xs px-2'}`}>
@@ -176,10 +179,14 @@ export function PetCard({
                 </div>
               )}
 
-              <div className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground">
+              <a
+                href={`tel:${pet.contactPhone}`}
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground hover:text-teal-600 transition-colors"
+              >
                 <Phone className="w-3.5 h-3.5 shrink-0" />
-                <span className="truncate">{pet.contactName}</span>
-              </div>
+                <span className="truncate">{pet.contactName} · {pet.contactPhone}</span>
+              </a>
             </>
           )}
 

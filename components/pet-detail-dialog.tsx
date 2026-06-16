@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Pet } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Eye, Share2, Maximize2 } from 'lucide-react'
+import { Eye, Share2, Maximize2, Phone, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import { useAuth } from '@/lib/auth-context'
 import { useRouter } from 'next/navigation'
@@ -44,6 +44,7 @@ export function PetDetailDialog({
   const [contactDialogOpen, setContactDialogOpen] = useState(false)
   const [directionsOpen, setDirectionsOpen] = useState(false)
   const [imageOpen, setImageOpen] = useState(false)
+  const [mapOpen, setMapOpen] = useState(false)
   
   if (!pet) return null
 
@@ -151,7 +152,11 @@ export function PetDetailDialog({
 
                 <div>
                   <h4 className="font-semibold">Contato</h4>
-                  <p className="text-sm text-muted-foreground mt-1">{pet.contactName} — {pet.contactPhone}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{pet.contactName}</p>
+                  <a href={`tel:${pet.contactPhone}`} className="flex items-center gap-1.5 text-sm text-teal-600 hover:text-teal-700 font-medium mt-0.5">
+                    <Phone className="w-3.5 h-3.5" />
+                    {pet.contactPhone}
+                  </a>
 
                   {pet.status === 'lost' && (
                     <>
@@ -223,8 +228,20 @@ export function PetDetailDialog({
               </div>
             </div>
 
-            <div className="w-full h-60 sm:h-96">
-              <InteractiveMapClient pets={[pet]} selectedPetId={pet.id} onPetSelect={() => {}} />
+            <div className="border-t pt-1">
+              <button
+                type="button"
+                className="w-full flex items-center justify-between text-sm text-muted-foreground hover:text-foreground py-2 transition-colors"
+                onClick={() => setMapOpen(v => !v)}
+              >
+                <span className="font-medium">Ver no mapa</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mapOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {mapOpen && (
+                <div className="w-full h-60 sm:h-80 mt-1">
+                  <InteractiveMapClient pets={[pet]} selectedPetId={pet.id} onPetSelect={() => {}} />
+                </div>
+              )}
             </div>
           </div>
         </DialogContent>

@@ -25,41 +25,88 @@ import {
 } from '@/components/ui/select'
 import { AlertTriangle } from 'lucide-react'
 
+export type ReportTarget = {
+  type: 'publicacao' | 'evento' | 'servico'
+  id: number | string
+  titulo: string
+}
+
 interface ReportDialogProps {
-  pet: Pet | null
+  pet?: Pet | null
+  target?: ReportTarget | null
   open: boolean
   onClose: () => void
 }
 
-export function ReportDialog({ pet, open, onClose }: ReportDialogProps) {
+const tipoLabels: Record<ReportTarget['type'], string> = {
+  publicacao: 'Publicação',
+  evento: 'Evento',
+  servico: 'Serviço',
+}
+
+const motivosPublicacao = [
+  { value: 'fake', label: 'Anúncio falso ou enganoso' },
+  { value: 'inappropriate', label: 'Conteúdo inapropriado' },
+  { value: 'spam', label: 'Spam ou propaganda' },
+  { value: 'abuse', label: 'Maus tratos ao animal' },
+  { value: 'duplicate', label: 'Publicação duplicada' },
+  { value: 'scam', label: 'Tentativa de golpe' },
+  { value: 'other', label: 'Outro motivo' },
+]
+
+const motivosEventoServico = [
+  { value: 'fake', label: 'Informações falsas ou enganosas' },
+  { value: 'inappropriate', label: 'Conteúdo inapropriado' },
+  { value: 'spam', label: 'Spam ou propaganda' },
+  { value: 'scam', label: 'Tentativa de golpe' },
+  { value: 'cancelled', label: 'Evento/serviço inexistente ou cancelado' },
+  { value: 'other', label: 'Outro motivo' },
+]
+
+export function ReportDialog({ pet, target, open, onClose }: ReportDialogProps) {
   const { user } = useAuth()
   const { toast } = useToast()
   const [reason, setReason] = useState('')
   const [details, setDetails] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const resolvedTarget: ReportTarget | null = target ?? (pet ? {
+    type: 'publicacao',
+    id: pet.id,
+    titulo: pet.name,
+  } : null)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!pet) return
+    if (!resolvedTarget) return
 
     setIsSubmitting(true)
+
+    const payload: Record<string, unknown> = {
+      usuarioId: user?.id,
+      motivo: reason,
+      descricao: details,
+    }
+
+    if (resolvedTarget.type === 'publicacao') {
+      payload.publicacaoId = Number(resolvedTarget.id)
+    } else if (resolvedTarget.type === 'evento') {
+      payload.eventoId = Number(resolvedTarget.id)
+    } else {
+      payload.servicoId = Number(resolvedTarget.id)
+    }
 
     try {
       await apiFetch('/api/denuncias', {
         method: 'POST',
-        body: JSON.stringify({
-          publicacaoId: Number(pet.id),
-          usuarioId: user?.id, // Envia ID se logado, senão undefined (anônimo)
-          motivo: reason,
-          descricao: details
-        })
+        body: JSON.stringify(payload),
       })
 
       toast({
         title: 'Denúncia enviada',
         description: 'Nossa equipe analisará o caso. Obrigado por ajudar a manter a comunidade segura.',
       })
-      
+
       setReason('')
       setDetails('')
       onClose()
@@ -68,14 +115,16 @@ export function ReportDialog({ pet, open, onClose }: ReportDialogProps) {
       toast({
         title: 'Erro',
         description: 'Não foi possível enviar a denúncia. Tente novamente.',
-        variant: 'destructive'
+        variant: 'destructive',
       })
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  if (!pet) return null
+  if (!resolvedTarget) return null
+
+  const motivos = resolvedTarget.type === 'publicacao' ? motivosPublicacao : motivosEventoServico
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -83,10 +132,10 @@ export function ReportDialog({ pet, open, onClose }: ReportDialogProps) {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-600" />
-            Denunciar Publicação
+            Denunciar {tipoLabels[resolvedTarget.type]}
           </DialogTitle>
           <DialogDescription>
-            Informe o motivo da denúncia. Nossa equipe analisará o caso.
+            Informe o motivo da denúncia sobre &quot;{resolvedTarget.titulo}&quot;. Nossa equipe analisará o caso.
           </DialogDescription>
         </DialogHeader>
 
@@ -98,13 +147,9 @@ export function ReportDialog({ pet, open, onClose }: ReportDialogProps) {
                 <SelectValue placeholder="Selecione o motivo" />
               </SelectTrigger>
               <SelectContent className="z-2060">
-                <SelectItem value="fake">Anúncio falso ou enganoso</SelectItem>
-                <SelectItem value="inappropriate">Conteúdo inapropriado</SelectItem>
-                <SelectItem value="spam">Spam ou propaganda</SelectItem>
-                <SelectItem value="abuse">Maus tratos ao animal</SelectItem>
-                <SelectItem value="duplicate">Publicação duplicada</SelectItem>
-                <SelectItem value="scam">Tentativa de golpe</SelectItem>
-                <SelectItem value="other">Outro motivo</SelectItem>
+                {motivos.map((m) => (
+                  <SelectItem key={m.value} value={m.value}>{m.label}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -134,8 +179,8 @@ export function ReportDialog({ pet, open, onClose }: ReportDialogProps) {
             <Button type="button" variant="outline" onClick={onClose} className="text-sm">
               Cancelar
             </Button>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={!reason || isSubmitting}
               variant="destructive"
               className="text-sm"

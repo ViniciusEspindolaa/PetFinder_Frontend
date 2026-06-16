@@ -29,8 +29,8 @@ export async function apiFetch(path: string, options: ApiOptions = {}) {
     const data = text ? JSON.parse(text) : null
 
     if (!res.ok) {
-      const message = (data && (data.erro || data.error || data.message)) || res.statusText
-      const err: any = new Error(message)
+      const message = (data && (data.message || (typeof data.error === 'string' ? data.error : undefined) || (typeof data.erro === 'string' ? data.erro : undefined))) || res.statusText
+      const err: any = new Error(String(message))
       err.status = res.status
       err.response = data
       throw err

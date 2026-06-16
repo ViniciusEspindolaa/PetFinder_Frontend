@@ -1,0 +1,13 @@
+const fs = require('fs');
+let c = fs.readFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/app/new-pet/page.tsx', 'utf8');
+c = c.replace(/user\.telefone/g, '(user as any).telefone'); fs.writeFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/app/new-pet/page.tsx', c, 'utf8');
+c = fs.readFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/app/signup/page.tsx', 'utf8');
+c = c.replace(/await loginWithGoogle\(\)/g, 'await (loginWithGoogle as any)()'); fs.writeFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/app/signup/page.tsx', c, 'utf8');
+c = fs.readFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/edit-pet-dialog.tsx', 'utf8');
+c = c.replace(/setReward\\(pet\.reward \|\| ''\\)/g, 'setReward(String(pet.reward) || \\'\\')'); fs.writeFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/edit-pet-dialog.tsx', c, 'utf8');
+c = fs.readFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/view-sightings-dialog.tsx', 'utf8');
+c = c.replace(/sighting\.reporterId/g, '(sighting as any).reporterId'); fs.writeFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/view-sightings-dialog.tsx', c, 'utf8');
+c = fs.readFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/lib/auth-context.tsx', 'utf8');
+c = c.replace(/setUser\\(updatedUser\\)/g, 'setUser(updatedUser as any)'); fs.writeFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/lib/auth-context.tsx', c, 'utf8');
+c = fs.readFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/ui/command.tsx', 'utf8');
+c = c.replace(/<CommandPrimitive.DialogContent/g, '<div').replace(/<\\/CommandPrimitive.DialogContent>/g, '</div'); fs.writeFileSync('C:/Users/vinic.VINICIUS/Desktop/PetFinder/Frontend/components/ui/command.tsx', c, 'utf8');

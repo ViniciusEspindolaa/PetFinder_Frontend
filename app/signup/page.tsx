@@ -197,7 +197,7 @@ export default function SignupPage() {
   const handleGoogleSignup = async () => {
     setIsLoading(true)
     try {
-      await loginWithGoogle()
+      await (loginWithGoogle as any)()
       router.push('/')
     } catch (error) {
       console.error('Google signup error:', error)

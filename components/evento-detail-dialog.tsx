@@ -8,7 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription as UIDialogDescription } from "@/components/ui/dialog"
 import { apiFetch } from "@/lib/api"
 import { useAuth } from "@/lib/auth-context"
-import { Phone, Mail, MapPin, Clock, Edit2, Calendar, Users, Heart } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, Edit2, Calendar, Users, Heart, Flag } from "lucide-react"
+import { ReportDialog } from "@/components/report-dialog"
 
 interface Evento {
   id: number
@@ -41,6 +42,7 @@ export function EventoDetailDialog({ id, open, onClose, onUpdate }: EventoDetail
 
   const [isAttending, setIsAttending] = useState(false)
   const [loadingAttend, setLoadingAttend] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
 
   useEffect(() => {
     if (open && id) {
@@ -80,10 +82,6 @@ export function EventoDetailDialog({ id, open, onClose, onUpdate }: EventoDetail
     try {
       const res = await apiFetch(`/api/eventos/${id}/inscricao`, { method: "POST" })
       setIsAttending(res.attending)
-      toast({
-        title: res.attending ? "Gostou do Evento!" : "Curtida Removida",
-        description: res.message,
-      })
       if (evento) {
         setEvento({
           ...evento,
@@ -214,36 +212,57 @@ export function EventoDetailDialog({ id, open, onClose, onUpdate }: EventoDetail
                       </div>
                     </div>
                     {user?.id === evento.usuario.id ? (
-                      <Button
-                        className="w-full"
-                        variant="outline"
-                        onClick={() => {
-                          onClose()
-                          router.push(`/eventos/${evento.id}`)
-                        }}
-                      >
-                        <Edit2 className="w-4 h-4 mr-2" />
-                        Editar Evento
-                      </Button>
+                      <div className="space-y-2">
+                        <Button
+                          className="w-full bg-teal-600 hover:bg-teal-700 text-white"
+                          onClick={() => {
+                            onClose()
+                            router.push(`/eventos/${evento.id}?edit=1`)
+                          }}
+                        >
+                          <Edit2 className="w-4 h-4 mr-2" />
+                          Editar Evento
+                        </Button>
+                        <Button
+                          className="w-full"
+                          variant="outline"
+                          onClick={() => {
+                            onClose()
+                            router.push(`/eventos/${evento.id}`)
+                          }}
+                        >
+                          Ver página completa
+                        </Button>
+                      </div>
                     ) : (
-                      <Button 
-                        disabled={loadingAttend}
-                        variant={isAttending ? "secondary" : "outline"}
-                        className={`w-full ${isAttending ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'text-gray-600 hover:text-red-600'}`}
-                        onClick={toggleAttend}
-                      >
-                        {isAttending ? (
-                          <>
-                            <Heart className="w-4 h-4 mr-2 fill-current" />
-                            Curtiu
-                          </>
-                        ) : (
-                          <>
-                            <Heart className="w-4 h-4 mr-2" />
-                            Curtir Evento
-                          </>
-                        )}
-                      </Button>
+                      <div className="space-y-2">
+                        <Button 
+                          disabled={loadingAttend}
+                          variant={isAttending ? "secondary" : "outline"}
+                          className={`w-full ${isAttending ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'text-gray-600 hover:text-red-600'}`}
+                          onClick={toggleAttend}
+                        >
+                          {isAttending ? (
+                            <>
+                              <Heart className="w-4 h-4 mr-2 fill-current" />
+                              Curtiu
+                            </>
+                          ) : (
+                            <>
+                              <Heart className="w-4 h-4 mr-2" />
+                              Curtir Evento
+                            </>
+                          )}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full text-amber-700 border-amber-200 hover:bg-amber-50"
+                          onClick={() => setReportOpen(true)}
+                        >
+                          <Flag className="w-4 h-4 mr-2" />
+                          Denunciar Evento
+                        </Button>
+                      </div>
                     )}
                   </CardContent>
                 </Card>
@@ -252,6 +271,14 @@ export function EventoDetailDialog({ id, open, onClose, onUpdate }: EventoDetail
           </div>
         )}
       </DialogContent>
+
+      {evento && (
+        <ReportDialog
+          target={{ type: 'evento', id: evento.id, titulo: evento.titulo }}
+          open={reportOpen}
+          onClose={() => setReportOpen(false)}
+        />
+      )}
     </Dialog>
   )
 }

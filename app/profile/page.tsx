@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Settings, LogOut, PawPrint, Eye, MapPin, Phone, Mail, Calendar, Edit } from 'lucide-react'
+import { ArrowLeft, Settings, LogOut, PawPrint, Eye, MapPin, Phone, Mail, Calendar, Edit, Briefcase, Edit2, ShieldCheck, ShieldAlert, EyeOff, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import { useToast } from '@/hooks/use-toast'
 
@@ -35,12 +35,26 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 
+interface VerificacaoStatus {
+  telefone_verificado: boolean
+  email_verificado: boolean
+  foto_perfil: string | null
+  contato_verificado: boolean
+  identidade_verificada: boolean
+  verificacao: { status: string } | null
+}
+
 export default function ProfilePage() {
   const { user, logout, isLoading } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
   const [userPets, setUserPets] = useState<Pet[]>([])
   const [userSightings, setUserSightings] = useState<any[]>([])
+  const [userEventos, setUserEventos] = useState<any[]>([])
+  const [userServicos, setUserServicos] = useState<any[]>([])
+  const [verificacaoStatus, setVerificacaoStatus] = useState<VerificacaoStatus | null>(null)
+  const [isLoadingEventos, setIsLoadingEventos] = useState(false)
+  const [isLoadingServicos, setIsLoadingServicos] = useState(false)
   const [isLoadingSightings, setIsLoadingSightings] = useState(false)
   const [completePetDialogOpen, setCompletePetDialogOpen] = useState(false)
   const [editPetDialogOpen, setEditPetDialogOpen] = useState(false)
@@ -51,6 +65,8 @@ export default function ProfilePage() {
   const [editingSighting, setEditingSighting] = useState<any | null>(null)
   const [sightingToDelete, setSightingToDelete] = useState<string | null>(null)
   const [viewingSightingsPet, setViewingSightingsPet] = useState<Pet | null>(null)
+  const [deleteServicoId, setDeleteServicoId] = useState<number | null>(null)
+  const [togglingServicoId, setTogglingServicoId] = useState<number | null>(null)
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -119,16 +135,69 @@ export default function ProfilePage() {
       } finally {
         setIsLoadingSightings(false)
       }
+
+      try {
+        setIsLoadingEventos(true)
+        const eventosRes: any = await apiFetch(`/api/eventos/usuario/${user.id}`)
+        setUserEventos(eventosRes.eventos || eventosRes || [])
+      } catch (error) {
+        console.error("Failed to load user events", error)
+      } finally {
+        setIsLoadingEventos(false)
+      }
+
+      try {
+        setIsLoadingServicos(true)
+        const servicosRes: any = await apiFetch(`/api/servicos/usuario/${user.id}`)
+        setUserServicos(Array.isArray(servicosRes) ? servicosRes : servicosRes.servicos || [])
+      } catch (error) {
+        console.error("Failed to load user services", error)
+      } finally {
+        setIsLoadingServicos(false)
+      }
+
+      try {
+        const verRes = await apiFetch('/api/verificacao/status')
+        setVerificacaoStatus(verRes)
+      } catch (error) {
+        console.error("Failed to load verification status", error)
+      }
     }
   }
 
   useEffect(() => {
     loadUserData()
-  }, [user])
+  }, [user?.id])
 
   const handleLogout = () => {
     logout()
     router.push('/login')
+  }
+
+  const handleToggleServico = async (servico: any) => {
+    setTogglingServicoId(servico.id)
+    try {
+      const atualizado = await apiFetch(`/api/servicos/${servico.id}/toggle-publicado`, { method: "PATCH" })
+      setUserServicos((prev) => prev.map((s) => (s.id === servico.id ? { ...s, ...atualizado } : s)))
+      toast({ title: atualizado.publicado ? "Serviço ativado" : "Serviço desativado" })
+    } catch (err: any) {
+      toast({ title: "Erro", description: err.message, variant: "destructive" })
+    } finally {
+      setTogglingServicoId(null)
+    }
+  }
+
+  const handleDeleteServico = async () => {
+    if (!deleteServicoId) return
+    try {
+      await apiFetch(`/api/servicos/${deleteServicoId}`, { method: "DELETE" })
+      setUserServicos((prev) => prev.filter((s) => s.id !== deleteServicoId))
+      toast({ title: "Serviço excluído" })
+    } catch (err: any) {
+      toast({ title: "Erro ao excluir", description: err.message, variant: "destructive" })
+    } finally {
+      setDeleteServicoId(null)
+    }
   }
 
   const getInitials = (name: string) => {
@@ -266,6 +335,9 @@ export default function ProfilePage() {
           <CardContent className="p-3.5 sm:p-6">
             <div className="flex flex-col sm:flex-row items-start gap-4">
               <div className="flex items-center text-left gap-4 flex-1">
+                <div className="w-14 h-14 rounded-full bg-teal-600 flex items-center justify-center text-white text-xl font-bold shrink-0 select-none">
+                  {getInitials(user.name)}
+                </div>
                 <div className="flex-1 min-w-0 text-left">
                   <h2 className="text-xl sm:text-2xl font-bold mb-2 leading-tight">{user.name}</h2>
                   <div className="space-y-1.5 text-sm">
@@ -302,6 +374,16 @@ export default function ProfilePage() {
                       {userPets.reduce((sum, pet) => sum + pet.sightings.length, 0)}
                     </div>
                     <div className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 leading-tight">Recebidos</div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t text-center">
+                  <div className="flex flex-col items-center">
+                    <div className="text-xl font-bold text-purple-600">{userEventos.length}</div>
+                    <div className="text-[10px] text-muted-foreground">Eventos</div>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <div className="text-xl font-bold text-indigo-600">{userServicos.length}</div>
+                    <div className="text-[10px] text-muted-foreground">Serviços</div>
                   </div>
                 </div>
               </div>
@@ -341,14 +423,25 @@ export default function ProfilePage() {
 
         {/* Tabs for Posts and Sightings */}
         <Tabs defaultValue="posts" className="w-full">
-          <TabsList className="w-full h-9 sm:h-10">
-            <TabsTrigger value="posts" className="flex-1 text-xs sm:text-base">
-              <PawPrint className="w-4 h-4 mr-1.5" />
-              <span className="hidden xs:inline sm:inline">Minhas </span>Publicações
+          <TabsList className="w-full h-auto flex overflow-x-auto flex-nowrap gap-1 p-1 scrollbar-none">
+            <TabsTrigger value="posts" className="shrink-0 text-xs sm:text-sm px-3">
+              <PawPrint className="w-4 h-4 mr-1" />
+              Publicações
             </TabsTrigger>
-            <TabsTrigger value="sightings" className="flex-1 text-xs sm:text-base">
-              <Eye className="w-4 h-4 mr-1.5" />
+            <TabsTrigger value="sightings" className="shrink-0 text-xs sm:text-sm px-3">
+              <Eye className="w-4 h-4 mr-1" />
               Avistamentos
+            </TabsTrigger>
+            <TabsTrigger value="eventos" className="shrink-0 text-xs sm:text-sm px-3">
+              <Calendar className="w-4 h-4 mr-1" />
+              Eventos
+            </TabsTrigger>
+            <TabsTrigger value="servicos" className="shrink-0 text-xs sm:text-sm px-3 relative">
+              <Briefcase className="w-4 h-4 mr-1" />
+              Serviços
+              {verificacaoStatus && !verificacaoStatus.contato_verificado && (
+                <span className="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full" />
+              )}
             </TabsTrigger>
           </TabsList>
 
@@ -412,6 +505,217 @@ export default function ProfilePage() {
               </div>
             )}
           </TabsContent>
+
+          <TabsContent value="eventos" className="space-y-2.5 mt-3">
+            {isLoadingEventos ? (
+              <div className="text-center py-8">
+                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                <p className="text-muted-foreground text-sm">Carregando eventos...</p>
+              </div>
+            ) : userEventos.length === 0 ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-muted-foreground mb-3 text-sm">Você ainda não criou nenhum evento</p>
+                  <Button onClick={() => router.push('/novo-evento')} className="h-9" size="sm">
+                    Criar Evento
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                {userEventos.map((evento: any) => (
+                  <Card key={evento.id} className="overflow-hidden flex flex-col">
+                    <div
+                      className="w-full aspect-[4/3] bg-teal-50 flex items-center justify-center cursor-pointer overflow-hidden shrink-0"
+                      onClick={() => router.push(`/eventos/${evento.id}`)}
+                    >
+                      {evento.fotos_urls?.[0] ? (
+                        <img src={evento.fotos_urls[0]} alt={evento.titulo} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-4xl">📅</span>
+                      )}
+                    </div>
+                    <CardContent className="p-2.5 flex flex-col gap-1.5 flex-1">
+                      <h3 className="font-semibold text-xs leading-tight line-clamp-2">{evento.titulo}</h3>
+                      <div className="flex items-center gap-1 text-[10px] text-gray-500">
+                        <Calendar className="w-2.5 h-2.5 shrink-0" />
+                        <span>{new Date(evento.data_hora_inicio).toLocaleDateString('pt-BR')}</span>
+                      </div>
+                      {evento.endereco_texto && (
+                        <div className="flex items-center gap-1 text-[10px] text-gray-500">
+                          <MapPin className="w-2.5 h-2.5 shrink-0" />
+                          <span className="line-clamp-1">{evento.endereco_texto}</span>
+                        </div>
+                      )}
+                      <div className="flex gap-1.5 mt-auto pt-1">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 h-7 text-[11px] px-2"
+                          onClick={() => router.push(`/eventos/${evento.id}`)}
+                        >
+                          Ver
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1 h-7 text-[11px] px-2 bg-teal-600 hover:bg-teal-700"
+                          onClick={() => router.push(`/eventos/${evento.id}?edit=1`)}
+                        >
+                          <Edit2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="servicos" className="space-y-2.5 mt-3">
+            {verificacaoStatus ? (
+              verificacaoStatus.identidade_verificada ? (
+                <Card className="border-green-200 bg-green-50">
+                  <CardContent className="p-3 flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-green-600 shrink-0" />
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-green-800">Prestador verificado</p>
+                      <p className="text-xs text-green-700">Você pode oferecer serviços com atendimento em domicílio.</p>
+                    </div>
+                    <Button size="sm" variant="ghost" className="text-xs h-7 px-2 text-green-700" onClick={() => router.push('/prestador/verificacao')}>
+                      Ver
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <Card className="border-amber-200 bg-amber-50">
+                  <CardContent className="p-3 space-y-2">
+                    <div className="flex items-start gap-2">
+                      <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-sm font-semibold text-amber-800">Complete sua verificação</p>
+                        <p className="text-xs text-amber-700">
+                          {!verificacaoStatus.contato_verificado
+                            ? 'Necessária para publicar qualquer serviço na plataforma.'
+                            : 'Necessária para serviços com atendimento em domicílio.'}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex gap-3 text-xs">
+                      {[
+                        { label: 'Foto', done: !!verificacaoStatus.foto_perfil },
+                        { label: 'Telefone', done: verificacaoStatus.telefone_verificado },
+                        { label: 'E-mail', done: verificacaoStatus.email_verificado },
+                        { label: 'Identidade', done: verificacaoStatus.identidade_verificada, inProgress: verificacaoStatus.verificacao?.status === 'EM_ANALISE' },
+                      ].map(({ label, done, inProgress }) => (
+                        <span key={label} className={done ? 'text-green-600 font-medium' : inProgress ? 'text-blue-600' : 'text-muted-foreground'}>
+                          {done ? '✓' : inProgress ? '…' : '○'} {label}
+                        </span>
+                      ))}
+                    </div>
+                    <Button size="sm" className="w-full h-8 text-xs bg-amber-600 hover:bg-amber-700" onClick={() => router.push('/prestador/verificacao')}>
+                      Ir para verificação
+                    </Button>
+                  </CardContent>
+                </Card>
+              )
+            ) : (
+              <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => router.push('/prestador/verificacao')}>
+                Verificação de prestador
+              </Button>
+            )}
+            <div className="flex justify-end">
+              <Button size="sm" variant="ghost" className="h-7 text-xs text-muted-foreground" onClick={() => router.push('/admin/verificacoes')}>
+                Painel admin
+              </Button>
+            </div>
+            {isLoadingServicos ? (
+              <div className="text-center py-8">
+                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                <p className="text-muted-foreground text-sm">Carregando serviços...</p>
+              </div>
+            ) : userServicos.length === 0 ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <Briefcase className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                  <p className="text-muted-foreground mb-3 text-sm">Você ainda não cadastrou nenhum serviço</p>
+                  <Button onClick={() => router.push('/novo-servico')} className="h-9" size="sm">
+                    Cadastrar Serviço
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                {userServicos.map((servico: any) => (
+                  <Card key={servico.id} className="overflow-hidden flex flex-col">
+                    <div
+                      className="w-full aspect-[4/3] bg-teal-50 flex items-center justify-center cursor-pointer overflow-hidden shrink-0 relative"
+                      onClick={() => router.push(`/servicos/${servico.id}`)}
+                    >
+                      {servico.fotos_urls?.[0] ? (
+                        <img src={servico.fotos_urls[0]} alt={servico.nome} className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-4xl">🏪</span>
+                      )}
+                      <span className={`absolute top-1.5 right-1.5 text-[9px] font-semibold px-1.5 py-0.5 rounded-full ${servico.publicado ? 'bg-green-500 text-white' : 'bg-gray-400 text-white'}`}>
+                        {servico.publicado ? 'Ativo' : 'Oculto'}
+                      </span>
+                    </div>
+                    <CardContent className="p-2.5 flex flex-col gap-1 flex-1">
+                      <h3 className="font-semibold text-xs leading-tight line-clamp-2">{servico.nome}</h3>
+                      {!servico.publicado && servico.motivo_nao_publicado && (
+                        <p className="text-[9px] text-amber-700 line-clamp-1">{servico.motivo_nao_publicado}</p>
+                      )}
+                      {servico.cidade && (
+                        <div className="flex items-center gap-1 text-[10px] text-gray-500">
+                          <MapPin className="w-2.5 h-2.5 shrink-0" />
+                          <span className="line-clamp-1">{servico.bairro ? `${servico.bairro}, ` : ''}{servico.cidade}</span>
+                        </div>
+                      )}
+                      <div className="flex gap-1 mt-auto pt-1">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 h-7 text-[11px] px-1"
+                          title="Ver serviço"
+                          onClick={() => router.push(`/servicos/${servico.id}`)}
+                        >
+                          <Eye className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1 h-7 px-1 bg-teal-600 hover:bg-teal-700"
+                          title="Editar"
+                          onClick={() => router.push(`/servicos/${servico.id}?edit=1`)}
+                        >
+                          <Edit2 className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 h-7 px-1"
+                          title={servico.publicado ? "Ocultar" : "Ativar"}
+                          disabled={togglingServicoId === servico.id}
+                          onClick={() => handleToggleServico(servico)}
+                        >
+                          <EyeOff className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="flex-1 h-7 px-1 text-red-500 hover:text-red-600 hover:border-red-300"
+                          title="Excluir"
+                          onClick={() => setDeleteServicoId(servico.id)}
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
         </Tabs>
 
         {/* Settings and Logout removed from here */}
@@ -459,6 +763,24 @@ export default function ProfilePage() {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction onClick={confirmDeleteSighting} className="bg-red-600 hover:bg-red-700">
+              Excluir
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={deleteServicoId !== null} onOpenChange={(open) => { if (!open) setDeleteServicoId(null) }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Excluir serviço?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta ação é permanente. O serviço será removido e não poderá ser recuperado.
+              Agendamentos ativos precisam ser cancelados antes da exclusão.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteServico} className="bg-red-600 hover:bg-red-700">
               Excluir
             </AlertDialogAction>
           </AlertDialogFooter>

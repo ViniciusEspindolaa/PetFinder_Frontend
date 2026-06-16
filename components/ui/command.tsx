@@ -30,9 +30,9 @@ const CommandDialog = ({
       {...props}
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/80 pt-[20vh] sm:pt-[25vh]"
     >
-      <CommandPrimitive.DialogContent className="overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-2xl animate-in fade-in-0 zoom-in-95 slide-in-from-top-[48%] sm:max-w-lg">
+      <div className="overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-2xl animate-in fade-in-0 zoom-in-95 slide-in-from-top-[48%] sm:max-w-lg">
         {children}
-      </CommandPrimitive.DialogContent>
+      </div>
     </CommandPrimitive.Dialog>
   )
 }

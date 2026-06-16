@@ -8,8 +8,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { apiFetch } from "@/lib/api"
 import { useAuth } from "@/lib/auth-context"
-import { Phone, Mail, MapPin, Clock, Star, Edit2, Calendar, CalendarPlus } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, Star, Edit2, Calendar, CalendarPlus, Flag } from "lucide-react"
 import { BookingDialog } from "@/components/booking-dialog"
+import { VerifiedBadge } from "@/components/verified-badge"
+import { ReportDialog } from "@/components/report-dialog"
 
 interface Servico {
   id: number
@@ -36,7 +38,18 @@ interface Servico {
   atende_domicilio?: boolean
   taxa_domicilio?: number
   variacoes?: { nome: string; preco: number }[]
-  usuario: { id: string; nome: string; email: string; telefone: string }
+  prestador_verificado?: boolean
+  identidade_verificada?: boolean
+  publicado?: boolean
+  usuario: {
+    id: string
+    nome: string
+    email: string
+    telefone: string
+    foto_perfil?: string
+    telefone_verificado?: boolean
+    email_verificado?: boolean
+  }
 }
 
 const tipoNome: Record<string, string> = {
@@ -60,6 +73,7 @@ export function ServiceDetailDialog({ id, open, onClose }: ServiceDetailDialogPr
   const [servico, setServico] = useState<Servico | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [openBookingDialog, setOpenBookingDialog] = useState(false)
+  const [reportOpen, setReportOpen] = useState(false)
 
   useEffect(() => {
     if (open && id) {
@@ -181,46 +195,75 @@ export function ServiceDetailDialog({ id, open, onClose }: ServiceDetailDialogPr
                   <CardContent className="p-4 space-y-4">
                     <h3 className="font-semibold text-lg">Prestador do Serviço</h3>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-lg hidden">
-                        {servico.usuario.nome.charAt(0).toUpperCase()}
+                      <div className="w-10 h-10 rounded-full bg-teal-100 overflow-hidden flex items-center justify-center text-teal-700 font-bold text-lg shrink-0">
+                        {servico.usuario.foto_perfil ? (
+                          <img src={servico.usuario.foto_perfil} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                          servico.usuario.nome.charAt(0).toUpperCase()
+                        )}
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">{servico.usuario.nome}</p>
+                        <VerifiedBadge
+                          contatoVerificado={servico.prestador_verificado}
+                          identidadeVerificada={servico.identidade_verificada}
+                        />
                       </div>
                     </div>
                     {user?.id === servico.usuario.id ? (
-                      <Button
-                        className="w-full"
-                        variant="outline"
-                        onClick={() => {
-                          onClose()
-                          router.push(`/servicos/${servico.id}`)
-                        }}
-                      >
-                        <Edit2 className="w-4 h-4 mr-2" />
-                        Editar Serviço
-                      </Button>
+                      <div className="space-y-2">
+                        <Button
+                          className="w-full bg-teal-600 hover:bg-teal-700 text-white"
+                          onClick={() => {
+                            onClose()
+                            router.push(`/servicos/${servico.id}?edit=1`)
+                          }}
+                        >
+                          <Edit2 className="w-4 h-4 mr-2" />
+                          Editar Serviço
+                        </Button>
+                        <Button
+                          className="w-full"
+                          variant="outline"
+                          onClick={() => {
+                            onClose()
+                            router.push(`/servicos/${servico.id}`)
+                          }}
+                        >
+                          Ver página completa
+                        </Button>
+                      </div>
                     ) : (
-                      <Button
-                        className="w-full bg-teal-600 hover:bg-teal-700"
-                        onClick={() => {
-                          if (!user) {
-                            toast({
-                              title: "Login Necessário",
-                              description: "Faça login para contatar o prestador do serviço.",
-                            })
-                            router.push('/login')
-                            return
-                          }
-                          const phone = servico.telefone || servico.usuario.telefone
-                          if (phone) {
-                            const phoneNumber = phone.replace(/\D/g, '')
-                            window.open(`https://wa.me/55${phoneNumber}?text=Olá,%20tenho%20interesse%20no%20serviço%20${servico.nome}%20visto%20no%20PetFinder.`, '_blank')
-                          }
-                        }}
-                      >
-                        Vou Contatar o Fornecedor!
-                      </Button>
+                      <div className="space-y-2">
+                        <Button
+                          className="w-full bg-teal-600 hover:bg-teal-700"
+                          onClick={() => {
+                            if (!user) {
+                              toast({
+                                title: "Login Necessário",
+                                description: "Faça login para contatar o prestador do serviço.",
+                              })
+                              router.push('/login')
+                              return
+                            }
+                            const phone = servico.telefone || servico.usuario.telefone
+                            if (phone) {
+                              const phoneNumber = phone.replace(/\D/g, '')
+                              window.open(`https://wa.me/55${phoneNumber}?text=Olá,%20tenho%20interesse%20no%20serviço%20${servico.nome}%20visto%20no%20PetFinder.`, '_blank')
+                            }
+                          }}
+                        >
+                          Vou Contatar o Fornecedor!
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="w-full text-amber-700 border-amber-200 hover:bg-amber-50"
+                          onClick={() => setReportOpen(true)}
+                        >
+                          <Flag className="w-4 h-4 mr-2" />
+                          Denunciar Serviço
+                        </Button>
+                      </div>
                     )}
 
                     {servico.oferece_agendamento && user && user.id !== servico.usuario.id && (
@@ -253,8 +296,17 @@ export function ServiceDetailDialog({ id, open, onClose }: ServiceDetailDialogPr
           atendeDomicilio={servico.atende_domicilio}
           taxaDomicilio={servico.taxa_domicilio}
           variacoes={servico.variacoes}
+          prestadorVerificado={servico.prestador_verificado}
+          identidadeVerificada={servico.identidade_verificada}
           open={openBookingDialog}
           onOpenChange={setOpenBookingDialog}
+        />
+      )}
+      {servico && (
+        <ReportDialog
+          target={{ type: 'servico', id: servico.id, titulo: servico.nome }}
+          open={reportOpen}
+          onClose={() => setReportOpen(false)}
         />
       )}
     </Dialog>
