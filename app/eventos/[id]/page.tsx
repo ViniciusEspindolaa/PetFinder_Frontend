@@ -23,6 +23,8 @@ interface Evento {
   descricao: string
   fotos_urls: string[]
   endereco_texto: string
+  bairro?: string
+  cidade?: string
   latitude?: number
   longitude?: number
   data_hora_inicio: string
@@ -51,6 +53,8 @@ export default function EventoDetailPage() {
     titulo: "",
     descricao: "",
     endereco_texto: "",
+    bairro: "",
+    cidade: "",
     data_hora_inicio: "",
     data_hora_fim: "",
     capacidade_max: "",
@@ -72,6 +76,8 @@ export default function EventoDetailPage() {
         titulo: data.titulo,
         descricao: data.descricao,
         endereco_texto: data.endereco_texto,
+        bairro: data.bairro || "",
+        cidade: data.cidade || "",
         data_hora_inicio: new Date(data.data_hora_inicio).toISOString().slice(0, 16),
         data_hora_fim: data.data_hora_fim ? new Date(data.data_hora_fim).toISOString().slice(0, 16) : "",
         capacidade_max: data.capacidade_max?.toString() || "",
@@ -98,8 +104,13 @@ export default function EventoDetailPage() {
     const doReverse = async () => {
       if (!mapLocation || !isEditing) return
       try {
-        const { endereco_texto } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
-        setFormData((prev) => ({ ...prev, endereco_texto }))
+        const { endereco_texto, bairro, cidade } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
+        setFormData((prev) => ({
+          ...prev,
+          endereco_texto,
+          bairro: bairro || prev.bairro,
+          cidade: cidade || prev.cidade,
+        }))
       } catch (err) {
         console.error("Erro no reverse geocoding", err)
       }
@@ -178,6 +189,8 @@ export default function EventoDetailPage() {
         titulo: formData.titulo,
         descricao: formData.descricao,
         endereco_texto: formData.endereco_texto,
+        bairro: formData.bairro || undefined,
+        cidade: formData.cidade || undefined,
         data_hora_inicio: new Date(formData.data_hora_inicio).toISOString(),
         data_hora_fim: formData.data_hora_fim ? new Date(formData.data_hora_fim).toISOString() : undefined,
         capacidade_max: formData.capacidade_max ? parseInt(formData.capacidade_max) : undefined,
@@ -303,6 +316,24 @@ export default function EventoDetailPage() {
                 onChange={(e) => setFormData({ ...formData, endereco_texto: e.target.value })}
                 placeholder="Endereço"
               />
+              <div className="grid grid-cols-2 gap-3 mt-2">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-muted-foreground">Bairro</label>
+                  <Input
+                    value={formData.bairro}
+                    onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
+                    placeholder="Ex: Centro"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-muted-foreground">Cidade</label>
+                  <Input
+                    value={formData.cidade}
+                    onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
+                    placeholder="Ex: Florianópolis"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -10,6 +10,7 @@ export interface User {
   photoUrl?: string
   createdAt: Date
   location?: Location
+  isAdmin?: boolean
 }
 
 export interface Location {

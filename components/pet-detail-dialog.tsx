@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Pet } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Eye, Share2, Maximize2, Phone, ChevronDown } from 'lucide-react'
+import { Eye, Share2, Maximize2, Phone, ChevronDown, MessageCircle } from 'lucide-react'
 import Image from 'next/image'
 import { useAuth } from '@/lib/auth-context'
 import { useRouter } from 'next/navigation'
@@ -157,6 +157,22 @@ export function PetDetailDialog({
                     <Phone className="w-3.5 h-3.5" />
                     {pet.contactPhone}
                   </a>
+                  {pet.contactPhone && (() => {
+                    const digits = pet.contactPhone.replace(/\D/g, '')
+                    const wa = digits.startsWith('55') && digits.length > 11 ? digits : `55${digits}`
+                    return (
+                      <a
+                        href={`https://wa.me/${wa}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="mt-2 flex items-center gap-1.5 text-sm font-medium text-white bg-green-500 hover:bg-green-600 transition-colors px-3 py-1.5 rounded-lg w-fit"
+                      >
+                        <MessageCircle className="w-3.5 h-3.5" />
+                        WhatsApp
+                      </a>
+                    )
+                  })()}
 
                   {pet.status === 'lost' && (
                     <>

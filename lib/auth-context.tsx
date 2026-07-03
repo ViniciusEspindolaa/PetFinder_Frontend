@@ -86,10 +86,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         location: (res.latitude && res.longitude) ? {
           lat: Number(res.latitude),
           lng: Number(res.longitude),
-          address: '', // Backend doesn't return address text on login yet
+          address: '',
           city: ''
         } : undefined,
-        createdAt: new Date()
+        createdAt: res.createdAt ? new Date(res.createdAt) : new Date(),
+        isAdmin: res.isAdmin ?? false,
       }
 
       setUser(userData)
@@ -160,7 +161,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email: loginRes.email,
         phone: loginRes.telefone || phone,
         photoUrl: '/user-profile-illustration.png',
-        createdAt: new Date()
+        createdAt: loginRes.createdAt ? new Date(loginRes.createdAt) : new Date()
       }
 
       setUser(userData)

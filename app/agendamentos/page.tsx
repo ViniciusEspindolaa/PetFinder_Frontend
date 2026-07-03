@@ -28,8 +28,13 @@ interface Agendamento {
     id: number
     nome: string
     tipo: string
+    tipo_agendamento?: string | null
     endereco_texto?: string
     telefone?: string
+    hora_inicio?: string | null
+    hora_fim?: string | null
+    duracao_agendamento?: number | null
+    dias_funcionamento?: string[]
   }
   usuario: {
     id: string
@@ -37,6 +42,16 @@ interface Agendamento {
     email: string
     telefone?: string
   }
+}
+
+function gerarSlots(horaInicio: string, horaFim: string, duracao: number): string[] {
+  const slots: string[] = []
+  const toMins = (s: string) => { const [h, m] = s.split(":").map(Number); return h * 60 + m }
+  const toStr = (m: number) => `${Math.floor(m / 60).toString().padStart(2, "0")}:${(m % 60).toString().padStart(2, "0")}`
+  let cur = toMins(horaInicio)
+  const end = toMins(horaFim)
+  while (cur + duracao <= end) { slots.push(toStr(cur)); cur += duracao }
+  return slots
 }
 
 const STATUS_INFO: Record<string, { label: string; cls: string }> = {
@@ -72,12 +87,26 @@ export default function AgendamentosPage() {
   const [reagendarData, setReagendarData] = useState("")
   const [reagendarHora, setReagendarHora] = useState("")
   const [reagendarTurno, setReagendarTurno] = useState("")
+  const [reagendarOcupados, setReagendarOcupados] = useState<string[]>([])
+  const [loadingSlots, setLoadingSlots] = useState(false)
 
   useEffect(() => {
     if (!user) { router.push("/login"); return }
     loadAgendamentos()
     loadRecebidos()
   }, [user])
+
+  useEffect(() => {
+    if (!reagendarId || !reagendarData) { setReagendarOcupados([]); return }
+    const ag = agendamentos.find(a => a.id === reagendarId)
+    if (!ag || !ag.horario_agendado) return
+    setReagendarHora("")
+    setLoadingSlots(true)
+    apiFetch(`/api/agendamentos/servico/${ag.servico.id}/ocupados?data=${reagendarData}`)
+      .then(res => setReagendarOcupados(res.horarios || []))
+      .catch(() => setReagendarOcupados([]))
+      .finally(() => setLoadingSlots(false))
+  }, [reagendarId, reagendarData])
 
   const loadAgendamentos = async () => {
     try {
@@ -277,19 +306,60 @@ export default function AgendamentosPage() {
 
           {/* Formulário inline de reagendamento */}
           {isReagendando && (
-            <div className="border rounded-lg p-3 space-y-2 bg-gray-50">
+            <div className="border rounded-lg p-3 space-y-3 bg-gray-50">
               <p className="text-sm font-medium text-gray-700">Nova data e horário</p>
               <Input type="date" value={reagendarData} onChange={(e) => setReagendarData(e.target.value)} min={hoje} className="h-8 text-sm" />
-              {a.horario_agendado !== null && a.horario_agendado !== undefined && (
-                <Input type="time" value={reagendarHora} onChange={(e) => setReagendarHora(e.target.value)} className="h-8 text-sm" />
-              )}
+              {a.horario_agendado !== null && a.horario_agendado !== undefined && (() => {
+                const s = a.servico
+                const todosSlots = s.hora_inicio && s.hora_fim && s.duracao_agendamento
+                  ? gerarSlots(s.hora_inicio, s.hora_fim, s.duracao_agendamento)
+                  : []
+                const slotsDisponiveis = todosSlots.filter(slot => !reagendarOcupados.includes(slot))
+                return (
+                  <div className="space-y-1.5">
+                    <p className="text-xs text-gray-500 font-medium">Horário</p>
+                    {!reagendarData ? (
+                      <p className="text-xs text-gray-400 bg-white py-2 px-3 rounded border text-center">
+                        Selecione a data primeiro
+                      </p>
+                    ) : loadingSlots ? (
+                      <p className="text-xs text-gray-400 text-center py-2">Carregando horários...</p>
+                    ) : todosSlots.length === 0 ? (
+                      <p className="text-xs text-amber-700 bg-amber-50 py-2 px-3 rounded border border-amber-200 text-center">
+                        Horários não configurados pelo prestador
+                      </p>
+                    ) : slotsDisponiveis.length === 0 ? (
+                      <p className="text-xs text-amber-700 bg-amber-50 py-2 px-3 rounded border border-amber-200 text-center">
+                        Nenhum horário disponível nesta data
+                      </p>
+                    ) : (
+                      <div className="flex flex-wrap gap-1.5">
+                        {slotsDisponiveis.map(slot => (
+                          <button
+                            key={slot}
+                            type="button"
+                            className={`px-2.5 py-1 text-xs rounded border transition-colors ${
+                              reagendarHora === slot
+                                ? "bg-teal-600 text-white border-teal-600"
+                                : "bg-white text-gray-700 border-gray-200 hover:border-teal-400 hover:text-teal-700"
+                            }`}
+                            onClick={() => setReagendarHora(slot)}
+                          >
+                            {slot}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              })()}
               {a.turno_agendado !== null && a.turno_agendado !== undefined && (
                 <Select value={reagendarTurno} onValueChange={setReagendarTurno}>
                   <SelectTrigger className="h-8 text-sm"><SelectValue placeholder="Turno" /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="MANHA">Manhã</SelectItem>
-                    <SelectItem value="TARDE">Tarde</SelectItem>
-                    <SelectItem value="NOITE">Noite</SelectItem>
+                    <SelectItem value="MANHA">Manhã (08:00–12:00)</SelectItem>
+                    <SelectItem value="TARDE">Tarde (13:00–18:00)</SelectItem>
+                    <SelectItem value="NOITE">Noite (18:00–22:00)</SelectItem>
                   </SelectContent>
                 </Select>
               )}

@@ -22,6 +22,17 @@ interface Servico {
   avaliacoes?: number
   total_avaliacoes?: number
   telefone?: string
+  valor_base?: number
+  variacoes?: { nome: string; preco: number }[]
+  hora_inicio?: string
+  hora_fim?: string
+  dias_funcionamento?: string[]
+  vagas_disponiveis?: number | null
+  oferece_agendamento?: boolean
+  tipo_agendamento?: string
+  atende_domicilio?: boolean
+  prestador_verificado?: boolean
+  identidade_verificada?: boolean
 }
 
 export default function ServicosPage() {

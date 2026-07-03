@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Search, MapPin, Calendar, Clock, Users, Plus, Heart, Edit2, Flag } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,8 @@ interface Evento {
   descricao: string
   fotos_urls: string[]
   endereco_texto: string
+  bairro?: string
+  cidade?: string
   data_hora_inicio: string
   data_hora_fim?: string
   status: string
@@ -103,7 +105,7 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
             {evento.status === "AGENDADO" ? "Agendado" : evento.status === "CONCLUIDO" ? "Concluído" : "Em andamento"}
           </Badge>
         </div>
-        <CardDescription className="line-clamp-2">
+        <CardDescription className="line-clamp-3">
           {evento.descricao}
         </CardDescription>
       </CardHeader>
@@ -123,7 +125,12 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
         </div>
         <div className="flex items-start gap-2">
           <MapPin className="w-4 h-4 mt-0.5 text-teal-600 shrink-0" />
-          <span className="line-clamp-1">{evento.endereco_texto}</span>
+          <span className="line-clamp-2">
+            {evento.endereco_texto}
+            {(evento.bairro || evento.cidade) && (
+              <span className="text-gray-400"> · {[evento.bairro, evento.cidade].filter(Boolean).join(', ')}</span>
+            )}
+          </span>
         </div>
         {evento.capacidade_max ? (
           <div className="flex items-start gap-2">
@@ -197,21 +204,38 @@ export default function EventosPage() {
   const { toast } = useToast()
   const { user } = useAuth()
 
+  const isFirstTextRender = useRef(true)
+
   useEffect(() => {
     fetchEventos()
   }, [filter])
 
+  useEffect(() => {
+    if (isFirstTextRender.current) {
+      isFirstTextRender.current = false
+      return
+    }
+    const timeout = setTimeout(fetchEventos, 400)
+    return () => clearTimeout(timeout)
+  }, [searchTerm, cidadeFilter])
+
   const fetchEventos = async () => {
     setIsLoading(true)
     try {
+      const params = new URLSearchParams()
+      if (searchTerm) params.append("busca", searchTerm)
+      if (cidadeFilter) params.append("cidade", cidadeFilter)
+
       let endpoint = "/api/eventos"
       if (filter === "proximos") {
         endpoint = "/api/eventos/proximos"
       } else if (filter !== "todos") {
-        endpoint = `/api/eventos/proximos?dias=${filter}`
+        endpoint = "/api/eventos/proximos"
+        params.append("dias", filter)
       }
 
-      const data = await apiFetch(endpoint)
+      const queryString = params.toString()
+      const data = await apiFetch(endpoint + (queryString ? `?${queryString}` : ""))
       if (data.eventos) {
         setEventos(data.eventos)
       } else {
@@ -228,20 +252,6 @@ export default function EventosPage() {
       setIsLoading(false)
     }
   }
-
-  const filteredEventos = eventos.filter((evento) => {
-    const term = searchTerm.toLowerCase()
-    const matchTerm = 
-      evento.titulo.toLowerCase().includes(term) ||
-      evento.descricao.toLowerCase().includes(term) ||
-      evento.endereco_texto.toLowerCase().includes(term)
-    
-    if (cidadeFilter) {
-      const isCidade = evento.endereco_texto.toLowerCase().includes(cidadeFilter.toLowerCase())
-      return matchTerm && isCidade
-    }
-    return matchTerm
-  })
 
   return (
     <div className="container max-w-4xl mx-auto p-4 pb-24 space-y-6">
@@ -292,7 +302,7 @@ export default function EventosPage() {
         <div className="flex justify-center items-center py-20">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
         </div>
-      ) : filteredEventos.length === 0 ? (
+      ) : eventos.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-xl border border-dashed">
           <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
           <h3 className="text-lg font-medium text-gray-900">Nenhum evento encontrado</h3>
@@ -300,7 +310,7 @@ export default function EventosPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredEventos.map((evento) => (
+          {eventos.map((evento) => (
             <EventCardItem
               key={evento.id}
               evento={evento}

@@ -17,9 +17,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { apiFetch } from "@/lib/api"
 import { reverseGeocode } from "@/lib/geocoding"
 import { useAuth } from "@/lib/auth-context"
-import { ArrowLeft, Phone, Mail, MapPin, Clock, Star, Edit2, X, Calendar, Flag } from "lucide-react"
+import { ArrowLeft, Phone, Mail, MapPin, Clock, Star, Edit2, X, Calendar, Flag, Plus } from "lucide-react"
 import Link from "next/link"
 import dynamic from "next/dynamic"
+import { Switch } from "@/components/ui/switch"
 import { BookingDialog } from "@/components/booking-dialog"
 import { ReportDialog } from "@/components/report-dialog"
 import { VerifiedBadge } from "@/components/verified-badge"
@@ -49,12 +50,35 @@ interface Servico {
   hora_fim?: string
   duracao_agendamento?: number
   dias_funcionamento?: string[]
+  horarios_bloqueados?: string[]
+  capacidade_por_slot?: number
+  vagas_disponiveis?: number | null
   atende_domicilio?: boolean
   taxa_domicilio?: number
   variacoes?: { nome: string; preco: number }[]
   prestador_verificado?: boolean
   identidade_verificada?: boolean
   usuario: { id: string; nome: string; email: string; telefone: string; foto_perfil?: string }
+}
+
+const diasSemana = [
+  { value: "1", label: "Seg" },
+  { value: "2", label: "Ter" },
+  { value: "3", label: "Qua" },
+  { value: "4", label: "Qui" },
+  { value: "5", label: "Sex" },
+  { value: "6", label: "Sáb" },
+  { value: "0", label: "Dom" },
+]
+
+function gerarSlots(horaInicio: string, horaFim: string, duracao: number): string[] {
+  const slots: string[] = []
+  const toMins = (s: string) => { const [h, m] = s.split(":").map(Number); return h * 60 + m }
+  const toStr = (m: number) => `${Math.floor(m / 60).toString().padStart(2, "0")}:${(m % 60).toString().padStart(2, "0")}`
+  let cur = toMins(horaInicio)
+  const end = toMins(horaFim)
+  while (cur + duracao <= end) { slots.push(toStr(cur)); cur += duracao }
+  return slots
 }
 
 const tipoNome: Record<string, string> = {
@@ -88,7 +112,16 @@ export default function ServicoDetailPage() {
     cidade: "",
     telefone: "",
     email: "",
-    horario: "",
+    dias_funcionamento: [] as string[],
+    hora_inicio: "08:00",
+    hora_fim: "18:00",
+    duracao_agendamento: 60,
+    horarios_bloqueados: [] as string[],
+    capacidade_por_slot: 1,
+    vagas_disponiveis: null as number | null,
+    variacoes: [] as { nome: string; preco: number }[],
+    atende_domicilio: false,
+    taxa_domicilio: 0,
   })
 
   const tipoOptions = [
@@ -120,7 +153,16 @@ export default function ServicoDetailPage() {
         cidade: data.cidade || "",
         telefone: data.telefone || "",
         email: data.email || "",
-        horario: data.horario || "",
+        dias_funcionamento: data.dias_funcionamento || [],
+        hora_inicio: data.hora_inicio || "08:00",
+        hora_fim: data.hora_fim || "18:00",
+        duracao_agendamento: data.duracao_agendamento || 60,
+        horarios_bloqueados: data.horarios_bloqueados || [],
+        capacidade_por_slot: data.capacidade_por_slot || 1,
+        vagas_disponiveis: data.vagas_disponiveis ?? null,
+        variacoes: data.variacoes || [],
+        atende_domicilio: data.atende_domicilio || false,
+        taxa_domicilio: data.taxa_domicilio ? Number(data.taxa_domicilio) : 0,
       })
     } catch (error) {
       console.error("Erro ao carregar serviço:", error)
@@ -177,7 +219,17 @@ export default function ServicoDetailPage() {
     }
   }
 
+  const isHospedagem = formData.tipo === "HOSPEDAGEM_CRECHE"
+
   const handleSave = async () => {
+    if (formData.dias_funcionamento.length === 0) {
+      toast({ title: "Erro", description: "Selecione pelo menos um dia de funcionamento.", variant: "destructive" })
+      return
+    }
+    if (formData.variacoes.length === 0 || formData.variacoes.some(v => !v.nome || v.preco <= 0)) {
+      toast({ title: "Erro", description: "Preencha corretamente as opções e valores do serviço.", variant: "destructive" })
+      return
+    }
     try {
       setIsSaving(true)
       const payload = {
@@ -189,10 +241,21 @@ export default function ServicoDetailPage() {
         cidade: formData.cidade || undefined,
         telefone: formData.telefone || undefined,
         email: formData.email || undefined,
-        horario: formData.horario || undefined,
         fotos_urls: servico?.fotos_urls || [],
         latitude: mapLocation?.lat ?? (servico?.latitude ? Number(servico.latitude) : -23.5505),
         longitude: mapLocation?.lng ?? (servico?.longitude ? Number(servico.longitude) : -46.6333),
+        oferece_agendamento: true,
+        tipo_agendamento: isHospedagem ? "VAGAS" : "HORARIO",
+        dias_funcionamento: formData.dias_funcionamento,
+        hora_inicio: formData.hora_inicio || "08:00",
+        hora_fim: formData.hora_fim || "18:00",
+        duracao_agendamento: isHospedagem ? null : (formData.duracao_agendamento ? Number(formData.duracao_agendamento) : 60),
+        horarios_bloqueados: isHospedagem ? [] : formData.horarios_bloqueados,
+        capacidade_por_slot: isHospedagem ? null : (formData.capacidade_por_slot > 1 ? formData.capacidade_por_slot : null),
+        vagas_disponiveis: isHospedagem ? formData.vagas_disponiveis : null,
+        variacoes: formData.variacoes,
+        atende_domicilio: formData.atende_domicilio,
+        taxa_domicilio: formData.atende_domicilio && formData.taxa_domicilio ? Number(formData.taxa_domicilio) : undefined,
       }
 
       await apiFetch(`/api/servicos/${params.id}`, {
@@ -364,14 +427,275 @@ export default function ServicoDetailPage() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-semibold">Horário</label>
-              <Input
-                value={formData.horario}
-                onChange={(e) => setFormData({ ...formData, horario: e.target.value })}
-                placeholder="Ex: 08:00-18:00 seg-sex, 09:00-14:00 sab"
-              />
+            {/* Opções e Valores */}
+            <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold">Opções e Valores do Serviço</h3>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setFormData(prev => ({ ...prev, variacoes: [...prev.variacoes, { nome: "", preco: 0 }] }))}
+                >
+                  <Plus className="w-4 h-4 mr-1" /> Adicionar
+                </Button>
+              </div>
+              {formData.variacoes.length === 0 && (
+                <p className="text-sm text-gray-400 text-center py-2">Nenhuma opção adicionada</p>
+              )}
+              {formData.variacoes.map((v, i) => (
+                <div key={i} className="flex gap-2 items-start">
+                  <Input
+                    placeholder="Nome (ex: Banho e Tosa)"
+                    value={v.nome}
+                    onChange={(e) => {
+                      const next = [...formData.variacoes]
+                      next[i] = { ...next[i], nome: e.target.value }
+                      setFormData({ ...formData, variacoes: next })
+                    }}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="R$"
+                    className="w-28 shrink-0"
+                    value={v.preco || ""}
+                    onChange={(e) => {
+                      const next = [...formData.variacoes]
+                      next[i] = { ...next[i], preco: Number(e.target.value) }
+                      setFormData({ ...formData, variacoes: next })
+                    }}
+                  />
+                  {formData.variacoes.length > 1 && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="shrink-0"
+                      onClick={() => {
+                        const next = [...formData.variacoes]
+                        next.splice(i, 1)
+                        setFormData({ ...formData, variacoes: next })
+                      }}
+                    >
+                      <X className="w-4 h-4 text-red-500" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+              <div className="space-y-2 pt-3 border-t">
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="atende_domicilio"
+                    checked={formData.atende_domicilio}
+                    onCheckedChange={(v) => setFormData({ ...formData, atende_domicilio: v })}
+                  />
+                  <label htmlFor="atende_domicilio" className="text-sm font-medium">Atende em Domicílio?</label>
+                </div>
+                {formData.atende_domicilio && (
+                  <Input
+                    type="number"
+                    placeholder="Taxa de deslocamento R$ (Opcional)"
+                    className="mt-1"
+                    value={formData.taxa_domicilio || ""}
+                    onChange={(e) => setFormData({ ...formData, taxa_domicilio: Number(e.target.value) })}
+                  />
+                )}
+              </div>
             </div>
+
+            {/* Disponibilidade e Agendamento */}
+            {isHospedagem ? (
+              <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
+                <h3 className="font-semibold">Disponibilidade e Funcionamento</h3>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold">Dias de Funcionamento</label>
+                  <div className="flex flex-wrap gap-2">
+                    {diasSemana.map((dia) => (
+                      <button
+                        key={dia.value}
+                        type="button"
+                        onClick={() => {
+                          const dias = formData.dias_funcionamento.includes(dia.value)
+                            ? formData.dias_funcionamento.filter(d => d !== dia.value)
+                            : [...formData.dias_funcionamento, dia.value]
+                          setFormData({ ...formData, dias_funcionamento: dias })
+                        }}
+                        className={`px-3 py-1 border rounded-full text-sm transition-colors ${
+                          formData.dias_funcionamento.includes(dia.value)
+                            ? "bg-teal-600 border-teal-600 text-white"
+                            : "bg-white text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
+                        {dia.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-3 border-t">
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="funciona_24h_edit"
+                      checked={formData.hora_inicio === "00:00" && formData.hora_fim === "23:59"}
+                      onCheckedChange={(checked) => setFormData({
+                        ...formData,
+                        hora_inicio: checked ? "00:00" : "08:00",
+                        hora_fim: checked ? "23:59" : "18:00",
+                      })}
+                    />
+                    <label htmlFor="funciona_24h_edit" className="text-sm font-medium">Funciona 24 horas</label>
+                  </div>
+                  {!(formData.hora_inicio === "00:00" && formData.hora_fim === "23:59") && (
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold">Abre às</label>
+                        <Input
+                          type="time"
+                          value={formData.hora_inicio}
+                          onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold">Fecha às</label>
+                        <Input
+                          type="time"
+                          value={formData.hora_fim}
+                          onChange={(e) => setFormData({ ...formData, hora_fim: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2 pt-3 border-t">
+                  <label className="text-sm font-semibold">Vagas Disponíveis</label>
+                  <Input
+                    type="number"
+                    min="0"
+                    placeholder="Deixe vazio para não limitar vagas"
+                    value={formData.vagas_disponiveis ?? ""}
+                    onChange={(e) => setFormData({ ...formData, vagas_disponiveis: e.target.value !== "" ? Number(e.target.value) : null })}
+                  />
+                  <p className="text-xs text-gray-400">Coloque 0 para marcar como lotado. Deixe vazio para vagas ilimitadas.</p>
+                  {formData.vagas_disponiveis === 0 && (
+                    <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
+                      Serviço marcado como lotado — clientes não poderão reservar.
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
+                <h3 className="font-semibold">Disponibilidade e Agendamento</h3>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold">Dias de Funcionamento</label>
+                  <div className="flex flex-wrap gap-2">
+                    {diasSemana.map((dia) => (
+                      <button
+                        key={dia.value}
+                        type="button"
+                        onClick={() => {
+                          const dias = formData.dias_funcionamento.includes(dia.value)
+                            ? formData.dias_funcionamento.filter(d => d !== dia.value)
+                            : [...formData.dias_funcionamento, dia.value]
+                          setFormData({ ...formData, dias_funcionamento: dias })
+                        }}
+                        className={`px-3 py-1 border rounded-full text-sm transition-colors ${
+                          formData.dias_funcionamento.includes(dia.value)
+                            ? "bg-teal-600 border-teal-600 text-white"
+                            : "bg-white text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
+                        {dia.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold">Abre às</label>
+                    <Input
+                      type="time"
+                      value={formData.hora_inicio}
+                      onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold">Fecha às</label>
+                    <Input
+                      type="time"
+                      value={formData.hora_fim}
+                      onChange={(e) => setFormData({ ...formData, hora_fim: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold">Duração por sessão (min)</label>
+                    <Input
+                      type="number"
+                      min="15"
+                      step="15"
+                      value={formData.duracao_agendamento}
+                      onChange={(e) => setFormData({ ...formData, duracao_agendamento: Number(e.target.value) })}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold">Capacidade simultânea por horário</label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={formData.capacidade_por_slot}
+                    onChange={(e) => setFormData({ ...formData, capacidade_por_slot: Math.max(1, Number(e.target.value)) })}
+                  />
+                  <p className="text-xs text-gray-400">
+                    Quantos clientes podem agendar o mesmo horário (ex: 2 para dois banhos simultâneos)
+                  </p>
+                </div>
+                {formData.hora_inicio && formData.hora_fim && formData.duracao_agendamento > 0 && (() => {
+                  const slots = gerarSlots(formData.hora_inicio, formData.hora_fim, formData.duracao_agendamento)
+                  return slots.length > 0 ? (
+                    <div className="pt-3 border-t">
+                      <p className="text-xs text-gray-500 mb-1">
+                        Prévia dos horários ({slots.length} no total) — clique para bloquear/desbloquear:
+                      </p>
+                      <p className="text-xs text-gray-400 mb-2">
+                        Horários riscados ficam indisponíveis para clientes (ex: horário de almoço)
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {slots.map((slot) => {
+                          const bloqueado = formData.horarios_bloqueados.includes(slot)
+                          return (
+                            <button
+                              key={slot}
+                              type="button"
+                              onClick={() => {
+                                const next = bloqueado
+                                  ? formData.horarios_bloqueados.filter(s => s !== slot)
+                                  : [...formData.horarios_bloqueados, slot]
+                                setFormData({ ...formData, horarios_bloqueados: next })
+                              }}
+                              className={`px-2.5 py-1 text-xs rounded-md border transition-colors ${
+                                bloqueado
+                                  ? "bg-red-50 border-red-300 text-red-400 line-through"
+                                  : "border-gray-200 bg-white text-gray-600 hover:border-red-300 hover:bg-red-50"
+                              }`}
+                            >
+                              {slot}
+                            </button>
+                          )
+                        })}
+                      </div>
+                      {formData.horarios_bloqueados.length > 0 && (
+                        <p className="text-xs text-red-500 mt-2">
+                          {formData.horarios_bloqueados.length} horário(s) bloqueado(s)
+                        </p>
+                      )}
+                    </div>
+                  ) : null
+                })()}
+              </div>
+            )}
 
             <div className="flex gap-3 pt-4">
               <Button variant="outline" onClick={() => setIsEditing(false)}>
@@ -438,12 +762,41 @@ export default function ServicoDetailPage() {
                 </div>
               )}
 
-              {servico.horario && (
+              {servico.horario && servico.tipo !== "HOSPEDAGEM_CRECHE" && (
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-teal-600 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-xs text-muted-foreground font-semibold">Horário</p>
                     <p className="text-sm font-medium">{servico.horario}</p>
+                  </div>
+                </div>
+              )}
+
+              {servico.tipo === "HOSPEDAGEM_CRECHE" && (
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-teal-600 mt-0.5 shrink-0" />
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground font-semibold">Horário de Funcionamento</p>
+                    {servico.hora_inicio === "00:00" && servico.hora_fim === "23:59" ? (
+                      <p className="text-sm font-medium">24 horas</p>
+                    ) : servico.hora_inicio && servico.hora_fim ? (
+                      <p className="text-sm font-medium">{servico.hora_inicio} – {servico.hora_fim}</p>
+                    ) : null}
+                    {servico.dias_funcionamento && servico.dias_funcionamento.length > 0 && (
+                      <p className="text-xs text-muted-foreground">
+                        {servico.dias_funcionamento
+                          .map((d) => ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"][parseInt(d)])
+                          .filter(Boolean)
+                          .join(", ")}
+                      </p>
+                    )}
+                    {servico.vagas_disponiveis === 0 ? (
+                      <p className="text-xs font-medium text-red-600 mt-1">Lotado — sem vagas no momento</p>
+                    ) : servico.vagas_disponiveis !== null && servico.vagas_disponiveis !== undefined ? (
+                      <p className="text-xs text-teal-700 mt-1">
+                        {servico.vagas_disponiveis} {servico.vagas_disponiveis === 1 ? "vaga disponível" : "vagas disponíveis"}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               )}
@@ -497,9 +850,12 @@ export default function ServicoDetailPage() {
               <Button
                 onClick={() => setOpenBookingDialog(true)}
                 className="w-full bg-teal-600 hover:bg-teal-700 mt-4"
+                disabled={servico.tipo === "HOSPEDAGEM_CRECHE" && servico.vagas_disponiveis === 0}
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Agendar Serviço
+                {servico.tipo === "HOSPEDAGEM_CRECHE" && servico.vagas_disponiveis === 0
+                  ? "Sem vagas disponíveis"
+                  : "Agendar Serviço"}
               </Button>
             )}
           </CardContent>
@@ -516,6 +872,8 @@ export default function ServicoDetailPage() {
         horaFim={servico?.hora_fim}
         duracao={servico?.duracao_agendamento}
         diasFuncionamento={servico?.dias_funcionamento}
+        horariosBloqueados={servico?.horarios_bloqueados}
+        vagasDisponiveis={servico?.vagas_disponiveis}
         atendeDomicilio={servico?.atende_domicilio}
         taxaDomicilio={servico?.taxa_domicilio}
         variacoes={servico?.variacoes}

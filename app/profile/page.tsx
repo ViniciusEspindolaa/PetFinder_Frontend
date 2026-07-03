@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Settings, LogOut, PawPrint, Eye, MapPin, Phone, Mail, Calendar, Edit, Briefcase, Edit2, ShieldCheck, ShieldAlert, EyeOff, Trash2 } from 'lucide-react'
+import { ArrowLeft, Settings, LogOut, PawPrint, Eye, MapPin, Phone, Mail, Calendar, Edit, Briefcase, Edit2, ShieldCheck, ShieldAlert, EyeOff, Trash2, Shield } from 'lucide-react'
 import Image from 'next/image'
 import { useToast } from '@/hooks/use-toast'
 
@@ -360,57 +360,41 @@ export default function ProfilePage() {
               </div>
 
               <div className="w-full sm:w-80 p-3 sm:p-4 bg-gray-50 rounded-lg">
-                <div className="grid grid-cols-3 sm:grid-cols-3 gap-2.5 sm:gap-4 text-center">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-4 text-center">
                   <div className="flex flex-col items-center">
-                    <div className="text-2xl sm:text-2xl font-bold text-teal-600">{userPets.length}</div>
+                    <div className="text-2xl font-bold text-teal-600">{userPets.length}</div>
                     <div className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 leading-tight">Publicações</div>
                   </div>
                   <div className="flex flex-col items-center">
-                    <div className="text-2xl sm:text-2xl font-bold text-orange-600">{userSightings.length}</div>
+                    <div className="text-2xl font-bold text-orange-600">{userSightings.length}</div>
                     <div className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 leading-tight">Avistamentos</div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="text-2xl sm:text-2xl font-bold text-blue-600">
-                      {userPets.reduce((sum, pet) => sum + pet.sightings.length, 0)}
-                    </div>
-                    <div className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 leading-tight">Recebidos</div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t text-center">
-                  <div className="flex flex-col items-center">
-                    <div className="text-xl font-bold text-purple-600">{userEventos.length}</div>
-                    <div className="text-[10px] text-muted-foreground">Eventos</div>
-                  </div>
-                  <div className="flex flex-col items-center">
-                    <div className="text-xl font-bold text-indigo-600">{userServicos.length}</div>
-                    <div className="text-[10px] text-muted-foreground">Serviços</div>
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="flex gap-2 mt-3">
-              <Button 
-                variant="outline" 
-                className="flex-1 h-9 text-xs sm:text-sm sm:h-10 px-2" 
+              <Button
+                variant="outline"
+                className="flex-1 h-9 text-xs sm:text-sm sm:h-10 px-2"
                 onClick={() => router.push('/profile/edit')}
                 title="Editar Perfil"
               >
                 <Edit className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
                 Editar
               </Button>
-              <Button 
-                variant="outline" 
-                className="flex-1 h-9 text-xs sm:text-sm sm:h-10 px-2" 
+              <Button
+                variant="outline"
+                className="flex-1 h-9 text-xs sm:text-sm sm:h-10 px-2"
                 onClick={() => router.push('/profile/settings')}
                 title="Configurações"
               >
                 <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
                 Config.
               </Button>
-              <Button 
-                variant="outline" 
-                className="flex-1 h-9 text-xs sm:text-sm sm:h-10 px-2 text-red-600 hover:text-red-700 hover:bg-red-50" 
+              <Button
+                variant="outline"
+                className="flex-1 h-9 text-xs sm:text-sm sm:h-10 px-2 text-red-600 hover:text-red-700 hover:bg-red-50"
                 onClick={handleLogout}
                 title="Sair"
               >
@@ -418,6 +402,16 @@ export default function ProfilePage() {
                 Sair
               </Button>
             </div>
+            {user.isAdmin && (
+              <Button
+                variant="outline"
+                className="w-full mt-2 h-9 text-xs sm:text-sm border-purple-200 text-purple-700 hover:bg-purple-50 hover:text-purple-800"
+                onClick={() => router.push('/admin/verificacoes')}
+              >
+                <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
+                Painel Administrativo · Validação de Serviços
+              </Button>
+            )}
           </CardContent>
         </Card>
 
@@ -624,11 +618,6 @@ export default function ProfilePage() {
                 Verificação de prestador
               </Button>
             )}
-            <div className="flex justify-end">
-              <Button size="sm" variant="ghost" className="h-7 text-xs text-muted-foreground" onClick={() => router.push('/admin/verificacoes')}>
-                Painel admin
-              </Button>
-            </div>
             {isLoadingServicos ? (
               <div className="text-center py-8">
                 <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />

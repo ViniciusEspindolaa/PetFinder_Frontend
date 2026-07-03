@@ -84,7 +84,7 @@ export function PetCard({
   return (
     <>
       <Card onClick={() => setDetailOpen(true)} className={`cursor-pointer w-full overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98] pt-0 ${pet.completed ? 'opacity-70' : ''}`}>
-        <div className={compactMode ? "relative h-40 bg-gray-100" : "relative aspect-4/3 sm:aspect-square bg-gray-100"}>
+        <div className={compactMode ? "relative h-40 bg-gray-100" : "relative aspect-4/3 bg-gray-100"}>
           {!imageLoaded && <div className="absolute inset-0 bg-gray-200 animate-pulse" />}
           <Image
             src={pet.photoUrl || "/placeholder.svg"}
@@ -96,9 +96,14 @@ export function PetCard({
             onLoad={() => setImageLoaded(true)}
           />
           <div className="absolute top-1.5 left-1.5 flex gap-1 flex-wrap">
-            <Badge className={`${statusConfig[pet.status].color} text-[10px] px-1.5 py-0.5 ${compactMode ? 'sm:text-xs sm:px-2' : 'text-xs px-2'}`}>
-              {statusConfig[pet.status].label}
-            </Badge>
+            <span className="relative inline-flex">
+              {pet.status === 'rescue' && (
+                <span className="absolute inset-0 rounded-full animate-ping bg-purple-500 opacity-50" />
+              )}
+              <Badge className={`${statusConfig[pet.status].color} text-[10px] px-1.5 py-0.5 relative ${compactMode ? 'sm:text-xs sm:px-2' : 'text-xs px-2'}`}>
+                {statusConfig[pet.status].label}
+              </Badge>
+            </span>
             {pet.completed && (
               <Badge variant="secondary" className={`bg-gray-700 text-white text-[10px] px-1.5 py-0.5 ${compactMode ? 'sm:text-xs sm:px-2' : 'text-xs px-2'}`}>
                 Finalizado

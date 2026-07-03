@@ -1,17 +1,6 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/admin/verificacoes/page": "app/admin/verificacoes/page.js",
-  "/agendamentos/page": "app/agendamentos/page.js",
   "/eventos/page": "app/eventos/page.js",
-  "/login/page": "app/login/page.js",
-  "/map/page": "app/map/page.js",
-  "/new-pet/page": "app/new-pet/page.js",
   "/page": "app/page.js",
-  "/pet/[id]/page": "app/pet/[id]/page.js",
-  "/prestador/verificacao/page": "app/prestador/verificacao/page.js",
-  "/profile/edit/page": "app/profile/edit/page.js",
   "/profile/page": "app/profile/page.js",
-  "/profile/settings/page": "app/profile/settings/page.js",
-  "/servicos/[id]/page": "app/servicos/[id]/page.js",
   "/servicos/page": "app/servicos/page.js"
 }

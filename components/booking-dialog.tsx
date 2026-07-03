@@ -30,6 +30,8 @@ interface BookingDialogProps {
   horaFim?: string
   duracao?: number
   diasFuncionamento?: string[]
+  horariosBloqueados?: string[]
+  vagasDisponiveis?: number | null
   atendeDomicilio?: boolean
   taxaDomicilio?: number
   variacoes?: { nome: string; preco: number }[]
@@ -50,6 +52,8 @@ export function BookingDialog({
   horaFim,
   duracao = 60,
   diasFuncionamento,
+  horariosBloqueados = [],
+  vagasDisponiveis,
   atendeDomicilio,
   taxaDomicilio = 0,
   variacoes = [],
@@ -73,6 +77,9 @@ export function BookingDialog({
 
   const isHorario = tipoAgendamento === "HORARIO"
   const isTurno = tipoAgendamento === "TURNO"
+  const isVagas = tipoAgendamento === "VAGAS"
+
+  const lotado = isVagas && vagasDisponiveis !== null && vagasDisponiveis !== undefined && vagasDisponiveis === 0
 
   // Busca horários/turnos já ocupados quando a data muda
   useEffect(() => {
@@ -117,7 +124,9 @@ export function BookingDialog({
     return horarios
   }
 
-  const horariosDisponiveis = gerarHorarios().filter((h) => !ocupados.horarios.includes(h))
+  const horariosDisponiveis = gerarHorarios()
+    .filter((h) => !ocupados.horarios.includes(h))
+    .filter((h) => !horariosBloqueados.includes(h))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -135,6 +144,11 @@ export function BookingDialog({
 
     if (isTurno && !turno) {
       setErro("Turno é obrigatório")
+      return
+    }
+
+    if (isVagas && lotado) {
+      setErro("Este serviço está sem vagas disponíveis no momento")
       return
     }
 
@@ -191,15 +205,25 @@ export function BookingDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {diasFuncionamento && diasFuncionamento.length > 0 && (
-            <div className="text-sm text-teal-700 bg-teal-50 p-2 rounded-md border border-teal-100">
-              <span className="font-semibold">Dias de atendimento:</span>{" "}
-              {diasFuncionamento
-                .map((d) => ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"][parseInt(d)])
-                .filter(Boolean)
-                .join(", ")}
+          {(diasFuncionamento && diasFuncionamento.length > 0) || horaInicio || horaFim ? (
+            <div className="text-sm text-teal-700 bg-teal-50 p-2 rounded-md border border-teal-100 space-y-0.5">
+              {diasFuncionamento && diasFuncionamento.length > 0 && (
+                <p>
+                  <span className="font-semibold">Dias de atendimento:</span>{" "}
+                  {diasFuncionamento
+                    .map((d) => ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"][parseInt(d)])
+                    .filter(Boolean)
+                    .join(", ")}
+                </p>
+              )}
+              {horaInicio && horaFim && (
+                <p>
+                  <span className="font-semibold">Horário:</span>{" "}
+                  {horaInicio === "00:00" && horaFim === "23:59" ? "24 horas" : `${horaInicio} – ${horaFim}`}
+                </p>
+              )}
             </div>
-          )}
+          ) : null}
 
           {erro && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-md text-sm">
@@ -251,25 +275,56 @@ export function BookingDialog({
 
           {isHorario && (
             <div className="space-y-2">
-              <label className="text-sm font-semibold">Hora Disponível (Duração: {duracao}m)</label>
-              {(horariosDisponiveis.length > 0) ? (
-                <Select value={hora} onValueChange={setHora} required>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione o horário" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {horariosDisponiveis.map(h => (
-                      <SelectItem key={h} value={h}>{h}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <label className="text-sm font-semibold">
+                Horário disponível{duracao ? ` · ${duracao}min por sessão` : ""}
+              </label>
+              {!data ? (
+                <p className="text-sm text-gray-400 bg-gray-50 text-center py-3 rounded-md border">
+                  Selecione uma data para ver os horários
+                </p>
+              ) : gerarHorarios().length === 0 ? (
+                <p className="text-sm text-amber-700 bg-amber-50 text-center py-3 rounded-md border border-amber-200">
+                  Horários não configurados pelo prestador
+                </p>
+              ) : horariosDisponiveis.length === 0 ? (
+                <p className="text-sm text-amber-700 bg-amber-50 text-center py-3 rounded-md border border-amber-200">
+                  Nenhum horário disponível nesta data
+                </p>
               ) : (
-                <Input
-                  type="time"
-                  value={hora}
-                  onChange={(e) => setHora(e.target.value)}
-                  required
-                />
+                <div className="flex flex-wrap gap-2">
+                  {horariosDisponiveis.map((h) => (
+                    <button
+                      key={h}
+                      type="button"
+                      className={`px-3 py-1.5 text-sm rounded-md border transition-colors ${
+                        hora === h
+                          ? "bg-teal-600 text-white border-teal-600"
+                          : "bg-white text-gray-700 border-gray-200 hover:border-teal-400 hover:text-teal-700"
+                      }`}
+                      onClick={() => setHora(h)}
+                    >
+                      {h}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {isVagas && (
+            <div className="space-y-2">
+              {lotado ? (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2 rounded-md text-sm font-medium text-center">
+                  Sem vagas disponíveis no momento
+                </div>
+              ) : vagasDisponiveis !== null && vagasDisponiveis !== undefined ? (
+                <div className="bg-teal-50 border border-teal-200 text-teal-700 px-3 py-2 rounded-md text-sm text-center">
+                  {vagasDisponiveis} {vagasDisponiveis === 1 ? "vaga disponível" : "vagas disponíveis"}
+                </div>
+              ) : (
+                <div className="bg-teal-50 border border-teal-200 text-teal-700 px-3 py-2 rounded-md text-sm text-center">
+                  Vagas disponíveis
+                </div>
               )}
             </div>
           )}
@@ -378,9 +433,9 @@ export function BookingDialog({
             <Button
               type="submit"
               className="flex-1 bg-teal-600 hover:bg-teal-700"
-              disabled={isLoading}
+              disabled={isLoading || lotado}
             >
-              {isLoading ? "Agendando..." : "Confirmar Agendamento"}
+              {isLoading ? "Agendando..." : lotado ? "Sem vagas" : "Confirmar Agendamento"}
             </Button>
           </div>
         </form>

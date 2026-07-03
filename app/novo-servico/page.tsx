@@ -50,9 +50,14 @@ export default function NovoServicoPage() {
     hora_inicio: "08:00",
     hora_fim: "18:00",
     duracao_agendamento: 60,
+    horarios_bloqueados: [] as string[],
+    capacidade_por_slot: 1,
+    vagas_disponiveis: null as number | null,
     atende_domicilio: false,
     taxa_domicilio: 0,
   })
+
+  const isHospedagem = formData.tipo === "HOSPEDAGEM_CRECHE"
 
   const tipoOptions = [
     { value: "PET_SITTER", label: "Pet Sitter" },
@@ -71,6 +76,16 @@ export default function NovoServicoPage() {
     { value: "6", label: "Sábado" },
     { value: "0", label: "Domingo" },
   ]
+
+  const gerarSlots = (horaInicio: string, horaFim: string, duracao: number): string[] => {
+    const slots: string[] = []
+    const toMins = (s: string) => { const [h, m] = s.split(":").map(Number); return h * 60 + m }
+    const toStr = (m: number) => `${Math.floor(m / 60).toString().padStart(2, "0")}:${(m % 60).toString().padStart(2, "0")}`
+    let cur = toMins(horaInicio)
+    const end = toMins(horaFim)
+    while (cur + duracao <= end) { slots.push(toStr(cur)); cur += duracao }
+    return slots
+  }
 
   const handleUploadFoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -240,14 +255,17 @@ export default function NovoServicoPage() {
         fotos_urls: formData.fotos_urls,
         latitude: mapLocation.lat,
         longitude: mapLocation.lng,
-        oferece_agendamento: formData.oferece_agendamento,
-        tipo_agendamento: formData.tipo_agendamento,
+        oferece_agendamento: true,
+        tipo_agendamento: isHospedagem ? "VAGAS" : "HORARIO",
         variacoes: formData.variacoes,
         especies_atendidas: formData.especies_atendidas,
         dias_funcionamento: formData.dias_funcionamento,
         hora_inicio: formData.hora_inicio || "08:00",
         hora_fim: formData.hora_fim || "18:00",
-        duracao_agendamento: formData.duracao_agendamento ? Number(formData.duracao_agendamento) : 60,
+        duracao_agendamento: isHospedagem ? undefined : (formData.duracao_agendamento ? Number(formData.duracao_agendamento) : 60),
+        horarios_bloqueados: isHospedagem ? [] : formData.horarios_bloqueados,
+        capacidade_por_slot: isHospedagem ? undefined : (formData.capacidade_por_slot > 1 ? formData.capacidade_por_slot : undefined),
+        vagas_disponiveis: isHospedagem ? formData.vagas_disponiveis : undefined,
         atende_domicilio: formData.atende_domicilio,
         taxa_domicilio: formData.atende_domicilio && formData.taxa_domicilio ? Number(formData.taxa_domicilio) : undefined,
       }
@@ -544,67 +562,206 @@ export default function NovoServicoPage() {
               </div>
             </div>
 
-            <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
-              <h3 className="font-semibold text-lg mb-4">Disponibilidade e Agendamento *</h3>
+            {isHospedagem ? (
+              <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
+                <h3 className="font-semibold text-lg mb-4">Disponibilidade e Funcionamento *</h3>
 
-              <div className="space-y-2">
-                <label className="text-sm font-semibold">Dias de Funcionamento *</label>
-                <div className="flex flex-wrap gap-2">
-                  {diasSemana.map((dia) => (
-                    <div
-                      key={dia.value}
-                      onClick={() => toggleDia(dia.value)}
-                      className={`
-                        px-3 py-1 border rounded-full text-sm cursor-pointer transition-colors
-                        ${formData.dias_funcionamento.includes(dia.value) ? "bg-teal-600 border-teal-600 text-white" : "bg-white text-gray-600 hover:bg-gray-100"}
-                      `}
-                    >
-                      {dia.label}
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold">Dias de Funcionamento *</label>
+                  <div className="flex flex-wrap gap-2">
+                    {diasSemana.map((dia) => (
+                      <div
+                        key={dia.value}
+                        onClick={() => toggleDia(dia.value)}
+                        className={`px-3 py-1 border rounded-full text-sm cursor-pointer transition-colors ${
+                          formData.dias_funcionamento.includes(dia.value)
+                            ? "bg-teal-600 border-teal-600 text-white"
+                            : "bg-white text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
+                        {dia.label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-3 border-t">
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      id="funciona_24h"
+                      checked={formData.hora_inicio === "00:00" && formData.hora_fim === "23:59"}
+                      onCheckedChange={(checked) => setFormData({
+                        ...formData,
+                        hora_inicio: checked ? "00:00" : "08:00",
+                        hora_fim: checked ? "23:59" : "18:00",
+                      })}
+                    />
+                    <label htmlFor="funciona_24h" className="text-sm font-medium">Funciona 24 horas</label>
+                  </div>
+                  {!(formData.hora_inicio === "00:00" && formData.hora_fim === "23:59") && (
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label htmlFor="hora_inicio_h" className="text-sm font-semibold">Abre às</label>
+                        <Input
+                          id="hora_inicio_h"
+                          type="time"
+                          value={formData.hora_inicio}
+                          onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label htmlFor="hora_fim_h" className="text-sm font-semibold">Fecha às</label>
+                        <Input
+                          id="hora_fim_h"
+                          type="time"
+                          value={formData.hora_fim}
+                          onChange={(e) => setFormData({ ...formData, hora_fim: e.target.value })}
+                        />
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                <div className="space-y-2">
-                  <label htmlFor="hora_inicio" className="text-sm font-semibold">
-                    Abre às
-                  </label>
-                  <Input
-                    id="hora_inicio"
-                    type="time"
-                    value={formData.hora_inicio}
-                    onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="hora_fim" className="text-sm font-semibold">
-                    Fecha às
-                  </label>
-                  <Input
-                    id="hora_fim"
-                    type="time"
-                    value={formData.hora_fim}
-                    onChange={(e) => setFormData({ ...formData, hora_fim: e.target.value })}
-                  />
+                  )}
                 </div>
 
-                <div className="space-y-2">
-                  <label htmlFor="duracao" className="text-sm font-semibold">
-                    Duração média (min)
-                  </label>
+                <div className="space-y-2 pt-3 border-t">
+                  <label htmlFor="vagas_disponiveis" className="text-sm font-semibold">Vagas Disponíveis</label>
                   <Input
-                    id="duracao"
+                    id="vagas_disponiveis"
                     type="number"
-                    min="15"
-                    step="15"
-                    value={formData.duracao_agendamento}
-                    onChange={(e) => setFormData({ ...formData, duracao_agendamento: Number(e.target.value) })}
+                    min="0"
+                    placeholder="Deixe vazio para não limitar vagas"
+                    value={formData.vagas_disponiveis ?? ""}
+                    onChange={(e) => setFormData({ ...formData, vagas_disponiveis: e.target.value !== "" ? Number(e.target.value) : null })}
                   />
+                  <p className="text-xs text-gray-400">Coloque 0 para marcar como lotado. Deixe vazio para vagas ilimitadas.</p>
+                  {formData.vagas_disponiveis === 0 && (
+                    <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-md p-2">
+                      Serviço marcado como lotado — clientes não poderão reservar.
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-4 border p-4 rounded-lg bg-gray-50">
+                <h3 className="font-semibold text-lg mb-4">Disponibilidade e Agendamento *</h3>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold">Dias de Funcionamento *</label>
+                  <div className="flex flex-wrap gap-2">
+                    {diasSemana.map((dia) => (
+                      <div
+                        key={dia.value}
+                        onClick={() => toggleDia(dia.value)}
+                        className={`
+                          px-3 py-1 border rounded-full text-sm cursor-pointer transition-colors
+                          ${formData.dias_funcionamento.includes(dia.value) ? "bg-teal-600 border-teal-600 text-white" : "bg-white text-gray-600 hover:bg-gray-100"}
+                        `}
+                      >
+                        {dia.label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                  <div className="space-y-2">
+                    <label htmlFor="hora_inicio" className="text-sm font-semibold">
+                      Abre às
+                    </label>
+                    <Input
+                      id="hora_inicio"
+                      type="time"
+                      value={formData.hora_inicio}
+                      onChange={(e) => setFormData({ ...formData, hora_inicio: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="hora_fim" className="text-sm font-semibold">
+                      Fecha às
+                    </label>
+                    <Input
+                      id="hora_fim"
+                      type="time"
+                      value={formData.hora_fim}
+                      onChange={(e) => setFormData({ ...formData, hora_fim: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="duracao" className="text-sm font-semibold">
+                      Duração por sessão (min)
+                    </label>
+                    <Input
+                      id="duracao"
+                      type="number"
+                      min="15"
+                      step="15"
+                      value={formData.duracao_agendamento}
+                      onChange={(e) => setFormData({ ...formData, duracao_agendamento: Number(e.target.value) })}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="capacidade_por_slot" className="text-sm font-semibold">
+                    Capacidade simultânea por horário
+                  </label>
+                  <Input
+                    id="capacidade_por_slot"
+                    type="number"
+                    min="1"
+                    value={formData.capacidade_por_slot}
+                    onChange={(e) => setFormData({ ...formData, capacidade_por_slot: Math.max(1, Number(e.target.value)) })}
+                  />
+                  <p className="text-xs text-gray-400">
+                    Quantos clientes podem agendar o mesmo horário (ex: 2 para dois banhos simultâneos)
+                  </p>
+                </div>
+
+                {formData.hora_inicio && formData.hora_fim && formData.duracao_agendamento > 0 && (() => {
+                  const slots = gerarSlots(formData.hora_inicio, formData.hora_fim, formData.duracao_agendamento)
+                  return slots.length > 0 ? (
+                    <div className="pt-3 border-t mt-2">
+                      <p className="text-xs text-gray-500 mb-1">
+                        Prévia dos horários ({slots.length} no total) — clique para bloquear/desbloquear:
+                      </p>
+                      <p className="text-xs text-gray-400 mb-2">
+                        Horários riscados ficam indisponíveis para clientes (ex: horário de almoço)
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {slots.map((slot) => {
+                          const bloqueado = formData.horarios_bloqueados.includes(slot)
+                          return (
+                            <button
+                              key={slot}
+                              type="button"
+                              onClick={() => {
+                                const next = bloqueado
+                                  ? formData.horarios_bloqueados.filter(s => s !== slot)
+                                  : [...formData.horarios_bloqueados, slot]
+                                setFormData({ ...formData, horarios_bloqueados: next })
+                              }}
+                              className={`px-3 py-1 text-xs rounded-md border transition-colors ${
+                                bloqueado
+                                  ? "bg-red-50 border-red-300 text-red-400 line-through"
+                                  : "border-gray-200 bg-white text-gray-600 hover:border-red-300 hover:bg-red-50"
+                              }`}
+                            >
+                              {slot}
+                            </button>
+                          )
+                        })}
+                      </div>
+                      {formData.horarios_bloqueados.length > 0 && (
+                        <p className="text-xs text-red-500 mt-2">
+                          {formData.horarios_bloqueados.length} horário(s) bloqueado(s)
+                        </p>
+                      )}
+                    </div>
+                  ) : null
+                })()}
+              </div>
+            )}
 
             <div className="space-y-2">
               <label className="text-sm font-semibold">

@@ -28,6 +28,8 @@ export default function NovoEventoPage() {
     titulo: "",
     descricao: "",
     endereco_texto: "",
+    bairro: "",
+    cidade: "",
     data_inicio: "",
     hora_inicio: "",
     data_fim: "",
@@ -115,10 +117,12 @@ export default function NovoEventoPage() {
     const doReverse = async () => {
       if (!mapLocation) return
       try {
-        const { endereco_texto } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
+        const { endereco_texto, bairro, cidade } = await reverseGeocode(mapLocation.lat, mapLocation.lng)
         setFormData((prev) => ({
           ...prev,
           endereco_texto,
+          bairro: bairro || prev.bairro,
+          cidade: cidade || prev.cidade,
         }))
       } catch (err) {
         console.error("Erro no reverse geocoding", err)
@@ -171,6 +175,8 @@ export default function NovoEventoPage() {
         titulo: formData.titulo,
         descricao: formData.descricao,
         endereco_texto: formData.endereco_texto,
+        bairro: formData.bairro || undefined,
+        cidade: formData.cidade || undefined,
         data_hora_inicio: dataHoraInicio.toISOString(),
         data_hora_fim: dataHoraFim?.toISOString(),
         capacidade_max: formData.capacidade_max ? parseInt(formData.capacidade_max) : undefined,
@@ -291,7 +297,8 @@ export default function NovoEventoPage() {
               </div>
             </div>
             
-            <div className="space-y-2"><label htmlFor="endereco" className="text-sm font-semibold flex items-center gap-2">
+            <div className="space-y-2">
+              <label htmlFor="endereco" className="text-sm font-semibold flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
                 Endereço *
               </label>
@@ -302,6 +309,31 @@ export default function NovoEventoPage() {
                 onChange={(e) => setFormData({ ...formData, endereco_texto: e.target.value })}
                 required
               />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label htmlFor="bairro" className="text-sm font-semibold">
+                  Bairro
+                </label>
+                <Input
+                  id="bairro"
+                  placeholder="Ex: Centro"
+                  value={formData.bairro}
+                  onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="cidade" className="text-sm font-semibold">
+                  Cidade
+                </label>
+                <Input
+                  id="cidade"
+                  placeholder="Ex: Florianópolis"
+                  value={formData.cidade}
+                  onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

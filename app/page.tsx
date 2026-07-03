@@ -57,13 +57,24 @@ export default function HomePage() {
   const [sortBy, setSortBy] = useState('recent')
   const [stats, setStats] = useState<{ publicacoes: number, avistamentos: number, resolvidos: number } | null>(null)
   
-  // Changed to arrays for multi-select
-  const [statusFilters, setStatusFilters] = useState<PetStatus[]>([])
-  const [typeFilters, setTypeFilters] = useState<PetType[]>([])
-  
-  const [cityFilters, setCityFilters] = useState<string[]>([])
+  // Filters — persisted in localStorage
+  const [statusFilters, setStatusFilters] = useState<PetStatus[]>(() => {
+    if (typeof window === 'undefined') return []
+    try { return JSON.parse(localStorage.getItem('pf-status') || '[]') } catch { return [] }
+  })
+  const [typeFilters, setTypeFilters] = useState<PetType[]>(() => {
+    if (typeof window === 'undefined') return []
+    try { return JSON.parse(localStorage.getItem('pf-type') || '[]') } catch { return [] }
+  })
+  const [cityFilters, setCityFilters] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return []
+    try { return JSON.parse(localStorage.getItem('pf-city') || '[]') } catch { return [] }
+  })
   const [citySearch, setCitySearch] = useState('')
-  const [neighborhoodFilters, setNeighborhoodFilters] = useState<string[]>([])
+  const [neighborhoodFilters, setNeighborhoodFilters] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return []
+    try { return JSON.parse(localStorage.getItem('pf-neighborhood') || '[]') } catch { return [] }
+  })
   const [neighborhoodSearch, setNeighborhoodSearch] = useState('')
   const [selectedPetForSighting, setSelectedPetForSighting] = useState<Pet | null>(null)
   const [selectedPetForViewing, setSelectedPetForViewing] = useState<Pet | null>(null)
@@ -115,7 +126,13 @@ export default function HomePage() {
     return () => { mounted = false }
   }, [])
 
-  // Set initial city filter based on user location
+  // Persist filters to localStorage
+  useEffect(() => { localStorage.setItem('pf-status', JSON.stringify(statusFilters)) }, [statusFilters])
+  useEffect(() => { localStorage.setItem('pf-type', JSON.stringify(typeFilters)) }, [typeFilters])
+  useEffect(() => { localStorage.setItem('pf-city', JSON.stringify(cityFilters)) }, [cityFilters])
+  useEffect(() => { localStorage.setItem('pf-neighborhood', JSON.stringify(neighborhoodFilters)) }, [neighborhoodFilters])
+
+  // Set initial city filter based on user location (only if nothing saved)
   useEffect(() => {
     if (user?.location?.city && cityFilters.length === 0) {
       setCityFilters([user.location.city])
@@ -310,8 +327,8 @@ export default function HomePage() {
         />
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 items-center justify-between">
-        <div className="flex items-center gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 items-center touch-pan-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div className="flex items-center gap-2 shrink-0">
         {/* Sort Dropdown */}
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="h-9 w-[200px] text-xs sm:text-sm border-dashed">
@@ -579,7 +596,7 @@ export default function HomePage() {
             </DropdownMenu>
           </div>
           {totalActiveFilters > 0 && (
-            <div className="flex items-center gap-2 mt-2">
+            <div className="flex items-center gap-2 shrink-0">
               <Badge variant="secondary" className="text-xs">
                 {totalActiveFilters} filtro{totalActiveFilters > 1 ? 's' : ''} ativo{totalActiveFilters > 1 ? 's' : ''}
               </Badge>
@@ -603,7 +620,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="rounded-xl overflow-hidden border bg-white animate-pulse">
-                <div className="aspect-square bg-gray-200" />
+                <div className="aspect-4/3 bg-gray-200" />
                 <div className="p-3 space-y-2.5">
                   <div className="h-4 bg-gray-200 rounded w-3/4" />
                   <div className="flex gap-1">
@@ -621,8 +638,23 @@ export default function HomePage() {
             ))}
           </div>
         ) : filteredPets.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-sm">Nenhum pet encontrado com os filtros selecionados</p>
+          <div className="text-center py-16 flex flex-col items-center gap-3">
+            <div className="text-5xl">🐾</div>
+            <p className="font-semibold text-foreground">Nenhum pet encontrado</p>
+            <p className="text-muted-foreground text-sm max-w-xs">
+              {totalActiveFilters > 0
+                ? 'Tente remover alguns filtros para ver mais resultados.'
+                : 'Ainda não há publicações nessa área. Seja o primeiro a ajudar!'}
+            </p>
+            {totalActiveFilters > 0 && (
+              <button
+                type="button"
+                onClick={() => { setStatusFilters([]); setTypeFilters([]); setCityFilters([]); setNeighborhoodFilters([]) }}
+                className="mt-1 text-sm font-medium text-teal-600 hover:text-teal-700 underline underline-offset-2"
+              >
+                Limpar todos os filtros
+              </button>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">

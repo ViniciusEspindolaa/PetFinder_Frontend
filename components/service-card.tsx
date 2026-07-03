@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { MapPin, Phone, Mail, Star, ExternalLink, CalendarPlus } from "lucide-react"
+import { MapPin, Phone, Mail, Star, ExternalLink, CalendarPlus, Clock } from "lucide-react"
 import { useState } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { VerifiedBadge } from '@/components/verified-badge'
@@ -22,6 +22,12 @@ interface ServiceCardProps {
   telefone?: string
   oferece_agendamento?: boolean
   tipo_agendamento?: string
+  valor_base?: number
+  variacoes?: { nome: string; preco: number }[]
+  hora_inicio?: string
+  hora_fim?: string
+  dias_funcionamento?: string[]
+  vagas_disponiveis?: number | null
   usuario?: {
     email: string
     telefone_verificado?: boolean
@@ -52,10 +58,31 @@ const tipoColor: Record<string, string> = {
   ADESTRADOR: "bg-green-100 text-green-800",
 }
 
+const DIAS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+
 export function ServiceCard(props: ServiceCardProps) {
   const [detailOpen, setDetailOpen] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
   const { toast } = useToast()
+
+  const precoMin = (() => {
+    const base = props.valor_base
+    const variacoes = props.variacoes ?? []
+    if (base == null && variacoes.length === 0) return null
+    const precos = [base, ...variacoes.map((v) => v.preco)].filter((p): p is number => p != null)
+    return Math.min(...precos)
+  })()
+
+  const horarioLabel = (() => {
+    const hi = props.hora_inicio
+    const hf = props.hora_fim
+    if (!hi || !hf) return null
+    if (hi === "00:00" && hf === "23:59") return "24h"
+    return `${hi}–${hf}`
+  })()
+
+  const isHospedagem = props.tipo === "HOSPEDAGEM_CRECHE"
+  const lotado = isHospedagem && props.vagas_disponiveis === 0
 
   return (
     <>
@@ -100,6 +127,31 @@ export function ServiceCard(props: ServiceCardProps) {
             <span className="text-xs text-gray-500">({props.total_avaliacoes})</span>
           </div>
         )}
+
+        {/* Preço e horário */}
+        <div className="flex flex-wrap gap-1.5">
+          {precoMin != null && (
+            <span className="text-xs font-semibold bg-teal-50 text-teal-700 border border-teal-100 px-2 py-0.5 rounded-full">
+              A partir de R$ {precoMin.toFixed(2)}
+            </span>
+          )}
+          {horarioLabel && (
+            <span className="text-xs bg-gray-50 text-gray-600 border border-gray-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              {horarioLabel}
+            </span>
+          )}
+          {lotado && (
+            <span className="text-xs font-semibold bg-red-50 text-red-600 border border-red-100 px-2 py-0.5 rounded-full">
+              Lotado
+            </span>
+          )}
+          {isHospedagem && !lotado && props.vagas_disponiveis != null && props.vagas_disponiveis > 0 && (
+            <span className="text-xs bg-green-50 text-green-700 border border-green-100 px-2 py-0.5 rounded-full">
+              {props.vagas_disponiveis} vagas
+            </span>
+          )}
+        </div>
 
         <div className="space-y-1 text-sm text-gray-600">
           {props.cidade && props.bairro && (
