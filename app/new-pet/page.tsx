@@ -167,6 +167,10 @@ export default function NewPetPage() {
 
   const resolveCoordsForSimilarSearch = (): Promise<{ lat: number; lng: number } | null> => {
     if (mapLocation) return Promise.resolve(mapLocation)
+    // Usa localização do perfil do usuário como fallback imediato (sem precisar do mapa preenchido)
+    if (user?.location?.lat && user?.location?.lng) {
+      return Promise.resolve({ lat: user.location.lat, lng: user.location.lng })
+    }
     return new Promise((resolve) => {
       if (!navigator.geolocation) return resolve(null)
       navigator.geolocation.getCurrentPosition(
@@ -178,7 +182,7 @@ export default function NewPetPage() {
   }
 
   useEffect(() => {
-    if (!breed || (status !== 'lost' && status !== 'found')) return
+    if (status !== 'lost' && status !== 'found') return
     const timer = setTimeout(() => {
       if (mapLocation) fetchSimilarPets()
     }, 600)
