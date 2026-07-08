@@ -26,8 +26,11 @@ interface ServiceCardProps {
   variacoes?: { nome: string; preco: number }[]
   hora_inicio?: string
   hora_fim?: string
+  duracao_agendamento?: number
   dias_funcionamento?: string[]
+  horarios_bloqueados?: string[]
   vagas_disponiveis?: number | null
+  taxa_domicilio?: number
   usuario?: {
     email: string
     telefone_verificado?: boolean
@@ -242,7 +245,16 @@ export function ServiceCard(props: ServiceCardProps) {
         servicoNome={props.nome}
         ofereceAgendamento={props.oferece_agendamento}
         tipoAgendamento={props.tipo_agendamento}
+        valorBase={props.valor_base}
+        horaInicio={props.hora_inicio}
+        horaFim={props.hora_fim}
+        duracao={props.duracao_agendamento}
+        diasFuncionamento={props.dias_funcionamento}
+        horariosBloqueados={props.horarios_bloqueados}
+        vagasDisponiveis={props.vagas_disponiveis}
         atendeDomicilio={props.atende_domicilio}
+        taxaDomicilio={props.taxa_domicilio}
+        variacoes={props.variacoes}
         prestadorVerificado={props.prestador_verificado}
         identidadeVerificada={props.identidade_verificada}
         open={bookingOpen}

@@ -165,9 +165,9 @@ export default function NotificationsPage() {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <div>
-                <h1 className="text-base sm:text-xl font-bold">Notificações</h1>
+                <h1 className="text-xl sm:text-2xl font-bold">Notificações</h1>
                 {unreadCount > 0 && (
-                  <p className="text-[10px] sm:text-xs text-muted-foreground">
+                  <p className="text-xs sm:text-sm text-muted-foreground">
                     {unreadCount} não {unreadCount === 1 ? 'lida' : 'lidas'}
                   </p>
                 )}
@@ -178,20 +178,20 @@ export default function NotificationsPage() {
                 variant="ghost"
                 size="sm"
                 onClick={handleMarkAllAsRead}
-                className="text-[10px] sm:text-xs px-2 h-7"
+                className="text-xs sm:text-sm px-3 h-9"
               >
-                <CheckCheck className="w-3.5 h-3.5 mr-1" />
+                <CheckCheck className="w-4 h-4 mr-1.5" />
                 Marcar todas
               </Button>
             )}
           </div>
 
           <Tabs value={filter} onValueChange={(value) => setFilter(value as any)}>
-            <TabsList className="w-full h-8 sm:h-10">
-              <TabsTrigger value="all" className="flex-1 text-xs sm:text-sm">
+            <TabsList className="w-full h-10">
+              <TabsTrigger value="all" className="flex-1 text-sm">
                 Todas ({notifications.length})
               </TabsTrigger>
-              <TabsTrigger value="unread" className="flex-1 text-xs sm:text-sm">
+              <TabsTrigger value="unread" className="flex-1 text-sm">
                 Não lidas ({unreadCount})
               </TabsTrigger>
             </TabsList>

@@ -5,6 +5,7 @@ import { useAuth } from "@/lib/auth-context"
 import { apiFetch } from "@/lib/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { CheckCircle2, Loader2 } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -65,6 +66,8 @@ export function BookingDialog({
 }: BookingDialogProps) {
   const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [processingStep, setProcessingStep] = useState(0)
   const [data, setData] = useState("")
   const [hora, setHora] = useState("")
   const [turno, setTurno] = useState("")
@@ -172,17 +175,23 @@ export function BookingDialog({
       })
 
       if (response) {
-        setData("")
-        setHora("")
-        setTurno("")
-        setObservacao("")
-        setFormaPagamento("")
-        setEmDomicilio(false)
-        onOpenChange(false)
-
-        // Mostrar mensagem de sucesso
-        alert("Agendamento realizado com sucesso!")
-        onSuccess?.()
+        setIsLoading(false)
+        setIsProcessing(true)
+        setProcessingStep(0)
+        setTimeout(() => setProcessingStep(1), 800)
+        setTimeout(() => setProcessingStep(2), 1800)
+        setTimeout(() => {
+          setIsProcessing(false)
+          setProcessingStep(0)
+          setData("")
+          setHora("")
+          setTurno("")
+          setObservacao("")
+          setFormaPagamento("")
+          setEmDomicilio(false)
+          onOpenChange(false)
+          onSuccess?.()
+        }, 2800)
       }
     } catch (error: any) {
       setErro(error.message || "Erro ao criar agendamento")
@@ -196,7 +205,7 @@ export function BookingDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>Agendar Serviço</DialogTitle>
           <DialogDescription>
@@ -204,7 +213,31 @@ export function BookingDialog({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {isProcessing && (
+          <div className="flex-1 flex flex-col items-center justify-center gap-4 py-10">
+            {processingStep < 2 ? (
+              <>
+                <Loader2 className="w-10 h-10 text-teal-600 animate-spin" />
+                <div className="text-center space-y-1">
+                  <p className="font-semibold text-sm">
+                    {processingStep === 0 ? 'Enviando agendamento...' : 'Processando pagamento...'}
+                  </p>
+                  <p className="text-xs text-muted-foreground">Aguarde um momento</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
+                <div className="text-center space-y-1">
+                  <p className="font-semibold text-sm text-green-700">Agendamento confirmado!</p>
+                  <p className="text-xs text-muted-foreground">Pagamento simulado com sucesso</p>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className={`space-y-4 overflow-y-auto flex-1 pr-1 ${isProcessing ? 'hidden' : ''}`}>
           {(diasFuncionamento && diasFuncionamento.length > 0) || horaInicio || horaFim ? (
             <div className="text-sm text-teal-700 bg-teal-50 p-2 rounded-md border border-teal-100 space-y-0.5">
               {diasFuncionamento && diasFuncionamento.length > 0 && (

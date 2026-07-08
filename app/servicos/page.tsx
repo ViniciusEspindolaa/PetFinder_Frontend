@@ -26,8 +26,11 @@ interface Servico {
   variacoes?: { nome: string; preco: number }[]
   hora_inicio?: string
   hora_fim?: string
+  duracao_agendamento?: number
   dias_funcionamento?: string[]
+  horarios_bloqueados?: string[]
   vagas_disponiveis?: number | null
+  taxa_domicilio?: number
   oferece_agendamento?: boolean
   tipo_agendamento?: string
   atende_domicilio?: boolean

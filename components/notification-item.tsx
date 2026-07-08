@@ -44,25 +44,25 @@ export function NotificationItem({ notification, onView, onMarkAsRead }: Notific
       )}
       onClick={() => onView(notification)}
     >
-      <CardContent className="p-2.5 sm:p-4">
-        <div className="flex gap-2">
-          <div className="flex-shrink-0 mt-0.5">{getIcon()}</div>
-          
+      <CardContent className="p-4">
+        <div className="flex gap-3">
+          <div className="flex-shrink-0 mt-1">{getIcon()}</div>
+
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2 mb-0.5">
-              <Badge variant="secondary" className="text-[9px] px-1.5 py-0.5 h-4">
+            <div className="flex items-start justify-between gap-2 mb-1">
+              <Badge variant="secondary" className="text-xs px-2 py-0.5">
                 {getTypeLabel()}
               </Badge>
               {!notification.read && (
-                <div className="w-1.5 h-1.5 bg-teal-600 rounded-full flex-shrink-0 mt-1" />
+                <div className="w-2 h-2 bg-teal-600 rounded-full flex-shrink-0 mt-1" />
               )}
             </div>
 
-            <h3 className="font-semibold text-xs sm:text-sm mb-0.5 leading-tight">{notification.title}</h3>
-            <p className="text-[11px] text-muted-foreground mb-1 line-clamp-2 leading-snug">{notification.message}</p>
+            <h3 className="font-semibold text-sm sm:text-base mb-1 leading-tight">{notification.title}</h3>
+            <p className="text-sm text-muted-foreground mb-2 line-clamp-2 leading-snug">{notification.message}</p>
 
-            <div className="flex items-center gap-1 text-[10px] sm:text-xs text-muted-foreground">
-              <Calendar className="w-3 h-3" />
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Calendar className="w-3.5 h-3.5" />
               {new Date(notification.createdAt).toLocaleDateString('pt-BR', {
                 day: '2-digit',
                 month: '2-digit',
@@ -75,11 +75,11 @@ export function NotificationItem({ notification, onView, onMarkAsRead }: Notific
         </div>
 
         {!notification.read && (
-          <div className="mt-1.5 pt-1.5 border-t">
+          <div className="mt-3 pt-3 border-t">
             <Button
               size="sm"
               variant="outline"
-              className="w-full text-[10px] h-6"
+              className="w-full text-xs h-8"
               onClick={(e) => {
                 e.stopPropagation()
                 onMarkAsRead(notification.id)

@@ -53,23 +53,21 @@ function MapFilterRow({
   activeClassName: string
 }) {
   return (
-    <div className="flex flex-wrap gap-2 mb-3">
-      <span className="text-sm font-medium flex items-center mr-2">{label}</span>
+    <div className="flex flex-wrap items-center gap-1.5 mb-2">
+      <span className="text-xs font-medium text-gray-500 mr-1">{label}</span>
       {options.map((opt) => (
-        <Button
+        <button
           key={opt.value}
-          size="sm"
-          variant="outline"
           className={cn(
-            "transition-all",
+            "h-6 px-2.5 text-xs rounded-full border transition-all font-medium",
             activeValue === opt.value
-              ? cn(activeClassName, "shadow-sm ring-1 ring-offset-1")
+              ? cn(activeClassName)
               : "bg-white text-gray-600 border-gray-300 hover:bg-gray-50"
           )}
           onClick={() => onChange(opt.value)}
         >
           {opt.label}
-        </Button>
+        </button>
       ))}
     </div>
   )
@@ -176,63 +174,55 @@ function MapContent() {
   return (
     <div className="h-screen flex flex-col">
 
-      <div className="container mx-auto px-3 py-3 sm:px-4">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="default"
-              onClick={() => router.push('/')}
-              className="p-2.5 h-auto"
-            >
-              <ArrowLeft className="w-6 h-6 sm:w-5 sm:h-5" />
-            </Button>
-            <h1 className="text-lg sm:text-xl font-bold">Mapa da Comunidade</h1>
-          </div>
+      <div className="container mx-auto px-3 py-2 sm:px-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => router.push('/')}
+            className="p-1.5 h-auto shrink-0"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <h1 className="text-base font-bold">Mapa da Comunidade</h1>
 
-          <div className="mt-2 sm:mt-0 sm:ml-auto flex flex-wrap gap-2">
-            <Button
-              size="sm"
-              variant="outline"
+          <div className="ml-auto flex gap-1.5">
+            <button
               className={cn(
-                "gap-1.5 font-semibold transition-all",
+                "flex items-center gap-1 h-7 px-2.5 text-xs rounded-full border font-medium transition-all",
                 showPets
-                  ? "bg-blue-600 hover:bg-blue-700 text-white border-blue-700 shadow-md ring-2 ring-blue-400 ring-offset-1"
-                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                  ? "bg-blue-600 text-white border-blue-700"
+                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
               )}
               onClick={() => setShowPets(!showPets)}
             >
-              <PawPrint className="w-4 h-4" />
+              <PawPrint className="w-3.5 h-3.5" />
               Pets
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
+            </button>
+            <button
               className={cn(
-                "gap-1.5 font-semibold transition-all",
+                "flex items-center gap-1 h-7 px-2.5 text-xs rounded-full border font-medium transition-all",
                 showServices
-                  ? "bg-teal-600 hover:bg-teal-700 text-white border-teal-700 shadow-md ring-2 ring-teal-400 ring-offset-1"
-                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                  ? "bg-teal-600 text-white border-teal-700"
+                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
               )}
               onClick={() => setShowServices(!showServices)}
             >
-              <Briefcase className="w-4 h-4" />
+              <Briefcase className="w-3.5 h-3.5" />
               Serviços
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
+            </button>
+            <button
               className={cn(
-                "gap-1.5 font-semibold transition-all",
+                "flex items-center gap-1 h-7 px-2.5 text-xs rounded-full border font-medium transition-all",
                 showEvents
-                  ? "bg-orange-600 hover:bg-orange-700 text-white border-orange-700 shadow-md ring-2 ring-orange-400 ring-offset-1"
-                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                  ? "bg-orange-600 text-white border-orange-700"
+                  : "bg-white text-gray-500 border-gray-300 hover:bg-gray-50"
               )}
               onClick={() => setShowEvents(!showEvents)}
             >
-              <CalendarDays className="w-4 h-4" />
+              <CalendarDays className="w-3.5 h-3.5" />
               Eventos
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -248,7 +238,7 @@ function MapContent() {
               { value: 'rescue', label: 'Resgate' },
             ]}
             onChange={(value) => setStatusFilter(value as typeof statusFilter)}
-            activeClassName="bg-slate-800 hover:bg-slate-900 text-white border-slate-800 ring-slate-400"
+            activeClassName="bg-slate-800 text-white border-slate-800"
           />
         )}
 
@@ -258,7 +248,7 @@ function MapContent() {
             activeValue={serviceTypeFilter}
             options={SERVICE_TYPE_FILTERS}
             onChange={(value) => setServiceTypeFilter(value as ServiceTypeFilter)}
-            activeClassName="bg-teal-600 hover:bg-teal-700 text-white border-teal-600 ring-teal-400"
+            activeClassName="bg-teal-600 text-white border-teal-600"
           />
         )}
 
@@ -268,7 +258,7 @@ function MapContent() {
             activeValue={eventStatusFilter}
             options={EVENT_STATUS_FILTERS}
             onChange={(value) => setEventStatusFilter(value as EventStatusFilter)}
-            activeClassName="bg-orange-600 hover:bg-orange-700 text-white border-orange-600 ring-orange-400"
+            activeClassName="bg-orange-600 text-white border-orange-600"
           />
         )}
       </div>

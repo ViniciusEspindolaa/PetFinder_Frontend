@@ -87,7 +87,13 @@ export function SimilarPetsDialog({ pets, open, onOpenChange, status }: SimilarP
                     </span>
                   )}
                   {pet.score_compatibilidade != null && (
-                    <span>Compatibilidade {pet.score_compatibilidade}</span>
+                    <span className={
+                      pet.score_compatibilidade >= 12 ? 'text-green-700 font-medium' :
+                      pet.score_compatibilidade >= 6  ? 'text-yellow-700 font-medium' :
+                      'text-gray-500'
+                    }>
+                      {Math.round((pet.score_compatibilidade / 20) * 100)}% compatível
+                    </span>
                   )}
                 </div>
                 {pet.usuario?.nome && (

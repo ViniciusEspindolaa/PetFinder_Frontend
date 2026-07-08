@@ -87,44 +87,44 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
       onClick={() => setSelectedEventoId(evento.id)}
     >
       {evento.fotos_urls && evento.fotos_urls.length > 0 && (
-        <div className="w-full h-40 overflow-hidden bg-gray-100 shrink-0 relative">
+        <div className="w-full h-32 overflow-hidden bg-gray-100 shrink-0 relative">
           <img
             src={evento.fotos_urls[0]}
             alt={evento.titulo}
             className="w-full h-full object-cover"
           />
           {isOwner && (
-            <Badge className="absolute top-2 left-2 bg-teal-600 text-white text-xs">Meu evento</Badge>
+            <Badge className="absolute top-2 left-2 bg-teal-600 text-white text-[10px]">Meu evento</Badge>
           )}
         </div>
       )}
-      <CardHeader className="pb-3 text-left">
+      <CardHeader className="pb-2 pt-3 px-3 text-left">
         <div className="flex justify-between items-start gap-2 mb-1">
-          <CardTitle className="text-lg text-teal-800 line-clamp-1">{evento.titulo}</CardTitle>
-          <Badge variant={evento.status === "AGENDADO" ? "default" : "secondary"} className="shrink-0">
+          <CardTitle className="text-sm text-teal-800 line-clamp-1">{evento.titulo}</CardTitle>
+          <Badge variant={evento.status === "AGENDADO" ? "default" : "secondary"} className="shrink-0 text-[10px] px-1.5 py-0">
             {evento.status === "AGENDADO" ? "Agendado" : evento.status === "CONCLUIDO" ? "Concluído" : "Em andamento"}
           </Badge>
         </div>
-        <CardDescription className="line-clamp-3">
+        <CardDescription className="text-xs line-clamp-2">
           {evento.descricao}
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-2 text-sm text-gray-600 pb-4 text-left flex-1">
-        <div className="flex items-start gap-2">
-          <Calendar className="w-4 h-4 mt-0.5 text-teal-600 shrink-0" />
+      <CardContent className="space-y-1.5 text-xs text-gray-600 pb-3 px-3 text-left flex-1">
+        <div className="flex items-start gap-1.5">
+          <Calendar className="w-3.5 h-3.5 mt-0.5 text-teal-600 shrink-0" />
           <span>
-            {new Date(evento.data_hora_inicio).toLocaleDateString('pt-BR')} 
+            {new Date(evento.data_hora_inicio).toLocaleDateString('pt-BR')}
             {evento.data_hora_fim && ` até ${new Date(evento.data_hora_fim).toLocaleDateString('pt-BR')}`}
           </span>
         </div>
-        <div className="flex items-start gap-2">
-          <Clock className="w-4 h-4 mt-0.5 text-teal-600 shrink-0" />
+        <div className="flex items-start gap-1.5">
+          <Clock className="w-3.5 h-3.5 mt-0.5 text-teal-600 shrink-0" />
           <span>
             {new Date(evento.data_hora_inicio).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
           </span>
         </div>
-        <div className="flex items-start gap-2">
-          <MapPin className="w-4 h-4 mt-0.5 text-teal-600 shrink-0" />
+        <div className="flex items-start gap-1.5">
+          <MapPin className="w-3.5 h-3.5 mt-0.5 text-teal-600 shrink-0" />
           <span className="line-clamp-2">
             {evento.endereco_texto}
             {(evento.bairro || evento.cidade) && (
@@ -133,21 +133,21 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
           </span>
         </div>
         {evento.capacidade_max ? (
-          <div className="flex items-start gap-2">
-            <Users className="w-4 h-4 mt-0.5 text-teal-600 shrink-0" />
+          <div className="flex items-start gap-1.5">
+            <Users className="w-3.5 h-3.5 mt-0.5 text-teal-600 shrink-0" />
             <span>Lotação: {Math.min(totalInscritos, evento.capacidade_max)} / {evento.capacidade_max} vagas</span>
           </div>
         ) : (
-          <div className="flex items-start gap-2">
-            <Heart className="w-4 h-4 mt-0.5 text-red-500 fill-current shrink-0" />
+          <div className="flex items-start gap-1.5">
+            <Heart className="w-3.5 h-3.5 mt-0.5 text-red-500 fill-current shrink-0" />
             <span>Curtidas: {totalInscritos}</span>
           </div>
         )}
       </CardContent>
-      <CardFooter className="pt-0 mt-auto flex flex-col gap-2">
+      <CardFooter className="pt-0 px-3 pb-3 mt-auto flex flex-col gap-1.5">
         {isOwner ? (
           <Button
-            className="w-full bg-teal-600 hover:bg-teal-700 text-xs h-9"
+            className="w-full bg-teal-600 hover:bg-teal-700 text-xs h-8"
             onClick={(e) => {
               e.stopPropagation()
               router.push(`/eventos/${evento.id}?edit=1`)
@@ -157,18 +157,18 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
             Editar Evento
           </Button>
         ) : (
-          <div className="flex gap-2 w-full">
-            <Button 
+          <div className="flex gap-1.5 w-full">
+            <Button
               disabled={loadingAttend}
               variant={isAttending ? "secondary" : "outline"}
-              className={`flex-1 text-xs py-1 h-9 ${isAttending ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'text-gray-600 hover:text-red-600'}`}
+              className={`flex-1 text-xs h-8 ${isAttending ? 'bg-red-100 text-red-600 hover:bg-red-200' : 'text-gray-600 hover:text-red-600'}`}
               onClick={toggleAttend}
             >
               {isAttending ? <><Heart className="w-3 h-3 mr-1 fill-current" /> Curtiu</> : <><Heart className="w-3 h-3 mr-1" /> Curtir</>}
             </Button>
             <Button
               variant="outline"
-              className="text-xs h-9 px-2 text-amber-700 border-amber-200 hover:bg-amber-50"
+              className="text-xs h-8 px-2 text-amber-700 border-amber-200 hover:bg-amber-50"
               onClick={(e) => {
                 e.stopPropagation()
                 onReport(evento)
@@ -178,9 +178,9 @@ function EventCardItem({ evento, setSelectedEventoId, user, toast, onReport }: {
             </Button>
           </div>
         )}
-        <Button 
-          variant="outline" 
-          className="w-full text-xs py-1 h-9" 
+        <Button
+          variant="outline"
+          className="w-full text-xs h-8"
           onClick={(e) => {
             e.stopPropagation()
             setSelectedEventoId(evento.id)
@@ -254,7 +254,7 @@ export default function EventosPage() {
   }
 
   return (
-    <div className="container max-w-4xl mx-auto p-4 pb-24 space-y-6">
+    <div className="container max-w-6xl mx-auto p-4 pb-24 space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#2C3E50]">Eventos e Feiras</h1>
@@ -309,7 +309,7 @@ export default function EventosPage() {
           <p className="text-gray-500 text-sm mt-1">Tente buscar por outros termos ou crie um novo evento.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {eventos.map((evento) => (
             <EventCardItem
               key={evento.id}
